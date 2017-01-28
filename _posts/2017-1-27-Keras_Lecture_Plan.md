@@ -9,8 +9,8 @@ comments: true
 케라스로 배워보는 딥러닝 강좌를 아래 순서대로 진행하고자 합니다.
 
 1. 딥러닝 이야기
-    * [케라스 이야기](https://tykimos.github.io/Keras/2017-1-27-Keras_Story.md)
-    * 계층 이야기
+    * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Story/)
+    * 레이어 이야기
 
 2. 딥러닝 기본 실습
     * 다층 퍼셉트론 모델 만들어보기
