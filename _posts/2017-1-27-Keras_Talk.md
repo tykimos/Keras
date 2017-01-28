@@ -33,6 +33,10 @@ comments: true
 
 케라스의 가장 핵심적인 데이터 구조는 바로 `모델`입니다. 케라스에서 제공하는 시퀀스 모델로 원하는 레이어를 쉽게 순차적으로 쌓을 수 있습니다. 다중 출력이 필요하는 등 좀 더 복잡한 모델을 구성하려면 케라스 함수 API를 사용하면 됩니다.
 
+# Test
+
+## test2
+
 
 ```python
 from keras.utils import np_utils
