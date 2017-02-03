@@ -120,7 +120,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 
 
-![svg](warehouse/2017-2-4-1.svg)
+![svg](/posts_warehouse/2017-2-4-1.svg)
 
 
 
