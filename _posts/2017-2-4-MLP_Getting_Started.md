@@ -123,6 +123,10 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ![svg](/posts_warehouse/2017-2-4-1.svg)
 dd
 
+### 모델 엮기
+
+컴파일 시에 정의해야하는 것들
+
 
 ### 모델 엮기
 
