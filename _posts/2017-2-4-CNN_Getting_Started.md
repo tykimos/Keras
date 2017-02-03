@@ -50,12 +50,7 @@ plt.show()
 
     Using Theano backend.
 
-
-
-![png](output_3_1.png)
-
-
-![svg]({{ site.baseurl }}/posts_warehouse/2017-2-4-CNN_Getting_Started-1.png)
+![png]({{ site.baseurl }}/posts_warehouse/2017-2-4-CNN_Getting_Started-1.png)
 
 
 ```python
@@ -136,11 +131,6 @@ from keras.utils.visualize_util import model_to_dot
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
-
-
-
-
-![svg](output_12_0.svg)
 
 
 
