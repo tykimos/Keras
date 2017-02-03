@@ -6,12 +6,7 @@ date:   2017-02-04 00:00:00
 categories: Keras
 comments: true
 ---
-본 강좌에서는 간단한 다층 퍼셉트론을 만들어보면서 다음 항목들에 대해서 살펴봅니다.
-
-* 케라스를 사용하기 위한 CSV 데이터셋 로딩하는 법
-* 다층 퍼셉트론 (Multilayer Perceptron)을 정의하고 컴파일하는 법
-
-다음과 같은 순서로 진행하겠습니다.
+본 강좌에서는 간단한 다층 퍼셉트론을 만들어봅니다. 다음과 같은 순서로 진행하겠습니다.
 
 1. 데이터셋 준비하기
 1. 모델 구성하기
@@ -117,6 +112,10 @@ from keras.utils.visualize_util import model_to_dot
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
+
+
+
+![svg](output_8_0.svg)
 
 
 
