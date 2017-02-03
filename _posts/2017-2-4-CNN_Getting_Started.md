@@ -6,7 +6,7 @@ date:   2017-02-04 00:00:00
 categories: Keras
 comments: true
 ---
-본 강좌에서는 간단한 다층 퍼셉트론을 만들어봅니다. 늘 그렇듯이 다음과 같은 순서로 진행하겠습니다.
+본 강좌에서는 간단한 컨볼루션 신경망 모델을 만들어봅니다. 늘 그렇듯이 다음과 같은 순서로 진행하겠습니다.
 
 1. 데이터셋 준비하기
 1. 모델 구성하기
@@ -55,7 +55,7 @@ plt.show()
 ![png](output_3_1.png)
 
 
-![svg]({{ site.baseurl }}/posts_warehouse/2017-2-4-CNN_Getting_Started-1.svg)
+![svg]({{ site.baseurl }}/posts_warehouse/2017-2-4-CNN_Getting_Started-1.png)
 
 
 ```python
