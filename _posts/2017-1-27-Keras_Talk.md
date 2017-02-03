@@ -122,3 +122,16 @@ print('loss_and_metrics : ' + str(loss_and_metrics))
 케라스로 모델을 만들었다고 하면 실전에서 좀 더 진실을 얘기해줄 것 같은 느낌이 들기 시작하죠? 그럼 이제 본격적으로 케라스를 알아봅시다.
 
 _(본 문단은 신화에 박식한 wingikaros님의 도움으로 작성되었습니다)_
+
+
+---
+
+### 같이 보기
+
+* [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Plan/)
+* 다음 : [딥러닝 이야기/레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/Layer_Talk/)
+
+
+```python
+
+```

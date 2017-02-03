@@ -10,7 +10,7 @@ comments: true
 
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-    * 레이어 이야기
+    * [레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/Layer_Talk/)
 2. 딥러닝 기본 실습
     * 다층 퍼셉트론 모델 만들어보기
     * 컨볼루션 신경망 모델 만들어보기
@@ -42,8 +42,3 @@ comments: true
 7. 딥러닝 실용 실습
     * 딥러닝으로 객체 검출 해보기
     * 딥러닝으로 객체 분할 해보기
-
-
-```python
-
-```
