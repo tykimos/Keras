@@ -12,10 +12,10 @@ comments: true
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
     * [레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/Layer_Talk/)
 2. 딥러닝 기본 실습
-    * 다층 퍼셉트론 모델 만들어보기
-    * 컨볼루션 신경망 모델 만들어보기
-    * 오토인코더 모델 만들어보기
-    * 순한 신경망 모델 만들어보기
+    * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
+    * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/CNN_Getting_Started/)
+    * [오토인코더 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/AutoEncoder_Getting_Started/)
+    * [순한 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/RNN_Getting_Started/)
 3. 딥러닝 활용 실습
     * 회귀 해보기
     * 이진 분류 해보기

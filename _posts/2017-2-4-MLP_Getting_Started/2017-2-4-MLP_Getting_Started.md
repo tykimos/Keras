@@ -1,11 +1,27 @@
+---
+layout: post
+title:  "다층 퍼셉트론 모델 만들어보기"
+author: Taeyoung, Kim
+date:   2017-02-04 00:00:00
+categories: Keras
+comments: true
+---
+본 강좌에서는 간단한 다층 퍼셉트론을 만들어보면서 다음 항목들에 대해서 살펴봅니다.
 
-본 강좌의 목적
+* 케라스를 사용하기 위한 CSV 데이터셋 로딩하는 법
+* 다층 퍼셉트론 (Multilayer Perceptron)을 정의하고 컴파일하는 법
 
-- 케라스를 사용하기 위한 CSV 데이터셋 로딩하는 법
-- 다층 퍼셉트론 (Multilayer Perceptron)을 정의하고 컴파일하는 법
-- 검증 데이터셋 (Validation Dataset)으로 케라스 모델 검증하는 법
+다음과 같은 순서로 진행하겠습니다.
 
-## 데이터셋 살펴보기
+1. 데이터셋 준비하기
+1. 모델 구성하기
+1. 모델 엮기
+1. 모델 학습시키기
+1. 모델 평가하기
+
+---
+
+### 데이터셋 살펴보기
 
 피마족 인디언 당뇨병 발병 데이터셋
 
@@ -35,10 +51,6 @@
     
 좀 더 살펴보면, 양성인 경우가 268개(34.9%), 음성인 경우가 500개(65.1%)이다. 즉 모델이 모두 음성이라고 판별을 한다하더라도 65.1%의 기본 정확도(baseline accuracy)를 달성할 수 있다. 현존하는 최대 정확도는 10-fold 교차검증(cross validataion) 했을 때 77.7%이다.
 
-## 데이터 불러오기
-
-라이브러리 로드와 난수생성기에 씨드(Seed) 지정하기
-
 
 ```python
 from keras.models import Sequential
@@ -63,10 +75,9 @@ X = dataset[:,0:8]
 Y = dataset[:,8]
 ```
 
-# 모델 정의하기
+---
 
-
-We create a Sequential model and add layers one at a time until we are happy with our network topology.
+### 모델 구성하기
 
 Dense 클래스를 사용하여 완전 연결 레이어(Fully Connected Layer)를 정의할 수 있다.
 
@@ -109,11 +120,11 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 
 
-![svg](./warehouse/2017-1-17-1.svg)
+![svg](output_8_0.svg)
 
 
 
-# 모델 컴파일하기
+### 모델 엮기
 
 컴파일 시에 정의해야하는 것들
 - 가중치 세트를 평가하는 데 사용할 손실함수(loss function)
@@ -128,7 +139,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 ```
 
-모델 적합하기 (Fit)
+### 모델 학습시키기
 
 - nb_epoch : 데이터셋에 대한 반복 횟수
 - batch_size : 네트워크에서 가중치 개갱신 전에 평가되는 인스턴스의 수
@@ -164,7 +175,7 @@ model.fit(X, Y, nb_epoch=10, batch_size=10) # nb_epoch 150
 
 
 
-    <keras.callbacks.History at 0x10a046f10>
+    <keras.callbacks.History at 0x106873b90>
 
 
 
@@ -178,6 +189,14 @@ print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
     768/768 [==============================] - 0s     
     acc: 70.18%
 
+
+---
+
+### 같이 보기
+
+* [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Plan/)
+* 이전 : [딥러닝 이야기/레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/Layer_Talk/)
+* 다음 : [딥러닝 기본 실습/컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/CNN_Getting_Started/)
 
 
 ```python
