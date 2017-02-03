@@ -4,7 +4,7 @@
 			{% if page.path == "index.html" %}
 			<span class="title">
 				<li>
-					<a href="/index.html">home</a>
+					<a href="{{ "/index.html" | prepend: site.baseurl }}">home</a>
 				</li>
 			</span>			
 			{% else %}
