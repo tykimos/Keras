@@ -27,13 +27,32 @@ comments: true
 * 파이썬 기반
     * Caffe 처럼 별도의 모델 설정 파일이 필요없으며 파이썬 코드로 모델들이 정의됩니다.
     
-케라스를 개발하고 유지보수하고 있는 사람은 구글 엔진니어인 프랑소와 쏠레(François Chollet)입니다.
+이 멋진 케라스를 개발하고 유지보수하고 있는 사람은 구글 엔진니어인 프랑소와 쏠레(François Chollet)입니다.
 
 ---
 
 ### 케라스 기본 개념
 
-케라스의 가장 핵심적인 데이터 구조는 바로 `모델`입니다. 케라스에서 제공하는 시퀀스 모델로 원하는 레이어를 쉽게 순차적으로 쌓을 수 있습니다. 다중 출력이 필요하는 등 좀 더 복잡한 모델을 구성하려면 케라스 함수 API를 사용하면 됩니다.
+케라스의 가장 핵심적인 데이터 구조는 바로 `모델`입니다. 케라스에서 제공하는 시퀀스 모델로 원하는 레이어를 쉽게 순차적으로 쌓을 수 있습니다. 다중 출력이 필요하는 등 좀 더 복잡한 모델을 구성하려면 케라스 함수 API를 사용하면 됩니다. 케라스로 딥러닝 모델을 만들 때는 다음과 같은 순서로 작성합니다. 다른 딥러닝 라이브러리와 비슷한 순서이지만 훨씬 직관적이고 간결합니다. 
+
+1. 데이터셋 준비하기
+    * 필요한 훈련셋, 검증셋, 테스트셋을 준비합니다.
+    * 딥러닝 모델의 학습 및 평가를 할 수 있도록 포멧 변환을 합니다.
+1. 모델 구성하기
+    * 시퀀스 모델을 생성한 뒤 필요한 레이어를 추가하여 구성합니다.
+    * 좀 더 복잡한 모델이 필요할 때는 케라스 함수 API를 사용합니다.
+1. 모델 엮기
+    * 손실 함수 및 최적화 방법을 정의합니다.
+    * 케라스에서는 compile() 함수를 사용합니다.
+1. 모델 학습시키기
+    * 훈련셋을 이용하여 구성한 모델로 학습시킵니다.
+    * 케라스에서는 fit() 함수를 사용합니다.
+1. 모델 평가하기
+    * 학습한 모델을 테스트셋을 이용하여 평가합니다.
+    * 케라스에서는 evaluate() 함수를 사용합니다.
+    * 평가가 아니라 예측을 하고자 한다면 predict() 함수를 사용합니다.
+
+손글씨 영상을 분류하는 문제를 케라스로 간단히 구현해봤습니다. 가로세로 픽셀이 32 x 32인 이미지를 입력받아 이를 784 벡터로 구성한 다음 이를 학습 및 평가하는 코드입니다. 이 간단한 코드로 93.4%의 정확도 결과를 얻었습니다. 각 함수의 설명 및 인자에 대한 설명은 여러 모델을 실습해보면서 하나씩 설명드리겠습니다. 
 
 
 ```python
@@ -42,7 +61,7 @@ from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 
-# prepare dataset
+# 1. 데이터셋 준비하기
 # load data
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
 
@@ -54,36 +73,37 @@ X_test = X_test.reshape(10000, 784).astype('float32') / 255.0
 Y_train = np_utils.to_categorical(Y_train)
 Y_test = np_utils.to_categorical(Y_test)
 
-# create model
+# 2. 모델 구성하기
 model = Sequential()
 model.add(Dense(output_dim=64, input_dim=28*28))
 model.add(Activation("relu"))
 model.add(Dense(output_dim=10))
 model.add(Activation("softmax"))
 
-# compile model
+# 3. 모델 엮기
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
-# fit model
+# 4. 모델 학습시키기
 model.fit(X_train, Y_train, nb_epoch=5, batch_size=32)
- 
-# evaluate
+
+# 5. 모델 평가하기
 loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
-print(loss_and_metrics)
+
+print('loss_and_metrics : ' + str(loss_and_metrics))
 ```
 
     Epoch 1/5
-    60000/60000 [==============================] - 9s - loss: 0.6651 - acc: 0.8257     
+    60000/60000 [==============================] - 3s - loss: 0.6698 - acc: 0.8300     
     Epoch 2/5
-    60000/60000 [==============================] - 9s - loss: 0.3477 - acc: 0.9022     
+    60000/60000 [==============================] - 3s - loss: 0.3442 - acc: 0.9034     
     Epoch 3/5
-    60000/60000 [==============================] - 11s - loss: 0.2996 - acc: 0.9146    
+    60000/60000 [==============================] - 3s - loss: 0.2943 - acc: 0.9170     
     Epoch 4/5
-    60000/60000 [==============================] - 9s - loss: 0.2708 - acc: 0.9235     
+    60000/60000 [==============================] - 4s - loss: 0.2641 - acc: 0.9251     
     Epoch 5/5
-    60000/60000 [==============================] - 12s - loss: 0.2490 - acc: 0.9300    
+    60000/60000 [==============================] - 4s - loss: 0.2416 - acc: 0.9316     
     10000/10000 [==============================] - 0s     
-    [0.23399651658833026, 0.9345]
+    loss_and_metrics : [0.22730162796676159, 0.93489999999999995]
 
 
 
@@ -91,21 +111,14 @@ print(loss_and_metrics)
 
 ### 왜 "케라스"인가?
 
-케라스의 가장 핵심적인 데이터 구조는 바로 __모델__입니다. 케라스에서 제공하는 시퀀스 모델로 원하는 레이어를 쉽게 순차적으로 쌓을 수 있습니다. 다중 출력이 필요하는 등 좀 더 복잡한 모델을 구성하려면 케라스 함수 API를 사용하면 됩니다.
+케라스는 초기에 ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System) 프로젝트의 일부로 개발되었다고 합니다. 오네이로스(ONEIROS)의 복수형이 오네이로이입니다. 케라스(κέρας)는 그리스어로 `뿔`을 의미하고, 오네이로이(ονειρο)는 그리스어로 꿈을 의인화 시킨 신이라는 의미입니다. 둘 다 그리스신화에 나오는 단어입니다. 첫 강좌인 만큼 가볍게 그리스신화 얘길 조금 해볼까요?
 
+그리스 신화에 오네이로이라고 불리는 꿈의 정령들이 있습니다. 오네이로이는 헬리오스의 궁전 근처에 살면서 두 개의 문을 통해 인간들에게 꿈을 보냅니다. 신이 사람들에게 메시지를 전할 때 오네이로이에게 부탁하여 꿈을 보낸다고 합니다. 미래에 성취될 진실은 뿔로 된 문으로 보내고 거짓은 상아로 된 문으로 보내줍니다. 즉 꿈을 통해 미래로 인도하는 역할을 오네이로이가 하고, 그때 뿔(케라스)로 된 문을 통해 꿈을 보냅니다. 신이 심기가 좋지 않을 때 거짓꿈을 보내기도 하죠. 제우스는 트로이가 곧 망할 것이라는 거짓꿈을 아가멤논에게 보내고, 아가멤논은 이 꿈을 뀐 뒤 트로이를 공격했다가 그리스군 패배하죠. 거짓꿈이니 상아의 문을 통해 전달되었겠죠? 거짓꿈을 믿었다가 패가망신한 경우입니다.
 
-Why this name, Keras?
+딴 얘기이지만 오네이로이는 밤의여신 닉스와 잠의 신 힙노스의 자식들이고 수천명이나 됩니다. 그 중에 모르페우스(Morpheus)라는 신이 있는 데, 이 신은 꿈에선 인간의 모습으로 보이며, .엄청나게 정교한 흉내를 낸다고 하네요. 모르페우스의 영어발음이 모피어스인데, 영화 매트릭스에선 이 이름의 인물이 네오의 가상세계에 나타나 진실로 이끄는 역할을 하죠.
 
-Keras (κέρας) means horn in Greek. It is a reference to a literary image from ancient Greek and Latin literature, first found in the Odyssey, where dream spirits (Oneiroi, singular Oneiros) are divided between those who deceive men with false visions, who arrive to Earth through a gate of ivory, and those who announce a future that will come to pass, who arrive through a gate of horn. It's a play on the words κέρας (horn) / κραίνω (fulfill), and ἐλέφας (ivory) / ἐλεφαίρομαι (deceive).
+학습된 모델이 진실을 알려줄지 거짓을 알려줄지는 사실 아무도 모릅니다. 학습이나 검증과정에서의 정확도는 준비된 데이터셋으로 측정할 수 있어도 실전에서는 그 결과를 검증하기 쉽지 않죠. 오네이로이가 보낸 꿈이 진실의 문으로 온 것인지 거짓의 문으로 온 것인지 모르는 것 처럼요. 학습된 모델이 알려준 결과가 진실을 담고 있기를 바라는 염원을 담아 딥러닝 라이브러리 이름을 케라스(뿔)라고 이름이 지어진 것 같습니다. 
 
-Keras was initially developed as part of the research effort of project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System).
+케라스로 모델을 만들었다고 하면 실전에서 좀 더 진실을 얘기해줄 것 같은 느낌이 들기 시작하죠? 그럼 이제 본격적으로 케라스를 알아봅시다.
 
-"Oneiroi are beyond our unravelling --who can be sure what tale they tell? Not all that men look for comes to pass. Two gates there are that give passage to fleeting Oneiroi; one is made of horn, one of ivory. The Oneiroi that pass through sawn ivory are deceitful, bearing a message that will not be fulfilled; those that come out through polished horn have truth behind them, to be accomplished for men who see them." Homer, Odyssey 19. 562 ff (Shewring translation).
-
-왜이 이름 이냐, 케사스?
-
-Keras (κέρας)는 그리스어로 뿔을 의미합니다. 오디세이에서 처음 발견 된 고대 그리스 및 라틴 문학의 문학 이미지에 대한 참고서로, 꿈의 영혼 (Oneiroi, 단수 Oneiros)은 그릇된 시각을 가진 사람들을 속이고 누가 상아의 문을 통해 지구에 도착하는지 , 그리고 앞으로 나올 미래를 선포하고 경적 문을 통해 도착하는 사람들. 그것은 κέρας (경적) / κραίνω (이행), ἐλέφας (상아색) / ἐλεφαίρομαι (속임수)에 관한 연극입니다.
-
-Keras는 초기에 ONEIROS 프로젝트 (Open-ended Neuro-Electronic 지능형 로봇 운영 시스템)의 연구 노력의 일부로 개발되었습니다.
-
-"Oneiroi는 우리가 풀어 놓을 수없는 것 - 사람들이 말하는 이야기가 모두 전달되는 것을 확신 할 수있는 사람이 누구인지는 알지 못한다. 두 개의 게이트는 잠깐 동안의 Oneiroi에게 패스를주고, 하나는 뿔과 상아로 만든다.
+_(본 문단은 신화에 박식한 wingikaros님의 도움으로 작성되었습니다)_
