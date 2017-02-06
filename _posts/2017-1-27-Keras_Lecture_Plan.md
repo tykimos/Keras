@@ -11,18 +11,20 @@ comments: true
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
     * [레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/Layer_Talk/)
+    * [손실함수 이야기](https://tykimos.github.io/Keras/2017/01/27/LossFunction_Talk/)
+    * [최적화 이야기](https://tykimos.github.io/Keras/2017/01/27/Optimizer_Talk/)
 2. 딥러닝 기본 실습
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
     * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/CNN_Getting_Started/)
     * [오토인코더 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/AutoEncoder_Getting_Started/)
     * [순한 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/RNN_Getting_Started/)
 3. 딥러닝 활용 실습
-    * 회귀 해보기
-    * 이진 분류 해보기
-    * 다중 분류 해보기
-    * 영상 인식 해보기
-    * 감성 분석 해보기
-    * 시계열 분석 해보기
+    * [회귀 해보기](https://tykimos.github.io/Keras/2017/02/04/Regression_Example)
+    * [이진 분류 해보기](https://tykimos.github.io/Keras/2017/02/04/BinaryClassification_Example)
+    * [다중 분류 해보기](https://tykimos.github.io/Keras/2017/02/04/MulticlassClassification_Example)
+    * [영상 인식 해보기](https://tykimos.github.io/Keras/2017/02/04/ImageClassification_Example)
+    * [감성 분석 해보기](https://tykimos.github.io/Keras/2017/02/04/PredictSentiment_Example)
+    * [시계열 예측 해보기](https://tykimos.github.io/Keras/2017/02/04/TimeSeriesPrediction_Example)
 4. 딥러닝 노하우 실습
     * 최적 모델 선택하는 법
     * 모델 검증하는 법
