@@ -26,3 +26,5 @@ disqus_url: "http://tykimos.github.io/Keras/"
 
 # Build settings
 markdown: kramdown
+
+encoding: UTF-8
