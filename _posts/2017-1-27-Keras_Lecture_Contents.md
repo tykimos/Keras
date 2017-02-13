@@ -5,6 +5,7 @@ author: Taeyoung, Kim
 date:   2017-01-27 00:00:00
 categories: Keras
 comments: true
+thumbnail: "http://tykimos.github.io/Keras/images/tykimos_keras_logo.png"
 ---
 케라스로 배워보는 딥러닝 강좌를 아래 내용를 아래 순서대로 진행하고자 합니다.
 
