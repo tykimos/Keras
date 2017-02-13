@@ -63,7 +63,6 @@ scipy==0.18.1
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
 six==1.10.0
-sunpy==0.7.3
 terminado==0.6
 Theano==0.8.2
 tornado==4.4
