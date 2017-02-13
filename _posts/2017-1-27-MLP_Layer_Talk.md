@@ -2,7 +2,7 @@
 layout: post
 title:  "다층 퍼셉트론 레이어 이야기"
 author: Taeyoung, Kim
-date:   2017-01-27 00:09:00
+date:   2017-01-27 02:00:00
 categories: Keras
 comments: true
 ---
@@ -15,7 +15,7 @@ comments: true
 신경망에서 사용되는 뉴런은 인간의 신경계를 모사한 것입니다. 아래 왼쪽 그림이 인간의 뉴런이고, 오른쪽 그림이 이를 모델링한 것입니다.
 
 * axon (축삭돌기) : 팔처럼 몸체에서 뻗어나와 다른 뉴런의 수상돌기와 연결됩니다.
-* dendrite (수상돌기) : 다른 뉴런의 축삭 돌기와 연결되며, 몸체에 나무가지 형태로 붙어 있습니다.
+* dendrite (수상돌기) : 다른 뉴런의 축삭 돌기와 연결되며, 몸체에 나뭇가지 형태로 붙어 있습니다.
 * synapse (시냅스) : 축사돌기와 수상돌기가 연결된 지점입니다. 여기서 한 뉴런이 다른 뉴런으로 신호가 전달됩니다.
 
 하나의 뉴런은 여러 다른 뉴런의 축삭돌기와 연결되어 있는데, 연결된 시냅스의 강도가 연결된 뉴런들의 영향력이 결정됩니다. 이러한 영향력의 합이 어떤 값을 초과하면 신호가 발생하여 축삭돌기를 통해서 다른 뉴런에게 신호가 전달되는 식입니다. 오른쪽 그림의 모델링과는 다음과 같이 매칭됩니다.
@@ -25,21 +25,21 @@ comments: true
 * w0*x0 + w1*x1 + w2*x2 : 입력되는 신호의 양과 해당 신호의 시냅스 강도가 곱해진 값의 합계
 * f : 최종 합계가 다른 뉴런에게 전달되는 신호의 양을 결정짓는 규칙, 이를 활성화 함수라고 부릅니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_neuron.png" align=center width=800>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_neuron.png align=center width=800>
 (출처: http://cs231n.github.io/neural-networks-1/)
 
 세 개의 신호를 받아 하나의 신호를 전달하는 뉴런을 레고로 표현하면 다음과 같다. 녹색 블럭은 시냅스의 강도, 노란색과 빨간색 블럭은 연산자, 파란색 블럭은 활성화 함수를 나타냅니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_1.png" align=center width=320>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_1.png align=center width=320>
 
 
 만약 세 개의 신호가 서로 다른 뉴런 두 개에 전달된다고 한다면, 각 뉴런은 하나의 신호가 출력되므로, 총 두 개의 신호가 출력됩니다. 이를 레고로 표현하면 다음과 같습니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_2.png" align=center width=640>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_2.png align=center width=640>
 
-위와 같은 표현이지만 이를 겹처서 표현하면 아래와 같습니다. 다시말해 세 개의 신호를 받는 뉴런 두 개를 표현 한 것입니다. 여기서 유심히 봐야할 점은 시냅스의 강도 즉 녹색 블럭의 개수입니다. 세 개의 신호가 뉴런 두 개에 연결되므로 총 연결 경우의 수(3*2=6)인 6개가 됩니다.
+위와 같은 표현이지만 이를 겹쳐 표현하면 아래와 같습니다. 다시말해 세 개의 신호를 받는 뉴런 두 개를 표현 한 것입니다. 여기서 유심히 봐야할 점은 시냅스의 강도 즉 녹색 블럭의 개수입니다. 세 개의 신호가 뉴런 두 개에 연결되므로 총 연결 경우의 수(3*2=6)인 6개가 됩니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_3.png" align=center width=320>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_3.png align=center width=320>
 
 ---
 
@@ -73,15 +73,15 @@ Dense 레이어는 입력 뉴런 수에 상관없이 출력 뉴런 수를 자유
 
 이를 레고로 표시하면 다음과 같습니다. 왼쪽 그림은 앞서 설명한 뉴런 상세 구조를 도식화 한 것이고, 오른쪽 그림은 이를 간단하게 도식화한 것이다. 왼쪽 그림에서 시냅스 강도가 녹색 블럭으로 표시되어 있다면, 중간 그림에서는 시냅스 강도가 연결선으로 표시되어 있고, 오른쪽 그림에서는 생략되어 있습니다. 생략되어 있더라도 입력 신호의 수와 출력 신호의 수만 알면 곱셈으로 쉽게 유추할 수 있습니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_4.png" align=center width=640>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_4.png align=center width=640>
 
-다중클래스 분류문제에서는 클래스 수만큼 출력 뉴런이 필요합니다. 만약 세가지 종류로 분류한다면, 아래 코드처럼 출력 뉴런이 3개이고, 입력 뉴련과 가중치를 계산한 값을 각 클래스의 확률 개념으로 표현할 수 있는 활성화 함수인 sofemax를 사용합니다.
+다중클래스 분류문제에서는 클래스 수만큼 출력 뉴런이 필요합니다. 만약 세가지 종류로 분류한다면, 아래 코드처럼 출력 뉴런이 3개이고, 입력 뉴런과 가중치를 계산한 값을 각 클래스의 확률 개념으로 표현할 수 있는 활성화 함수인 softmax를 사용합니다.
 
 > Dense(3, input_dim=4, activation='softmax'))
 
 이를 레고로 표시하면 다음과 같습니다. 입력 신호가 4개이고 출력 신호가 3개이므로 시냅스 강도의 개수는 12개입니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_5.png" align=center width=640>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_5.png align=center width=640>
 
 Dense 레이어는 보통 출력층 이전의 은닉층으로도 많이 쓰이고, 영상이 아닌 수치자료 입력 시에는 입력층으로도 많이 쓰입니다. 이 때 활성화 함수로 'relu'가 주로 사용됩니다. 'relu'는 학습과정에서 역전파 시에 좋은 성능이 나는 것으로 알려져 있습니다.
 
@@ -89,7 +89,7 @@ Dense 레이어는 보통 출력층 이전의 은닉층으로도 많이 쓰이�
 
 이를 레고로 표시하면 다음과 같습니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_6.png" align=center width=640>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_6.png align=center width=640>
 
 또한 입력층이 아닐 때에는 이전층의 출력 뉴런 수를 알 수 있기 때문에 input_dim을 지정하지 않아도 됩니다. 아래 코드를 보면, 입력층에만 input_dim을 정의하였고, 이후 층에서는 input_dim을 지정하지 않았습니다.
 
@@ -97,9 +97,9 @@ Dense 레이어는 보통 출력층 이전의 은닉층으로도 많이 쓰이�
     model.add(Dense(6, init='uniform', activation='relu'))
     model.add(Dense(1, init='uniform', activation='sigmoid'))
 
-이를 레고로 표시하면 다음과 같습니다. 왼쪽 그림은 Dense 레이어 세 개를 도식화 한 것이고, 오른쪽 그림은 입력과 출력의 수에 맞게 연결하여 입력 신호가 인가되었을 때, 출력 신호가 나오는 것 까지의 구성을 표시한 것입니다. 이제 레고 블럭만 봐도 입력값이 4이고 출력값이 0에서 1까지 범위를 가지는 값이 나올 수 있도록 설계된 구조임을 알 수 있습니다. 활성화 함수가 sigmoid이기 때문에 이진 분류에 적합해 보입니다.
+이를 레고로 표시하면 다음과 같습니다. 왼쪽 그림은 Dense 레이어 세 개를 도식화 한 것이고, 오른쪽 그림은 입력과 출력의 수에 맞게 연결하여 입력 신호가 인가되었을 때, 출력 신호가 나오는 것 까지의 구성을 표시한 것입니다. 이제 레고 블럭만 봐도 입력값이 4이고 출력값이 0에서 1까지 범위를 가지는 값이 나올 수 있도록 설계된 구조임을 알 수 있습니다. 활성화 함수가 sigmoid이기 때문에 이진 분류에 적합합니다.
 
-<img src="http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_7.png" align=center width=640>
+<img src=http://tykimos.github.com/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_7.png align=center width=640>
 
 쌓았던 레고를 실제 케라스로 구현해봅니다. 4개의 입력 값을 받아 이진 분류하는 문제를 풀 수 있는 모델입니다.
 
@@ -127,13 +127,6 @@ from keras.utils.visualize_util import model_to_dot
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
-
-
-
-
-![svg](output_7_0.svg)
-
-
 
 ![model](http://tykimos.github.io/Keras/warehouse/2017-1-27-MLP_Layer_Talk_model.png)
 
