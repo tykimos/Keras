@@ -115,11 +115,7 @@ model.add(Dense(6, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 ```
 
-    Using Theano backend.
-
-
 케라스의 시각화 기능을 이용하여 구성된 레이어를 벡터 이미지 형태로 보실 수 있습니다. 레고 블럭과 비교해서는 위아래만 바뀌었을 뿐 크게 차이가 없습니다.
-
 
 ```python
 from IPython.display import SVG
@@ -127,13 +123,6 @@ from keras.utils.visualize_util import model_to_dot
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
-
-
-
-
-![svg](output_7_0.svg)
-
-
 
 ![model](http://tykimos.github.io/Keras/warehouse/2017-1-27-MLP_Layer_Talk_model.png)
 
