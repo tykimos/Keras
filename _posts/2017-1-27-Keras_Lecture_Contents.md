@@ -53,7 +53,8 @@ comments: true
     * [필기체 (MNIST)]
     * [광물탐색용 음파탐지기 (sonar)]
 
+---
 
-```python
+### 같이 보기
 
-```
+* 다음 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
