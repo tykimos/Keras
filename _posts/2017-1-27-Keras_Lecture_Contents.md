@@ -2,7 +2,7 @@
 layout: post
 title:  "케라스 강좌 내용"
 author: Taeyoung, Kim
-date:   2017-01-27 22:07:00
+date:   2017-01-27 00:00:00
 categories: Keras
 comments: true
 ---
