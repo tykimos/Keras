@@ -25,6 +25,13 @@ disqus_shortname: tykimos
 disqus_url: "http://tykimos.github.io/Keras/"
 #########################################
 
+author:
+  facebook:     tykimo # site author facebook page
+facebook:
+  app_id:       1234 # site facebook app id
+  publisher:    1234 # site facebook page id
+  admins:       1234 # site admin facebook profile id
+
 # Build settings
 markdown: kramdown
 
