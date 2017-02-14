@@ -5,7 +5,6 @@ author: Taeyoung, Kim
 date:   2017-01-27 01:00:00
 categories: Keras
 comments: true
-image: "http://tykimos.github.io/Keras/warehouse/tykimos_keras_logo.png"
 ---
 케라스(Keras) - 그 간결함에 빠지다.
 
