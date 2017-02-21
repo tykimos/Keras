@@ -1,3 +1,13 @@
+---
+layout: post
+title:  "케라스와 텐서플로우와의 통합"
+author: Taeyoung, Kim
+date:   2017-02-22 01:00:00
+categories: News
+comments: true
+image: http://tykimos.github.io/Keras/warehouse/2017-2-22_Integrating_Keras_and_TensorFlow_1.png
+---
+
 지난 주에 개최된 TensorFlow DEV SUMMIT 2017 행사에서 프랑소와 쏠레(François Chollet)님이 케라스(Keras)와 텐서플로우(TensorFlow)와의 통합이란 주제로 발표를 했습니다. 발표에서 이번 통합이 케라스 사용자와 텐서플로우 사용자에게 어떤 의미를 뜻하는 지를 설명하였고, 비디오 QA 예제를 통해 텐서플로우에서 케라스를 어떻게 사용하는 지를 보여주었습니다. 케라스 사용자인 저에겐 중요한 발표이기도 하고, 케라스가 가장 빠른 성장세를 보이고 있는 프레임워크 중 하나이기에 주요 내용을 정리해보고자 합니다.
 
 [![video](http://tykimos.github.io/Keras/warehouse/2017-2-22_Integrating_Keras_and_TensorFlow_1.png)](https://youtu.be/UeheTiBJ0Io)
