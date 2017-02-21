@@ -100,15 +100,6 @@ exp = tf.training.Experiment(model,
                              train_input_fn=train_inputs,
                              eval_input_fn=eval_inputs)
 ```
-
-
-      File "<ipython-input-2-526432ea0bf3>", line 21
-        train_panda_dataframe = pandas.read_hdf(...)
-                                                ^
-    SyntaxError: invalid syntax
-
-
-
 ---
 
 ### 릴리즈 계획
