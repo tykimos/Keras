@@ -3,7 +3,7 @@ layout: post
 title:  "케라스 이야기"
 author: Taeyoung, Kim
 date:   2017-01-27 01:00:00
-categories: Keras
+categories: Lecture
 comments: true
 image: http://tykimos.github.io/Keras/warehouse/gates.jpg
 ---

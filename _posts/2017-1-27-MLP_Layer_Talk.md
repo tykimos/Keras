@@ -3,7 +3,7 @@ layout: post
 title:  "다층 퍼셉트론 레이어 이야기"
 author: Taeyoung, Kim
 date:   2017-01-27 02:00:00
-categories: Keras
+categories: Lecture
 comments: true
 image: http://tykimos.github.io/Keras/warehouse/2017-1-27_MLP_Layer_Talk_lego_5.png
 ---
