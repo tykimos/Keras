@@ -2,9 +2,10 @@
 layout: post
 title:  "컨볼루션 신경망 레이어 이야기"
 author: Taeyoung, Kim
-date:   2017-01-27 00:09:00
+date:   2017-01-27 04:00:00
 categories: Keras
 comments: true
+image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_10.png
 ---
 이번 강좌에서는 컨볼루션 신경망 모델에서 주로 사용되는 컨볼루션(Convolution) 레이어, 맥스풀링(Max Pooling) 레이어, Flatten 레이어에 대해서 알아보겠습니다. 각 레이어별로 레이어 구성 및 역할에 대해서 알아보겠습니다.
 
@@ -198,6 +199,13 @@ model.add(Dense(10, activation='softmax'))
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
+
+
+
+![svg](output_6_0.svg)
+
+
+
 ![model](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_model.png)
 
 ---
@@ -213,7 +221,6 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 * [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
 * 이전 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
 * 다음 : [딥러닝 이야기/컨볼루션 신경망 모델 만들어보기]
----
 
 
 ```python
