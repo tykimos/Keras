@@ -56,16 +56,16 @@ Dense 레이어는 입력과 출력을 모두 연결해줍니다. 예를 들어 
     Dense(8, input_dim=4, init='uniform', activation='relu'))
 
 주요 인자는 다음과 같습니다.
-* 첫번째 인자 : 출력 뉴런의 수
-* input_dim : 입력 뉴런의 수
-* init : 가중치 초기화 방법 설정
-    * uniform : 균일 분포
-    * normal : 가우시안 분포
-* activation : 활성화 함수 설정
-    * linear : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옴
-    * relu : rectifier 함수, 은익층에 주로 쓰임
-    * sigmoid : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰임
-    * softmax : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰임
+* 첫번째 인자 : 출력 뉴런의 수를 설정합니다.
+* input_dim : 입력 뉴런의 수를 설정합니다.
+* init : 가중치 초기화 방법 설정합니다.
+    * 'uniform' : 균일 분포
+    * 'normal' : 가우시안 분포
+* activation : 활성화 함수 설정합니다.
+    * 'linear' : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옵니다.
+    * 'relu' : rectifier 함수, 은익층에 주로 쓰입니다.
+    * 'sigmoid' : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰입니다.
+    * 'softmax' : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
 
 Dense 레이어는 입력 뉴런 수에 상관없이 출력 뉴런 수를 자유롭게 설정할 수 있기 때문에 출력층으로 많이 사용됩니다. 이진 분류문제에서는 0과 1을 나타내는 출력 뉴런이 하나만 있으면 되기 때문에 아래 코드처럼 출력 뉴런이 1개이고, 입력 뉴런과 가중치를 계산한 값을 0에서 1사이로 표현할 수 있는 활성화 함수인 sigmoid을 사용합니다.
 
@@ -115,7 +115,11 @@ model.add(Dense(6, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 ```
 
+    Using Theano backend.
+
+
 케라스의 시각화 기능을 이용하여 구성된 레이어를 벡터 이미지 형태로 보실 수 있습니다. 레고 블럭과 비교해서는 위아래만 바뀌었을 뿐 크게 차이가 없습니다.
+
 
 ```python
 from IPython.display import SVG
@@ -130,7 +134,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 ### 결론
 
-본 강좌를 통해 신경망의 기본인 뉴런에 대해서 알아보고, 이를 생물학적, 수학적, 레고적(?)으로 도식화 해봤습니다. 그리고 다층 퍼셉트론 모델에서 가장 기본이 되는 전결합층인 Dense 레이어와 Dense 레이어를 쌓는 법에 대해서 알아봤습니다.
+본 강좌를 통해 신경망의 기본인 뉴런에 대해서 알아보고, 이를 다양한 방식으로 도식화 해봤습니다. 그리고 다층 퍼셉트론 모델에서 가장 기본이 되는 전결합층인 Dense 레이어와 Dense 레이어를 쌓는 법에 대해서 알아봤습니다. 다음 강좌에는 레이어를 조합하여 실제로 다층 퍼셉트록 모델을 만들어봅니다.
 
 ---
 
@@ -138,4 +142,9 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 * [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
 * 이전 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-* 다음 : [딥러닝 이야기/컨볼루션 신경망 레이어 이야기]
+* 다음 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
+
+
+```python
+
+```
