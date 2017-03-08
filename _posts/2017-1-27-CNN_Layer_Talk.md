@@ -7,11 +7,11 @@ categories: Keras
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_10.png
 ---
-이번 강좌에서는 컨볼루션 신경망 모델에서 주로 사용되는 컨볼루션(Convolution) 레이어, 맥스풀링(Max Pooling) 레이어, Flatten 레이어에 대해서 알아보겠습니다. 각 레이어별로 레이어 구성 및 역할에 대해서 알아보겠습니다.
+이번 강좌에서는 컨볼루션 신경망 모델에서 주로 사용되는 컨볼루션(Convolution) 레이어, 맥스풀링(Max Pooling) 레이어, 플래튼(Flatten) 레이어에 대해서 알아보겠습니다. 각 레이어별로 레이어 구성 및 역할에 대해서 알아보겠습니다.
 
 ---
 
-### 필터로 특징을 뽑아주는 컨볼루션 레이어
+### 필터로 특징을 뽑아주는 컨볼루션(Convolution) 레이어
 
 케라스에서 제공되는 컨볼루션 레이어 종류에도 여러가지가 있으나 영상 처리에 주로 사용되는 Convolution2D 레이어를 살펴보겠습니다. 레이어는 영상 인식에 주로 사용되며, 필터가 탑재되어 있습니다. 아래는 Convolution2D 클래스 사용 예제입니다.
 
@@ -78,7 +78,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 ![lego_4](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_4.png)
 
-'valid'인 경우에는 입력 이미지 영역에 맞게 필터를 적용하기 때문에 출력 이미지 크기가 입력 이미지 크기보다 작아집니다. 반면에 'same'은 출력 이미지와 입력 이미지 사이즈가 동일하도럭 입력 이미지 경계에 빈 영역을 추가하여 필터를 적용합니다. 'same'으로 설정 시, 입력 이미지에 경계를 학습시키는 효과가 있습니다.
+'valid'인 경우에는 입력 이미지 영역에 맞게 필터를 적용하기 때문에 출력 이미지 크기가 입력 이미지 크기보다 작아집니다. 반면에 'same'은 출력 이미지와 입력 이미지 사이즈가 동일하도록 입력 이미지 경계에 빈 영역을 추가하여 필터를 적용합니다. 'same'으로 설정 시, 입력 이미지에 경계를 학습시키는 효과가 있습니다.
 
 #### 필터 수
 
@@ -147,31 +147,82 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 ---
 
-### 사소한 변화따위 무시해주는 MaxPooling Layer
+### 사소한 변화를 무시해주는 맥스풀링(Max Pooling) 레이어
 
 컨볼루션 레이어의 출력 이미지에서 주요값만 뽑아 크기가 작은 출력 영상을 만듭니다. 이것은 지역적인 사소한 변화가 영향을 미치지 않도록 합니다. 
 
     MaxPooling2D(pool_size=(2, 2))
 
 주요 인자는 다음과 같습니다.
-* pool_size : 풀 크기를 지정합니다.
+* pool_size : 수직, 수평 축소 비율을 지정합니다. (2, 2)이면 출력 영상 크기는 입력 영상 크기의 반으로 줄어듭니다.
+
+예를 들어, 입력 영상 크기가 4 x 4이고, 풀 크기를 (2, 2)로 했을 때를 도식화하면 다음과 같습니다. 녹색 블럭은 입력 영상을 나타내고, 노란색 블럭은 풀 크기에 따라 나눈 경계를 표시합니다. 해당 풀에서 가장 큰 값을 선택하여 파란 블럭으로 만들면, 그것이 출력 영상이 됩니다. 가장 오른쪽은 맥스풀링 레이어를 약식으로 표시한 것입니다.
+
+![lego_12](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_12.png)
+
+이 레이어는 영상의 작은 변화라던지 사소한 움직임이 특징을 추출할 때 크게 영향을 미치지 않도록 합니다. 영상 내에 특징이 세 개가 있다고 가정했을 때, 아래 그림에서 첫 번째 영상을 기준으로 두 번째 영상은 오른쪽으로 이동하였고, 세 번째 영상은 약간 비틀어 졌고, 네 번째 영상은 조금 확대되었지만, 맥스풀링한 결과는 모두 동일합니다. 얼굴 인식 문제를 예를 들면, 맥스풀링의 역할은 사람마다 눈, 코, 입 위치가 조금씩 다른데 이러한 차이가 사람이라고 인식하는 데 있어서는 큰 영향을 미치지 않게 합니다.
+
+![lego_13](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_13.png)
 
 ---
 
-### 다차원을 일차원으로 바꿔주는 Flatten Layer
+### 영상을 일차원으로 바꿔주는 플래튼(Flatten) 레이어
 
-다차원의 텐서를 Dense 레이어에 넘기기 위해서 1차원으로 바꿔주는 역할을 수행합니다. 사용법은 간단합니다.
+CNN에서 컨볼루션 레이어나 맥스풀링 레이어를 반복적으로 거치면 주요 특징만 추출되고, 추출된 주요 특징은 전결합층에 전달되어 학습됩니다. 컨볼루션 레이어나 맥스풀링 레이어는 주로 2차원 자료를 다루지만 전결합층에 전달하기 위해선 1차원 자료로 바꿔줘야 합니다. 이 때 사용되는 것이 플래튼 레이어입니다. 사용 예시는 다음과 같습니다.
 
     Flatten()
     
-이전 레이어의 출력 정보를 이용하여 입력 정보를 자동으로 설정되며, 출력 형태는 입력 형태에 따라 자동으로 계산되기 때문에 별도로 사용자가 파라미터를 지정해주지 않아도 됩니다.
+이전 레이어의 출력 정보를 이용하여 입력 정보를 자동으로 설정되며, 출력 형태는 입력 형태에 따라 자동으로 계산되기 때문에 별도로 사용자가 파라미터를 지정해주지 않아도 됩니다. 크기가 3 x 3인 영상을 1차원으로 변경했을 때는 도식화하면 다음과 같습니다.
+
+![lego_14](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_14.png)
+
+---
+
+### 한 번 쌓아보기
+
+지금까지 알아본 레이어를 이용해서 간단한 컨볼루션 모델을 만들어보겠습니다. 먼저 간단한 문제를 정의해봅시다. 손으로 삼각형, 사각형, 원을 손으로 그린 이미지가 있고 이미지 크기가 8 x 8이라고 가정해봅니다. 삼각형, 사각형, 원을 구분하는 3개의 클래스를 분류하는 문제이기 때문에 출력 벡터는 3개여야 합니다. 필요하다고 생각하는 레이어를 구성해봤습니다.
+
+![lego_22](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_22.png)
+
+* 컨볼루션 레이어 : 입력 이미지 크기 8 x 8, 입력 이미지 채널 1개, 필터 크기 3 x 3, 필터 수 2개, 경계 타입 'same', 활성화 함수 'relu'
+
+![lego_15](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_15.png)
+
+* 맥스풀링 레이어 : 풀 크기 2 x 2
+
+![lego_16](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_16.png)
+
+* 컨볼루션 레이어 : 입력 이미지 크기 4 x 4, 입력 이미지 채널 2개, 필터 크기 2 x 2, 필터 수 3개, 경계 타입 'same', 활성화 함수 'relu'
+
+![lego_17](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_17.png)
+
+* 맥스풀링 레이어 : 풀 크기 2 x 2
+
+![lego_18](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_18.png)
+
+* 플래튼 레이어
+
+![lego_19](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_19.png)
+
+* 댄스 레이어 : 입력 뉴런 수 12개, 출력 뉴런 수 8개, 활성화 함수 'relu'
+
+![lego_20](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_20.png)
+
+* 댄스 레이어 : 입력 뉴런 수 8개, 출력 뉴런 수 3개, 활성화 함수 'softmax'
+
+![lego_21](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_21.png)
+
+모든 레이어 블럭이 준비되었으니 이를 조합해 봅니다. 입출력 크기만 맞으면 레고 끼우듯이 합치면 됩니다. 참고로 케라스 코드에서는 가장 첫번째 레이어를 제외하고는 입력 형태를 자동으로 계산하므로 이 부분은 신경쓰지 않아도 됩니다. 레이어를 조립하니 간단한 컨볼루션 모델이 생성되었습니다. 이 모델에 이미지를 입력하면, 삼각형, 사각형, 원을 나타내는 벡터가 출력됩니다.
+
+![lego_23](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_23.png)
+
+그럼 케라스 코드로 어떻게 구현하는 지 알아봅니다. 먼저 필요한 패키지를 추가하는 과정입니다. 케라스의 레이어는 'keras.layers'에 정의되어 있으며, 여기서 필요한 레이어를 추가합니다. 
 
 
 ```python
 import numpy
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.layers import Dropout
 from keras.layers import Flatten
 from keras.layers.convolutional import Convolution2D
 from keras.layers.convolutional import MaxPooling2D
@@ -186,25 +237,22 @@ from keras.utils.visualize_util import model_to_dot
     Using Theano backend.
 
 
+Sequential 모델을 하나 생성한 뒤 위에서 정의한 레이어를 차례차레 추가하면 컨볼루션 모델이 생성됩니다.
+
 
 ```python
 model = Sequential()
 
-model.add(Convolution2D(32, 5, 5, border_mode='valid', input_shape=(1, 28, 28), activation='relu'))
+model.add(Convolution2D(2, 3, 3, border_mode='same', input_shape=(1, 8, 8), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Convolution2D(3, 2, 2, border_mode='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dense(10, activation='softmax'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(3, activation='softmax'))
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
-
-
-
-
-![svg](output_6_0.svg)
-
-
 
 ![model](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_model.png)
 
@@ -212,7 +260,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 ### 결론
 
-본 강좌를 통해 컨볼루션 모델에서 사용되는 주요 레이어에 대해서 알아보았습니다. 다음 강좌에는 레이어를 조합하여 실제로 컨볼루션 모델을 만들어봅니다.
+본 강좌를 통해 컨볼루션 모델에서 사용되는 주요 레이어에 대해서 알아보았고, 레이어를 조합하여 컨볼루션 모델을 만들어봤습니다. 다음 강좌에서는 이 모델을 이용하여 실제로 데이터셋을 학습시킨 후 분류가 제대로 되는 지 알아보겠습니다.
 
 ---
 
@@ -220,7 +268,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 * [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
 * 이전 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
-* 다음 : [딥러닝 이야기/컨볼루션 신경망 모델 만들어보기]
+* 다음 : [딥러닝 이야기/컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Layer_Getting_Started/)
 
 
 ```python

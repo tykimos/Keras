@@ -15,7 +15,7 @@ comments: true
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
     * [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/)
-    * [컨볼루션 신경망 모델 만들어보기]
+    * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Layer_Getting_Started/)
     * [순환 신경망 레이어 이야기]    
     * [순환 신경망 모델 만들어보기]
 1. 딥러닝 분류 해보기
