@@ -142,7 +142,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 * [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
 * 이전 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-* 다음 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
+* 다음 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
 
 
 ```python
