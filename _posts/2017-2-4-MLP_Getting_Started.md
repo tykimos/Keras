@@ -141,13 +141,6 @@ from keras.utils.visualize_util import model_to_dot
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
-
-
-
-![svg](output_11_0.svg)
-
-
-
 ![model](http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_model.png)
 
 ---

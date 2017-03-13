@@ -148,13 +148,6 @@ from keras.utils.visualize_util import model_to_dot
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
-
-
-
-![svg](output_10_0.svg)
-
-
-
 ![model](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_3.png)
 
 ---
