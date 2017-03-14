@@ -3,7 +3,7 @@ layout: post
 title:  "컨볼루션 신경망 모델 만들어보기"
 author: Taeyoung, Kim
 date:   2017-03-08 23:00:00
-categories: Keras
+categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_4.png
 ---
