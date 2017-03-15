@@ -3,7 +3,7 @@ layout: post
 title:  "컨볼루션 신경망 레이어 이야기"
 author: Taeyoung, Kim
 date:   2017-01-27 04:00:00
-categories: Keras
+categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_10.png
 ---

@@ -13,11 +13,18 @@ comments: true
     * [학습과정 이야기]
 1. 딥러닝 모델 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
-    * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Layer_Getting_Started/)
+    * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
     * [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/)
-    * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Layer_Getting_Started/)
+    * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
     * [순환 신경망 레이어 이야기]    
     * [순환 신경망 모델 만들어보기]
+1. 딥러닝 성능 높히기
+    * [TensorBoard 사용해보기](https://tykimos.github.io/Keras/2017/03/11/To_Use_TensorBoard/)
+    * [데이터 증강(data agumentation) 사용해보기] 
+    * [드롭아웃 레이어 사용해보기]
+    * [최적 모델 선택하는 법]
+    * [경사하강법과 미니배치]
+    * [과적합 줄이는 법]
 1. 딥러닝 분류 해보기
     * [이진 분류 해보기-MLP]
     * [다중 분류 해보기-MLP]
@@ -34,21 +41,12 @@ comments: true
 1. 딥러닝 생성 모델 해보기
     * [오토인코더 모델 만들어보기]    
     * [Variational Autoencoder (VAE) 해보기]
-    * [Generative Adversarial Network (GAN) 해보기]
-1. 딥러닝 튜닝 해보기
-    * [최적 모델 선택하는 법]
-    * [경사하강법과 미니배치]
-    * [과적합 줄이는 법]
-    * [모델 성능 개선시키는 법]
-    * [TensorBoard 사용해보기]    
+    * [Generative Adversarial Network (GAN) 해보기]   
 1. 딥러닝 아트 해보기
     * [딥러닝으로 소설쓰기]
     * [딥러닝으로 꿈꾸기]
     * [딥러닝으로 그림그리기]
     * [딥러닝으로 화풍바꾸기]
-1. 데이터셋 이야기
-    * [필기체 (MNIST)]
-    * [광물탐색용 음파탐지기 (sonar)]
 
 ---
 

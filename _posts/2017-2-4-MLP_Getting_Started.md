@@ -3,7 +3,7 @@ layout: post
 title:  "다층 퍼셉트론 모델 만들어보기"
 author: Taeyoung, Kim
 date:   2017-02-04 01:00:00
-categories: Keras
+categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_lego.png
 ---
