@@ -71,30 +71,36 @@ comments: true
     * requirements.txt
         
 1. 명령 프롬프트 창을 열어서 '/inspace/dl/'로 디렉토리를 이동합니다. 참고로 '[ENTER]'는 엔터키를 입력하라는 의미입니다.
-> \> cd /inspace/dl/ [ENTER]
+```
+> cd /inspace/dl/ [ENTER]
+```
 1. 다음 명령어를 입력하여 통합 패키지를 설치합니다. 
-> \> pip install --no-index --find-links=./packages -r requirements.txt [ENTER]
+```
+> pip install --no-index --find-links=./packages -r requirements.txt [ENTER]
+```
     
 #### TensorFlow 설치
 
 1. 다음 명령어를 입력하여 TensorFlow를 설치합니다.   
-> \> pip install --no-index --find-links=./packages tensorflow [ENTER]
+```
+> pip install --no-index --find-links=./packages tensorflow [ENTER]
+```
 1. CMD 창에서 다음과 같이 실행하여 정상적으로 설치된 것을 확인합니다.
-    > \> python [ENTER] 
-    
-    > \>>> import tensorflow as tf [ENTER]
-    
-    > \>>> hello = tf.constant(‘Hello, Tensorflow’) [ENTER]
-    
-    > \>>> sess = tf.Session() [ENTER]
-    
-    > \>>> print(sess.run(hello)) [ENTER]
+```
+> python [ENTER]   
+>>> import tensorflow as tf [ENTER]
+>>> hello = tf.constant(‘Hello, Tensorflow’) [ENTER]
+>>> sess = tf.Session() [ENTER]
+>>> print(sess.run(hello)) [ENTER]
+```
 1. “Hello, Tensorflow”라는 문구가 출력되면 정상적으로 설치된 것 입니다.
 
 #### GPU용 TensorFlow 설치
 
 1. 다음 명령어를 입력하여 TensorFlow GPU를 설치합니다.
-    > \> pip install --no-index --find-links=./packages tensorflow-gpu
+```
+> pip install --no-index --find-links=./packages tensorflow-gpu
+```
 1. "cuda_8.0.61_windows.exe"을 실행시켜 CUDA를 설치합니다.
 1. "cudatools_4.0.17_win_64.msi"을 실행시켜 CUDA toolkit 설치합니다.
 1. "cudnn-8.0-windows7-x64-v5.0-ga.zip"을 압축 해제합니다.
@@ -113,29 +119,32 @@ comments: true
 #### Theano 설치
 
 1. Theano 폴더로 이동한 후 Theano를 설치합니다. 
-    
-    > \> cd /inspace/dl/Theano [ENTER]
-    
-    > \> python setup.py install [ENTER]
+```   
+> cd /inspace/dl/Theano [ENTER]
+> python setup.py install [ENTER]
+```
 
 #### Keras 설치
 
 1. Keras 폴더로 이동한 후 Keras를 설치합니다.
-    > \> cd /inspace/dl/Keras [ENTER]
-    
-    > \> python setup.py install [ENTER] 
+```
+> cd /inspace/dl/Keras [ENTER]
+> python setup.py install [ENTER] 
+```
 1. Theano와 Keras가 정상적으로 설치되었는 지 확인합니다.
-    > \> python [ENTER]
-    
-    > \>>> import Keras [ENTER]
+```
+> python [ENTER] 
+>>> import Keras [ENTER]
+```
 
 1. "Using Theano backend." 또는 "Using Tensorflow backend.”라는 문구가 출력되면 정상적으로 설치된 것입니다. 
     
 #### 오류 대처
 1. pydot, find_graphviz() 관련 에러가 발생 시 Keras, Theano 재설치합니다.
-    > \> pip uninstall keras theano [ENTER]
-    
-    > \> pip install --no-index --find-links=./packages keras theano [ENTER]
+```
+> pip uninstall keras theano [ENTER]
+> pip install --no-index --find-links=./packages keras theano [ENTER]
+```
 
 ---
 
