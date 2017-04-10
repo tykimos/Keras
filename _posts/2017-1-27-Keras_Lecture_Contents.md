@@ -10,7 +10,7 @@ comments: true
 
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-    * [학습인자와 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
+    * [학습과정과 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)
 1. 딥러닝 모델 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
