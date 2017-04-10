@@ -14,14 +14,13 @@ comments: true
 
 #### 설치 파일 다운로드
 
-설치하고자 하는 환경에 해당하는 파일을 다운로드 받습니다. 고용량이라 파일 다운로드 링크는 아래 댓글 창에 이메일이나 연락처를 남겨주시면 보내드리도록 하겠습니다. 요청하실 때 밑줄 친 파일명을 기입해주세요. 
+설치하고자 하는 환경에 해당하는 파일을 다운로드 받습니다. 고용량이라 파일 다운로드 링크는 아래 댓글 창에 이메일이나 연락처를 남겨주시면 보내드리도록 하겠습니다. 요청하실 때 밑줄 친 파일명을 기입해주세요.
 
-* 윈도우 7 64비트 환경, TensorFlow 1.0.0, Theano 0.9.0, Keras 1.2.2 : <U>tf100_th090_keras122_cpu_gpu_win7_x64.zip</U> (1.98GB)
+* 윈도우 7 64비트 환경, TensorFlow 1.0.0, Theano 0.9.0, Keras 1.2.2 : <U>tf100_th090_keras122_cpu_gpu_win7_x64.zip</U> (5.86GB)
     * TensorFlow '1.0.0'
     * TensorFlow GPU '1.0.0'
     * Theano '0.9.0rc1'    
     * Keras '1.2.2'
-    * Microsoft Visual Studio Community 2015 다운 (https://www.microsoft.com/en-us/download/details.aspx?id=48146)
     
 #### 설치 환경 정리
 
@@ -37,7 +36,7 @@ comments: true
 
 ### 윈도우 7 64비트 환경, TensorFlow 1.0.0, Theano 0.9.0, Keras 1.2.2
 
-"tf100_th090_keras122_cpu_gpu_win7_x64.zip" 파일(1.98GB)을 다운로드 받습니다. 압축 파일을 풀면 아래와 같은 폴더 및 파일들이 있습니다.
+"tf100_th090_keras122_cpu_gpu_win7_x64.zip" 파일(5.86GB)을 다운로드 받습니다. 압축 파일을 풀면 아래와 같은 폴더 및 파일들이 있습니다.
 
 * Anaconda3-4.2.0-Windows-x86_64.exe
 * cuda_8.0.61_windows.exe
@@ -47,7 +46,7 @@ comments: true
 * [폴더] packages
 * requirements.txt
 * [폴더] Theano
-* vs2015.com_enu.iso (https://www.microsoft.com/en-us/download/details.aspx?id=48146 에서 별도로 다운로드 받습니다.)
+* vs2015.com_enu.iso
 
 #### Visual Studio 설치
 1. vs2015.com_enu.iso 파일을 실행시켜 Visual Studio 2015를 설치합니다. iso 파일을 수 있어야 합니다.
@@ -158,5 +157,5 @@ comments: true
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Plan/)    
-* 이전 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
+* 이전 : [딥러닝 이야기/학습인자와 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
 * 다음 : [딥러닝 모델 이야기/다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)

@@ -10,8 +10,7 @@ comments: true
 
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-    * [학습과정 이야기]
-    * [온라인 설치]
+    * [학습인자와 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)
 1. 딥러닝 모델 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
@@ -21,7 +20,7 @@ comments: true
     * [순환 신경망 레이어 이야기]    
     * [순환 신경망 모델 만들어보기]
 1. 딥러닝 성능 높히기
-    * [TensorBoard 사용해보기](https://tykimos.github.io/Keras/2017/03/11/To_Use_TensorBoard/)
+    * [TensorBoard 사용해보기]
     * [데이터 증강(data agumentation) 사용해보기] 
     * [드롭아웃 레이어 사용해보기]
     * [최적 모델 선택하는 법]
