@@ -5,7 +5,7 @@ author: Taeyoung, Kim
 date:   2017-03-25 12:00:00
 categories: Keras
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_6.png
+image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_plot2.png
 ---
 본 강좌에서는 딥러닝 모델 학습과정과 어떻게 데이터셋을 구성하는 지에 대해서 알아보겠습니다. 딥러닝을 공부할수록 딥러닝 모델이 학습하는 과정이 사람이 학습하는 과정과 유사하다는 느낌을 많이 받습니다. 딥러닝 학습과정을 이해하기 위해 우리가 수능 공부하는 것에 비유를 들어보겠습니다.
 
