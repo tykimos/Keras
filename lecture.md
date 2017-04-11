@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "케라스 강좌 내용"
+title:  "케라스 강좌목차"
 author: 김태영
 date:   2017-01-27 00:00:00
 categories: Lecture
