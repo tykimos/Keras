@@ -4,45 +4,34 @@
 			{% if page.path == "index.html" %}
 			<span class="title">
 				<li>
-					<a href="{{ "/index.html" | prepend: site.baseurl }}">home</a>
+					<a href="{{ "/index.html" | prepend: site.baseurl }}">글</a>
 				</li>
 			</span>			
 			{% else %}
 				<li>
-					<a href="{{ "/index.html" | prepend: site.baseurl }}">home</a>
+					<a href="{{ "/index.html" | prepend: site.baseurl }}">글</a>
 				</li>			
 			{% endif %}
-			{% if page.path == "archive" %}
+			{% if page.path == "lecture" %}
 			<span class="title">
 				<li>
-					<a href="{{ "/archive" | prepend: site.baseurl }}">archive</a>
+					<a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
 				</li>
 			</span>			
 			{% else %}
 				<li>
-					<a href="{{ "/archive" | prepend: site.baseurl }}">archive</a>
-				</li>			
-			{% endif %}
-			{% if page.path == "category" %}
-			<span class="title">
-				<li>
-					<a href="{{ "/category" | prepend: site.baseurl }}">category</a>
-				</li>
-			</span>			
-			{% else %}
-				<li>
-					<a href="{{ "/category" | prepend: site.baseurl }}">category</a>
+					<a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
 				</li>			
 			{% endif %}
 			{% if page.path == "about" %}
 			<span class="title">
 				<li>
-					<a href="{{ "/about" | prepend: site.baseurl }}">about</a>
+					<a href="{{ "/about" | prepend: site.baseurl }}">소개</a>
 				</li>
 			</span>			
 			{% else %}
 				<li>
-					<a href="{{ "/about" | prepend: site.baseurl }}">about</a>
+					<a href="{{ "/about" | prepend: site.baseurl }}">소개</a>
 				</li>			
 			{% endif %}			
 		</div>
