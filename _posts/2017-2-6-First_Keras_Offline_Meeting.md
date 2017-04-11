@@ -16,7 +16,7 @@ image: https://tykimos.github.io/Keras/warehouse/2017-2-6-Meeting_Keras_Lecture_
 
 ### 같이 보기
 
-* [케라스 강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
+* [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 
 
 ```python

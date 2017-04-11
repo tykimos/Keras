@@ -114,5 +114,5 @@ exp = tf.training.Experiment(model,
 
 ### 같이 보기
 
-* [케라스 강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
+* [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)

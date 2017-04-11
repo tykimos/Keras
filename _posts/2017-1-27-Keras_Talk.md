@@ -129,7 +129,7 @@ _(본 문단은 신화에 박식한 wingikaros님의 도움으로 작성되었�
 
 ### 같이 보기
 
-* [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
+* [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * 다음 : [딥러닝 이야기/다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
 
 

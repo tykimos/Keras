@@ -172,6 +172,6 @@ A2) 맞습니다. 첫번째 검증 시 모의고사 5회를 사용하였고, 두
 
 ### 같이 보기
 
-* [강좌 목차](https://tykimos.github.io/Keras/2017/01/27/Keras_Lecture_Contents/)
+* [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * 이전 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
 * 다음 : [딥러닝 이야기/오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)
