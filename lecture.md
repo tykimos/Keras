@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "케라스 강좌목차"
+permalink: /lecture
 author: 김태영
 date:   2017-01-27 00:00:00
 categories: Lecture
