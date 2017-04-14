@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-permalink: /about/
+permalink: /about
 ---
 
 <img src="http://tykimos.github.io/Keras/images/face.jpg">
