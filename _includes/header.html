@@ -23,6 +23,17 @@
 					<a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
 				</li>			
 			{% endif %}
+			{% if page.path == "discussion.md" %}
+			<span class="title">
+				<li>
+					<a href="{{ "/discussion" | prepend: site.baseurl }}">토론</a>
+				</li>
+			</span>			
+			{% else %}
+				<li>
+					<a href="{{ "/discussion" | prepend: site.baseurl }}">토론</a>
+				</li>			
+			{% endif %}			
 			{% if page.path == "about.md" %}
 			<span class="title">
 				<li>
