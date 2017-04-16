@@ -5,7 +5,7 @@ author: Taeyoung, Kim
 date:   2017-03-08 23:10:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_1.png
+image: http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_2.png
 ---
 본 강좌에서는 컨볼루션 신경망 모델의 성능을 높이기 위해서 데이터를 부풀리는 방법에 대해서 알아보겠습니다.
 
