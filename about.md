@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 ---
 <img src="http://tykimos.github.io/Keras/images/face.jpg">
 
