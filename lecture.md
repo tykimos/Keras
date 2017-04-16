@@ -1,10 +1,5 @@
 ---
-layout: post
-title:  "케라스 강좌목차"
-permalink: /lecture
-author: 김태영
-date:   2017-01-27 00:00:00
-categories: Lecture
+layout: page
 comments: true
 ---
 케라스로 배워보는 딥러닝 강좌를 아래 내용를 아래 순서대로 진행하고자 합니다.

@@ -1,5 +1,6 @@
 ---
 layout: page
+comments: true
 ---
 <img src="http://tykimos.github.io/Keras/images/face.jpg">
 
