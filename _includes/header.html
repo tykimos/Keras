@@ -12,18 +12,18 @@
 					<a href="{{ "/index.html" | prepend: site.baseurl }}">글</a>
 				</li>			
 			{% endif %}
-			{% if page.path == "lecture" %}
+			{% if page.path == "lecture.md" %}
 			<span class="title">
 				<li>
-					ttt {{ page.path }} tttt <a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
+					<a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
 				</li>
 			</span>			
 			{% else %}
 				<li>
-					ttt {{ page.path }} tttt <a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
+					<a href="{{ "/lecture" | prepend: site.baseurl }}">강좌</a>
 				</li>			
 			{% endif %}
-			{% if page.path == "about" %}
+			{% if page.path == "about.md" %}
 			<span class="title">
 				<li>
 					<a href="{{ "/about" | prepend: site.baseurl }}">소개</a>
