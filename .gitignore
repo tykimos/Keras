@@ -18,3 +18,4 @@ Keras.egg-info
 # developer environments
 .idea
 venv
+.ipynb_checkpoints
