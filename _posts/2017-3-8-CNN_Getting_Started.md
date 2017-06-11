@@ -32,7 +32,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_4.
 import numpy as np
 
 # 랜덤시드 고정시키기
-np.random.seed(5)
+np.random.seed(3)
 ```
 
 ---
@@ -51,13 +51,16 @@ np.random.seed(5)
  - circle
  - rectangle
  - triangle
-- validation
+- test
  - circle
  - rectangle
  - triangle
  
 ![data](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_2.png)
 
+직접 그려보시는 것을 권장하시만 아래 링크에서 다운로드를 받으실 수 있습니다.
+
+[다운로드](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_handwriting_shape.zip)
 
 ---
 
@@ -82,7 +85,8 @@ np.random.seed(5)
 ```python
 from keras.preprocessing.image import ImageDataGenerator
 
-train_datagen = ImageDataGenerator()
+# 데이터셋 불러오기
+train_datagen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_datagen.flow_from_directory(
         'warehouse/handwriting_shape/train',
@@ -90,10 +94,10 @@ train_generator = train_datagen.flow_from_directory(
         batch_size=3,
         class_mode='categorical')
 
-validation_datagen = ImageDataGenerator()
+test_datagen = ImageDataGenerator(rescale=1./255)
 
-validation_generator = validation_datagen.flow_from_directory(
-        'warehouse/handwriting_shape/validation',
+test_generator = test_datagen.flow_from_directory(
+        'warehouse/handwriting_shape/test',
         target_size=(24, 24),    
         batch_size=3,
         class_mode='categorical')
@@ -103,53 +107,43 @@ validation_generator = validation_datagen.flow_from_directory(
     Found 15 images belonging to 3 classes.
 
 
-    Using Theano backend.
-
-
 ---
 
 ### 모델 구성하기
 
-영상 분류에 높은 성능을 보이고 있는 컨볼루션 신경망 모델을 구성해보겠습니다. 이전 강좌에서 만들어봤던 모델 위에 입력을 24 x 24, 3개 채널 이미지를 받을 수 있고 필터를 12개를 가진 컨볼루션 레이어와 맥스풀링 레이어를 추가해봤습니다.
+영상 분류에 높은 성능을 보이고 있는 컨볼루션 신경망 모델을 구성해보겠습니다. 각 레이어들은 이전 강좌에서 살펴보았으므로 크게 어려움없이 구성할 수 있습니다.
 
-* 컨볼루션 레이어 : 입력 이미지 크기 24 x 24, 입력 이미지 채널 3개, 필터 크기 3 x 3, 필터 수 12개, 경계 타입 'same', 활성화 함수 'relu'
-* 맥스풀링 레이어 : 풀 크기 2 x 2
-* 컨볼루션 레이어 : 입력 이미지 크기 8 x 8, 입력 이미지 채널 1개, 필터 크기 3 x 3, 필터 수 2개, 경계 타입 'same', 활성화 함수 'relu'
-* 맥스풀링 레이어 : 풀 크기 2 x 2
-* 컨볼루션 레이어 : 입력 이미지 크기 4 x 4, 입력 이미지 채널 2개, 필터 크기 2 x 2, 필터 수 3개, 경계 타입 'same', 활성화 함수 'relu'
+* 컨볼루션 레이어 : 입력 이미지 크기 24 x 24, 입력 이미지 채널 3개, 필터 크기 3 x 3, 필터 수 32개, 활성화 함수 'relu'
+* 컨볼루션 레이어 : 필터 크기 3 x 3, 필터 수 64개, 활성화 함수 'relu'
 * 맥스풀링 레이어 : 풀 크기 2 x 2
 * 플래튼 레이어
-* 댄스 레이어 : 입력 뉴런 수 12개, 출력 뉴런 수 8개, 활성화 함수 'relu'
-* 댄스 레이어 : 입력 뉴런 수 8개, 출력 뉴런 수 3개, 활성화 함수 'softmax'
+* 댄스 레이어 : 출력 뉴런 수 128개, 활성화 함수 'relu'
+* 댄스 레이어 : 출력 뉴런 수 3개, 활성화 함수 'softmax'
 
 
 ```python
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Flatten
-from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 
-# create model
+# 모델 구성하기
 model = Sequential()
-model.add(Convolution2D(12, 3, 3, border_mode='same', input_shape=(3, 24, 24), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Convolution2D(2, 3, 3, border_mode='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Convolution2D(3, 2, 2, border_mode='same', activation='relu'))
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(24,24,3)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
-model.add(Dense(8, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 ```
-
-    Using Theano backend.
-
 
 
 ```python
 from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
+from keras.utils.vis_utils import model_to_dot
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
@@ -174,7 +168,7 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 
 ```python
-# Compile model
+# 모델 엮기
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 ```
 
@@ -190,36 +184,30 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 
 ```python
-# Fit the model
+# 모델 학습시키기
 model.fit_generator(
         train_generator,
-        samples_per_epoch=45,
-        nb_epoch=100,
-        validation_data=validation_generator,
-        nb_val_samples=15)
+        steps_per_epoch=45,
+        epochs=50,
+        validation_data=test_generator,
+        validation_steps=15)
 ```
 
-    Epoch 1/100
-    45/45 [==============================] - 0s - loss: 6.3339 - acc: 0.4667 - val_loss: 6.0346 - val_acc: 0.6000
-    Epoch 2/100
-    45/45 [==============================] - 0s - loss: 5.6510 - acc: 0.6222 - val_loss: 5.6219 - val_acc: 0.6000
-    Epoch 3/100
-    45/45 [==============================] - 0s - loss: 5.5095 - acc: 0.6222 - val_loss: 5.9724 - val_acc: 0.6000
-    Epoch 4/100
-    45/45 [==============================] - 0s - loss: 5.5965 - acc: 0.6222 - val_loss: 6.3116 - val_acc: 0.6000
-    Epoch 5/100
+    Epoch 1/50
+    45/45 [==============================] - 1s - loss: 0.3871 - acc: 0.8519 - val_loss: 0.0187 - val_acc: 1.0000
+    Epoch 2/50
+    45/45 [==============================] - 1s - loss: 0.0038 - acc: 1.0000 - val_loss: 0.0047 - val_acc: 1.0000
+    Epoch 3/50
+    45/45 [==============================] - 1s - loss: 2.2539e-04 - acc: 1.0000 - val_loss: 0.0057 - val_acc: 1.0000
+    Epoch 4/50
+    45/45 [==============================] - 1s - loss: 1.4869e-04 - acc: 1.0000 - val_loss: 0.0039 - val_acc: 1.0000
     ...
-    Epoch 96/100
-    45/45 [==============================] - 0s - loss: 7.1322e-05 - acc: 1.0000 - val_loss: 0.4188 - val_acc: 0.9333
-    Epoch 97/100
-    45/45 [==============================] - 0s - loss: 6.5756e-05 - acc: 1.0000 - val_loss: 0.4209 - val_acc: 0.9333
-    Epoch 98/100
-    45/45 [==============================] - 0s - loss: 6.1240e-05 - acc: 1.0000 - val_loss: 0.4227 - val_acc: 0.9333
-    Epoch 99/100
-    45/45 [==============================] - 0s - loss: 5.7496e-05 - acc: 1.0000 - val_loss: 0.4243 - val_acc: 0.9333
-    Epoch 100/100
-    45/45 [==============================] - 0s - loss: 5.4306e-05 - acc: 1.0000 - val_loss: 0.4257 - val_acc: 0.9333
-
+    Epoch 48/50
+    45/45 [==============================] - 2s - loss: 5.8678e-07 - acc: 1.0000 - val_loss: 0.0032 - val_acc: 1.0000
+    Epoch 49/50
+    45/45 [==============================] - 2s - loss: 5.5675e-07 - acc: 1.0000 - val_loss: 0.0042 - val_acc: 1.0000
+    Epoch 50/50
+    45/45 [==============================] - 2s - loss: 5.2717e-07 - acc: 1.0000 - val_loss: 0.0032 - val_acc: 1.0000
 
 ---
 
@@ -229,21 +217,21 @@ model.fit_generator(
 
 
 ```python
-# evaluate
+# 모델 평가하기
 print("-- Evaluate --")
 
 scores = model.evaluate_generator(
-            validation_generator, 
-            val_samples = 15)
+            test_generator, 
+            steps = 15)
 
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 
-# predict
+# 모델 예측하기
 print("-- Predict --")
 
 output = model.predict_generator(
-            validation_generator, 
-            val_samples = 15)
+            test_generator, 
+            steps = 15)
 
 np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
@@ -251,33 +239,201 @@ print(output)
 ```
 
     -- Evaluate --
-    acc: 93.33%
+    acc: 100.00%
+    -- Predict --
+    [[1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.040 0.953 0.007]
+     [0.000 1.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.040 0.953 0.007]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [1.000 0.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.040 0.953 0.007]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.040 0.953 0.007]]
+
+
+간단한 모델이고 데이터셋이 적은 데도 불구하고 100%라는 높은 정확도를 얻었습니다. 
+
+---
+
+### 전체 소스
+
+
+```python
+import numpy as np
+
+# 랜덤시드 고정시키기
+np.random.seed(3)
+
+from keras.preprocessing.image import ImageDataGenerator
+
+# 데이터셋 불러오기
+train_datagen = ImageDataGenerator(rescale=1./255)
+
+train_generator = train_datagen.flow_from_directory(
+        'warehouse/handwriting_shape/train',
+        target_size=(24, 24),
+        batch_size=3,
+        class_mode='categorical')
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+test_generator = test_datagen.flow_from_directory(
+        'warehouse/handwriting_shape/test',
+        target_size=(24, 24),    
+        batch_size=3,
+        class_mode='categorical')
+
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Flatten
+from keras.layers.convolutional import Conv2D
+from keras.layers.convolutional import MaxPooling2D
+
+# 모델 구성하기
+model = Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(24,24,3)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dense(3, activation='softmax'))
+
+# 모델 엮기
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# 모델 학습시키기
+model.fit_generator(
+        train_generator,
+        steps_per_epoch=45,
+        epochs=50,
+        validation_data=test_generator,
+        validation_steps=15)
+
+# 모델 평가하기
+print("-- Evaluate --")
+
+scores = model.evaluate_generator(
+            test_generator, 
+            steps = 15)
+
+print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
+
+# 모델 예측하기
+print("-- Predict --")
+
+output = model.predict_generator(
+            test_generator, 
+            steps = 15)
+
+np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
+print(output)
+```
+
+    Found 45 images belonging to 3 classes.
+    Found 15 images belonging to 3 classes.
+    Epoch 1/50
+    45/45 [==============================] - 1s - loss: 0.3871 - acc: 0.8519 - val_loss: 0.0187 - val_acc: 1.0000
+    Epoch 2/50
+    45/45 [==============================] - 1s - loss: 0.0036 - acc: 1.0000 - val_loss: 0.0049 - val_acc: 1.0000
+    Epoch 3/50
+    45/45 [==============================] - 1s - loss: 1.9775e-04 - acc: 1.0000 - val_loss: 0.0046 - val_acc: 1.0000
+    Epoch 4/50
+    45/45 [==============================] - 1s - loss: 1.0265e-04 - acc: 1.0000 - val_loss: 0.0031 - val_acc: 1.0000
+    ...
+    Epoch 48/50
+    45/45 [==============================] - 2s - loss: 3.5189e-07 - acc: 1.0000 - val_loss: 2.9281e-04 - val_acc: 1.0000
+    Epoch 49/50
+    45/45 [==============================] - 2s - loss: 3.3688e-07 - acc: 1.0000 - val_loss: 5.2348e-04 - val_acc: 1.0000
+    Epoch 50/50
+    45/45 [==============================] - 2s - loss: 3.2231e-07 - acc: 1.0000 - val_loss: 3.8373e-04 - val_acc: 1.0000
+    -- Evaluate --
+    acc: 100.00%
     -- Predict --
     [[0.000 0.000 1.000]
      [1.000 0.000 0.000]
+     [0.000 0.001 0.999]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.004 0.995 0.001]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.004 0.995 0.001]
+     [0.000 1.000 0.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 0.001 0.999]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
      [0.000 1.000 0.000]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
      [1.000 0.000 0.000]
      [0.000 0.000 1.000]
-     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [0.004 0.995 0.001]
      [1.000 0.000 0.000]
      [1.000 0.000 0.000]
+     [0.000 0.001 0.999]
      [1.000 0.000 0.000]
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
-     [0.000 0.002 0.998]
-     [0.000 1.000 0.000]]
-
-
-간단한 모델이고 데이터셋이 적은 데도 불구하고 93.33%라는 높은 정확도를 얻었습니다. 개수로 따지면 검증 샘플 15개 중 1개가 잘 못 분류가 되었네요. Predict 함수는 입력된 이미지에 대해서 모델의 결과를 알려주는 역할을 하는 데, 각 샘플별로 클래스별 확률을 확인할 수 있습니다. 각 열은 다음을 뜻합니다.
-- 첫번째 열 : 원일 확률
-- 두번째 열 : 사각형일 확률
-- 세번째 열 : 삼각형일 확률
-
-확인을 해보니 rectangle020.png 파일이 사격형이 아니라 삼각형으로 판정이 되었습니다. 사각형을 그릴 때는 몰랐었는데, 막상 모델에서 삼각형이라고 얘기하니 다른 사각형이랑 조금 다르게 그린 것 같습니다.
-
-![predict](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_4.png)
+     [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 0.000 1.000]
+     [0.000 1.000 0.000]
+     [0.004 0.995 0.001]]
 
 
 ---
