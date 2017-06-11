@@ -145,10 +145,6 @@ plt.legend(loc='lower right')
 plt.show()
 ```
 
-
-![png](output_17_0.png)
-
-
 ![classification](http://tykimos.github.com/Keras/warehouse/2017-5-22-Evaluation_Talk_roc_1.png)
 
 여기서 노란점선이 이상적인 모델을 표시한 것입니다. 임계값과 상관없이 민감도와 특이도가 100%일때를 말하고, AUC 값은 1입니다. 빨간점선은 기준선으로서 AUC 값이 0.5입니다. 개발한 모델을 사용하려면, 적어도 이 기준선보다는 상위에 있어야 되겠죠? 모델 F와 모델 G를 비교해보면, 모델 F가 모델 G보다 상위에 있음을 알 수 있습니다. AUC를 보더라도 모델 F가 면적이 더 넓습니다. sklearn 패키지는 ROC curve 및 AUC를 좀 더 쉽게 구할 수 있는 함수를 제공합니다. 임계값 변화에 따른 민감도, 특이도를 계산해서 입력할 필요없이, 클래스 값과 모델에서 나오는 클래스 확률 값을 그대로 입력하면, ROC curve를 그릴 수 있는 값과 AUC 값을 알려줍니다. sklearn 패키지를 이용한 소스코드는 다음과 같습니다.
@@ -182,10 +178,6 @@ plt.plot([0,1],[0,1],'r--')
 plt.legend(loc='lower right')
 plt.show()
 ```
-
-
-![png](output_20_0.png)
-
 
 ![classification](http://tykimos.github.com/Keras/warehouse/2017-5-22-Evaluation_Talk_roc_2.png)
 
@@ -307,10 +299,6 @@ plt.legend(loc='upper right')
 plt.show()
 ```
 
-
-![png](output_34_0.png)
-
-
 ![detection](http://tykimos.github.com/Keras/warehouse/2017-5-22-Evaluation_Talk_prg_1.png)
 
 이러한 그래프를 하나의 수치로 나타낸 것이 `AP(Average Precision)`이라고 합니다. 이는 각 재현율에 해당하는 정밀도을 더해서 평균을 취한 것입니다. sklearn 패키지는 Precision-Recall Graph 및 AP를 좀 더 쉽게 구할 수 있는 함수를 제공합니다. 임계값 변화에 따른 정밀도, 재현율을 계산해서 입력할 필요없이, 클래스 값과 모델에서 나오는 클래스 확률 값을 그대로 입력하면 됩니다. sklearn 패키지를 이용한 소스코드는 다음과 같습니다.
@@ -342,10 +330,6 @@ plt.plot(recall_G, precision_G, 'g', label = 'Model G (AP = %0.2F)'%ap_G)
 plt.legend(loc='upper right')
 plt.show()
 ```
-
-
-![png](output_37_0.png)
-
 
 ![detection](http://tykimos.github.com/Keras/warehouse/2017-5-22-Evaluation_Talk_prg_2.png)
 
