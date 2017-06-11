@@ -1,5 +1,9 @@
 ---
-layout: page
+layout: post
+title:  "케라스 강좌 내용"
+author: Taeyoung, Kim
+date:   2017-01-27 00:00:00
+categories: Lecture
 comments: true
 ---
 케라스로 배워보는 딥러닝 강좌를 아래 내용를 아래 순서대로 진행하고자 합니다.
@@ -7,6 +11,7 @@ comments: true
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
     * [학습과정과 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
+    * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)
 1. 딥러닝 모델 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
@@ -44,3 +49,9 @@ comments: true
     * [딥러닝으로 꿈꾸기]
     * [딥러닝으로 그림그리기]
     * [딥러닝으로 화풍바꾸기]
+
+---
+
+### 같이 보기
+
+* 다음 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
