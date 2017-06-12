@@ -22,7 +22,7 @@ comments: true
     * [순환 신경망 모델 만들어보기]
 1. 딥러닝 성능 높히기
     * [TensorBoard 사용해보기]
-    * [데이터 증강(data agumentation) 사용해보기] 
+    * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/03/08/CNN_Data_Augmentation/) 
     * [드롭아웃 레이어 사용해보기]
     * [최적 모델 선택하는 법]
     * [경사하강법과 미니배치]

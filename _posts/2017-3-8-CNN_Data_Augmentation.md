@@ -5,32 +5,235 @@ author: Taeyoung, Kim
 date:   2017-03-08 23:10:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_2.png
+image: http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_combination.png
 ---
-본 강좌에서는 컨볼루션 신경망 모델의 성능을 높이기 위해서 데이터를 부풀리는 방법에 대해서 알아보겠습니다.
+본 강좌에서는 컨볼루션 신경망 모델의 성능을 높이기 위한 방법 중 하나인 데이터 부풀리기에 대해서 알아보겠습니다. 훈련셋이 부족하거나 훈련셋이 시험셋의 특성을 충분히 반영하지 못할 때 이 방법을 사용하면 모델의 성능을 크게 향상시킬 수 있습니다. 케라스에서는 데이터 부풀리기를 위한 함수를 제공하기 때문에 파라미터 셋팅만으로 간단히 데이터 부풀리기를 할 수 있습니다.
 
+1. 현실적인 문제
+1. 기존 모델 결과보기
 1. 데이터 부풀리기
-1. 문제 정의하기
-1. 데이터셋 준비하기
-1. 모델 구성하기
-1. 모델 엮기
-1. 모델 학습시키기
-1. 모델 사용하기
+1. 개선 모델 결과보기
+
+---
+
+### 현실적인 문제
+
+[컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/) 강좌에서 사용하였던 원, 사각형, 삼각형 데이터셋을 예제로 살펴보겠습니다. 구성은 훈련셋과 시험셋으로 되어 있는 데, 아래 그림은 훈련셋입니다.
+
+#### 훈련셋
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_1.png)
+
+그리고 아래 그림은 시험셋입니다. 훈련셋과 시험셋은 모두 한사람(제가) 그린 것이라 거의 비슷합니다. 그래서 그런지 100% 정확도의 좋은 결과를 얻었나 봅니다.
+
+#### 시험셋
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_2.png)
+
+100% 정확도를 얻은 모델이니 원, 사각형, 삼각형을 그려주면 다 분류를 해보겠다며 지인에게 자랑을 해봅니다. 그래서 지인이 그려준 시험셋은 다음과 같습니다.
+
+#### 도전 시험셋
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_3.png)
+
+막상 시험셋을 받아보니 자신감이 없어지면서 여러가지 생각이 듭니다.
+
+- 아, 이것도 원, 사각형, 삼각형이구나
+- 왜 이런 데이터를 진작에 학습시키지 않았을까?
+- 새로 받은 시험셋 일부를 학습시켜볼까?
+- 이렇게 간단한 문제도 개발과 현실과의 차이가 이렇게 나는데, 실제 문제는 더 상황이 좋지 않겠지?
+
+결국 하나의 결론에 도달합니다.
+
+    개발자가 시험셋을 만들면 안된다.
+
+하지만 어떠한 문제에서도 미래에 들어올 데이터에 대해서는 알 수가 없기 때문에, 비슷한 상황일 것 같습니다. 먼저 도전 시험셋으로 시험한 결과를 살펴본 뒤, 한정적인 훈련셋을 이용하여 최대한 발생할 수 있는 경우을 고려하여 훈련셋을 만드는 방법인 `데이터 부풀리기`에 대해서 알아보겠습니다.
+
+---
+
+### 기존 모델 결과보기
+
+[컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/) 강좌에서 사용했던 모델을 그대로 가지고 왔습니다. 제가 만든 시험셋에서는 결과가 100%나왔는데, 도전 시험셋으론 어떤 결과가 나오는 지 테스트해보겠습니다.
+
+
+```python
+import numpy as np
+
+# 랜덤시드 고정시키기
+np.random.seed(3)
+
+from keras.preprocessing.image import ImageDataGenerator
+
+# 데이터셋 불러오기
+train_datagen = ImageDataGenerator(rescale=1./255)
+
+train_generator = train_datagen.flow_from_directory(
+        'warehouse/hard_handwriting_shape/train',
+        target_size=(24, 24),
+        batch_size=3,
+        class_mode='categorical')
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+test_generator = test_datagen.flow_from_directory(
+        'warehouse/hard_handwriting_shape/test',
+        target_size=(24, 24),    
+        batch_size=3,
+        class_mode='categorical')
+
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Flatten
+from keras.layers.convolutional import Conv2D
+from keras.layers.convolutional import MaxPooling2D
+
+# 모델 구성하기
+model = Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(24,24,3)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dense(3, activation='softmax'))
+
+# 모델 엮기
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+# 모델 학습시키기
+model.fit_generator(
+        train_generator,
+        steps_per_epoch=15,
+        epochs=200,
+        validation_data=test_generator,
+        validation_steps=5)
+
+# 모델 평가하기
+print("-- Evaluate --")
+
+scores = model.evaluate_generator(
+            test_generator, 
+            steps = 5)
+
+print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
+
+# 모델 예측하기
+print("-- Predict --")
+
+output = model.predict_generator(
+            test_generator, 
+            steps = 5)
+
+np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
+print(output)
+```
+
+    Found 45 images belonging to 3 classes.
+    Found 15 images belonging to 3 classes.
+    Epoch 1/200
+    15/15 [==============================] - 0s - loss: 0.9365 - acc: 0.5778 - val_loss: 1.7078 - val_acc: 0.3333
+    Epoch 2/200
+    15/15 [==============================] - 0s - loss: 0.1786 - acc: 1.0000 - val_loss: 2.8848 - val_acc: 0.4000
+    Epoch 3/200
+    15/15 [==============================] - 0s - loss: 0.0233 - acc: 1.0000 - val_loss: 4.3072 - val_acc: 0.4000
+    Epoch 4/200
+    15/15 [==============================] - 0s - loss: 0.0148 - acc: 1.0000 - val_loss: 4.3684 - val_acc: 0.4000
+    Epoch 5/200
+    15/15 [==============================] - 0s - loss: 0.0338 - acc: 0.9778 - val_loss: 4.7764 - val_acc: 0.4000
+    ...
+    Epoch 195/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 6.4387 - val_acc: 0.4000
+    Epoch 196/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 6.2569 - val_acc: 0.4667
+    Epoch 197/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 7.4963 - val_acc: 0.4000
+    Epoch 198/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 7.4959 - val_acc: 0.4000
+    Epoch 199/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 7.4956 - val_acc: 0.4000
+    Epoch 200/200
+    15/15 [==============================] - 0s - loss: 1.2186e-07 - acc: 1.0000 - val_loss: 7.4950 - val_acc: 0.4000
+    -- Evaluate --
+    acc: 40.00%
+    -- Predict --
+    [[0.000 0.013 0.987]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.727 0.001 0.272]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]
+     [0.000 0.013 0.987]
+     [0.000 0.000 1.000]
+     [0.000 0.000 1.000]]
+
+
+수행결과는 40%입니다. 세개 중 하나 찍는 문제인데도 불구하고 50%로 못 넘깁니다. 오버피팅이 제대로 된 모델이라고 볼 수 있습니다.
 
 ---
 
 ### 데이터 부풀리기
 
-데이터 부풀리는 방법 설명
+케라스에서는 `ImageDataGenerator` 함수를 통해서 데이터 부풀리기 기능을 제공합니다. [keras.io](https://keras.io/preprocessing/image/#imagedatagenerator) 페이지를 보면, 아래와 같은 옵션으로 데이터 부풀리기를 할 수 있습니다.
 
-- rotation_range : 
-- width_shift_range : 
-- height_shift_range : 
-- shear_range : 
-- zoom_range : 
-- horizontal_flip : 
-- vertical_flip : 
-- fill_mode : 
+    keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
+    samplewise_center=False,
+    featurewise_std_normalization=False,
+    samplewise_std_normalization=False,
+    zca_whitening=False,
+    rotation_range=0.,
+    width_shift_range=0.,
+    height_shift_range=0.,
+    shear_range=0.,
+    zoom_range=0.,
+    channel_shift_range=0.,
+    fill_mode='nearest',
+    cval=0.,
+    horizontal_flip=False,
+    vertical_flip=False,
+    rescale=None,
+    preprocessing_function=None,
+    data_format=K.image_data_format())
+
+그럼 훈련셋 중 하나인 삼각형을 골라 데이터 부풀리기를 해보겠습니다. 원본이 되는 삼각형은 다음과 같습니다.
+
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_4.png)
+
+이 삼각형을 ImageDataGenerator 함수을 이용하여 각 파라미터별로 어떻게 부풀리기를 하는 지 살펴보겠습니다.
+
+#### rotation_range = 90
+지정된 각도 범위내에서 임의로 원본이미지를 회전시킵니다. 단위는 도이며, 정수형입니다. 예를 들어 90이라면 0도에서 90도 사이에 임의의 각도로 회전시킵니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_rotate.png)
+                                   
+#### width_shift_range = 0.1
+지정된 수평방향 이동 범위내에서 임의로 원본이미지를 이동시킵니다. 수치는 전체 넓이의 비율(실수)로 나타냅니다. 예를 들어 0.1이고 전체 넓이가 100이면, 10픽셀 내외로 좌우 이동시킵니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_width_shift.png)
+
+#### height_shift_range = 0.1
+지정된 수직방향 이동 범위내에서 임의로 원본이미지를 이동시킵니다. 수치는 전체 높이의 비율(실수)로 나타냅니다. 예를 들어 0.1이고 전체 높이가 100이면, 10픽셀 내외로 상하 이동시킵니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_height_shift.png)
+
+#### shear_range = 0.5
+밀림 강도 범위내에서 임의로 원본이미지를 변형시킵니다. 수치는 시계반대방향으로 밀림 강도를 라디안으로 나타냅니다. 예를 들어 0.5이라면, 0.5 라이안내외로 시계반대방향으로 변형시킵니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_shear.png)
+
+#### zoom_range = 0.3
+지정된 확대/축소 범위내에서 임의로 원본이미지를 확대/축소합니다. "1-수치"부터 "1+수치"사이 범위로 확대/축소를 합니다. 예를 들어 0.3이라면, 0.7배에서 1.3배 크기 변화를 시킵니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_zoom.png)
+
+#### horizontal_flip = True
+수평방향으로 뒤집기를 합니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_horizontal_flip.png)
+
+#### vertical_flip = True
+수직방향으로 뒤집기를 합니다.
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_vertical_flip.png)
+
+아래 코드는 ImageDataGenerator함수를 이용하여 지정된 파라미터로 원본이미지에 대해 데이터 부풀리기를 수행한 후 그 결과를 특정 폴더에 저장하는 코드입니다. 여러 파라미터를 사용하였기 때문에 이를 혼합하여 데이터 부풀리기를 수행합니다. 즉 확대/축소도 하고 좌우 이동도 지정하였다면, 축소하면서 좌로 이동된 이미지도 생성됩니다.
 
 
 ```python
@@ -42,452 +245,124 @@ np.random.seed(5)
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 
 # 데이터셋 불러오기
-train_datagen = ImageDataGenerator(
-                rotation_range=40,
-                width_shift_range=0.2,
-                height_shift_range=0.2,
-                shear_range=0.2,
-                zoom_range=0.2,
-                horizontal_flip=True,
-                vertical_flip=True,
-                fill_mode='nearest')
+data_aug_gen = ImageDataGenerator(rescale=1./255, 
+                                  rotation_range=15,
+                                  width_shift_range=0.1,
+                                  height_shift_range=0.1,
+                                  shear_range=0.5,
+                                  zoom_range=[0.8, 2.0],
+                                  horizontal_flip=True,
+                                  vertical_flip=True,
+                                  fill_mode='nearest')
+                                   
+img = load_img('warehouse/hard_handwriting_shape/train/triangle/triangle001.png')
+x = img_to_array(img)
+x = x.reshape((1,) + x.shape)
 
-img = load_img('/Users/tykimos/Projects/Keras/_writing/warehouse/handwriting_shape/validation/triangle/triangle018.png')  # this is a PIL image
-x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-
-# the .flow() command below generates batches of randomly transformed images
-# and saves the results to the `preview/` directory
 i = 0
-for batch in train_datagen.flow(x, batch_size=1,
-                          save_to_dir='preview', save_prefix='tri', save_format='png'):
+
+# 이 for는 무한으로 반복되기 때문에 우리가 원하는 반복횟수를 지정하여, 지정된 반복횟수가 되면 빠져나오도록 해야합니다.
+for batch in train_datagen.flow(x, batch_size=1, save_to_dir='warehouse/preview', save_prefix='tri', save_format='png'):
     i += 1
-    if i > 20:
-        break  # otherwise the generator would loop indefinitely
+    if i > 30: 
+        break
 ```
 
-입력되는 패치 이미지는 다음과 같습니다.
+위 코드로 데이터 부풀리기가 수행된 결과 이미지는 다음과 같습니다. 지인이 만든 도전 시험셋 중 비슷한 것들도 보입니다.
 
-![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_1.png)
-
-위의 패치 이미지를 입력으로 데이터 부풀리기를 한 결과는 다음과 같습니다.
-
-![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_2.png)
+![data](http://tykimos.github.com/Keras/warehouse/2017-3-8-CNN_Data_Augmentation_5_combination.png)
 
 ---
 
-### 문제 정의하기
+### 개선 모델 결과보기
 
-좋은 예제와 그와 관련된 데이터셋도 공개된 것이 많이 있지만, 직접 문제를 정의하고 데이터를 만들어보는 것도 처럼 딥러닝을 접하시는 분들에게는 크게 도움이 될 것 같습니다. 컨볼루션 신경망 모델에 적합한 문제는 이미지 기반의 분류입니다. 따라서 우리는 직접 손으로 삼각형, 사각형, 원을 그려 이미지로 저장한 다음 이를 분류해보는 모델을 만들어보겠습니다. 문제 형태와 입출력을 다음과 같이 정의해봅니다.
-* 문제 형태 : 다중 클래스 분류
-* 입력 : 손으로 그린 삼각형, 사각형, 원 이미지
-* 출력 : 삼각형, 사각형, 원일 확률을 나타내는 벡터
+데이터 부풀리기를 하기 위해서는 기존 코드에서 아래 코드를 추가합니다. 각 파라미터 설정 값에 따라 결과가 다르기 나오니, 실제 데이터에 있을만한 수준으로 적정값을 지정하셔야 합니다.
 
-매번 실행 시마다 결과가 달라지지 않도록 랜덤 시드를 명시적으로 지정합니다.
+
+```python
+# 데이터셋 불러오기
+train_datagen = ImageDataGenerator(rescale=1./255, 
+                                   rotation_range=15,
+                                   width_shift_range=0.1,
+                                   height_shift_range=0.1,
+                                   shear_range=0.5,
+                                   zoom_range=[0.8, 2.0],
+                                   horizontal_flip=True,
+                                   vertical_flip=True,
+                                   fill_mode='nearest')
+```
+
+수정된 전체 코드는 다음과 같습니다. 참고로 시험셋은 데이터 부풀리기를 할 필요가 없으니, test_datagen 객체 생성 시에는 별도의 파라미터를 추가하지 않았습니다. 그리고 fit_generator함수에서 steps_per_epoch의 값은 기존 15개에서 더 많은 수 (현재 예는 1500개)로 설정합니다. batch_size * steps_per_epoch가 전체 샘플 수 인데, 데이터 부풀리기를 하지 않을 때는 기존의 15개의 배치사이즈(3개)로 전체 45개를 모두 학습에 사용할 수 있지만, ImageDataGenerator함수를 통해 데이터 부풀리기는 할 때는 하나의 샘플로 여러 개의 결과를 얻기 때문에 요청하는 데로 무한의 샘플이 제공됩니다. 여기서는 100배 정도인 1500개로 설정했습니다.
 
 
 ```python
 import numpy as np
 
 # 랜덤시드 고정시키기
-np.random.seed(5)
-```
+np.random.seed(3)
 
----
-
-### 데이터셋 준비하기
-
-손으로 그린 삼각형, 사각형, 원 이미지를 만들기 위해서는 여러가지 방법이 있을 수 있겠네요. 테블릿을 이용할 수도 있고, 종이에 그려서 사진으로 찍을 수도 있습니다. 저는 그림 그리는 툴을 이용해서 만들어봤습니다. 이미지 사이즈는 24 x 24 정도로 해봤습니다. 
-
-![data](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_1.png)
-
-모양별로 20개 정도를 만들어서 15개를 훈련에 사용하고, 5개를 테스트에 사용해보겠습니다. 이미지는 png나 jpg로 저장합니다. 실제로 데이터셋이 어떻게 구성되어 있는 지 모른 체 튜토리얼을 따라하거나 예제 코드를 실행시키다보면 결과는 잘 나오지만 막상 실제 문제에 적용할 때 막막해질 때가 있습니다. 간단한 예제로 직접 데이터셋을 만들어봄으로써 실제 문제에 접근할 때 시행착오를 줄이는 것이 중요합니다.
-
-데이터셋 폴더는 다음과 같이 구성했습니다.
-
-- train
- - circle
- - rectangle
- - triangle
-- validation
- - circle
- - rectangle
- - triangle
- 
-![data](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_2.png)
-
----
-
-### 데이터셋 불러오기
-
-케라스에서는 이미지 파일을 쉽게 학습시킬 수 있도록 ImageDataGenerator 클래스를 제공합니다. ImageDataGenerator 클래스는 데이터 증강 (data augmentation)을 위해 막강한 기능을 제공하는 데, 이 기능들은 다른 강좌에세 다루기로 하고, 본 강좌에서는 특정 폴더에 이미지를 분류 해놓았을 때 이를 학습시키기 위한 데이터셋으로 만들어주는 기능을 사용해보겠습니다.
-
-먼저 ImageDataGenerator 클래스를 이용하여 객체를 생성한 뒤 flow_from_directory() 함수를 호출하여 제네레이터(generator)를 생성합니다. flow_from_directory() 함수의 주요인자는 다음과 같습니다.
-
-- 첫번재 인자 : 이미지 경로를 지정합니다.
-- target_size : 패치 이미지 크기를 지정합니다. 폴더에 있는 원본 이미지 크기가 다르더라도 target_size에 지정된 크기로 자동 조절됩니다.
-- batch_size : 배치 크기를 지정합니다.
-- class_mode : 분류 방식에 대해서 지정합니다.
-    - categorical : 2D one-hot 부호화된 라벨이 반환됩니다.
-    - binary : 1D 이진 라벨이 반환됩니다.
-    - sparse : 1D 정수 라벨이 반환됩니다.
-    - None : 라벨이 반환되지 않습니다.
-
-본 예제에서는 패치 이미지 크기를 24 x 24로 하였으니 target_size도 (24, 24)로 셋팅하였습니다. 훈련 데이터 수가 클래스당 15개이니 배치 크기를 3으로 지정하여 총 5번 배치를 수행하면 하나의 epoch가 수행될 수 있도록 하였습니다. 다중 클래스 문제이므로 class_mode는 'categorical'로 지정하였습니다. 그리고 제네레이터는 훈련용과 검증용으로 두 개를 만들었습니다. 
-
-
-```python
 from keras.preprocessing.image import ImageDataGenerator
 
 # 데이터셋 불러오기
-train_datagen = ImageDataGenerator(
-                rotation_range=40,
-                width_shift_range=0.2,
-                height_shift_range=0.2,
-                shear_range=0.2,
-                zoom_range=0.2,
-                horizontal_flip=True,
-                vertical_flip=True,
-                fill_mode='nearest')
+train_datagen = ImageDataGenerator(rescale=1./255, 
+                                   rotation_range=10,
+                                   width_shift_range=0.2,
+                                   height_shift_range=0.2,
+                                   shear_range=0.7,
+                                   zoom_range=[0.9, 2.2],
+                                   horizontal_flip=True,
+                                   vertical_flip=True,
+                                   fill_mode='nearest')
 
 train_generator = train_datagen.flow_from_directory(
-        'warehouse/handwriting_shape/train',
+        'warehouse/hard_handwriting_shape/train',
         target_size=(24, 24),
         batch_size=3,
         class_mode='categorical')
 
-validation_datagen = ImageDataGenerator()
+test_datagen = ImageDataGenerator(rescale=1./255)
 
-validation_generator = validation_datagen.flow_from_directory(
-        'warehouse/handwriting_shape/validation',
+test_generator = test_datagen.flow_from_directory(
+        'warehouse/hard_handwriting_shape/test',
         target_size=(24, 24),    
         batch_size=3,
         class_mode='categorical')
-```
 
-    Found 45 images belonging to 3 classes.
-    Found 15 images belonging to 3 classes.
-
-
-    Using Theano backend.
-
-
----
-
-### 모델 구성하기
-
-영상 분류에 높은 성능을 보이고 있는 컨볼루션 신경망 모델을 구성해보겠습니다. 이전 강좌에서 만들어봤던 모델 위에 입력을 24 x 24, 3개 채널 이미지를 받을 수 있고 필터를 12개를 가진 컨볼루션 레이어와 맥스풀링 레이어를 추가해봤습니다.
-
-* 컨볼루션 레이어 : 입력 이미지 크기 24 x 24, 입력 이미지 채널 3개, 필터 크기 3 x 3, 필터 수 12개, 경계 타입 'same', 활성화 함수 'relu'
-* 맥스풀링 레이어 : 풀 크기 2 x 2
-* 컨볼루션 레이어 : 입력 이미지 크기 8 x 8, 입력 이미지 채널 1개, 필터 크기 3 x 3, 필터 수 2개, 경계 타입 'same', 활성화 함수 'relu'
-* 맥스풀링 레이어 : 풀 크기 2 x 2
-* 컨볼루션 레이어 : 입력 이미지 크기 4 x 4, 입력 이미지 채널 2개, 필터 크기 2 x 2, 필터 수 3개, 경계 타입 'same', 활성화 함수 'relu'
-* 맥스풀링 레이어 : 풀 크기 2 x 2
-* 플래튼 레이어
-* 댄스 레이어 : 입력 뉴런 수 12개, 출력 뉴런 수 8개, 활성화 함수 'relu'
-* 댄스 레이어 : 입력 뉴런 수 8개, 출력 뉴런 수 3개, 활성화 함수 'softmax'
-
-
-```python
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Flatten
-from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 
-# 모델 구성하기
+from keras.layers import Dropout
+
 model = Sequential()
-model.add(Convolution2D(12, 3, 3, border_mode='same', input_shape=(3, 24, 24), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Convolution2D(2, 3, 3, border_mode='same', activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Convolution2D(3, 2, 2, border_mode='same', activation='relu'))
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(24,24,3)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
-model.add(Dense(8, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dense(3, activation='softmax'))
-```
 
-    Using Theano backend.
-
-
-
-```python
-from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
-
-SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
-```
-
-
-
-
-![svg](output_13_0.svg)
-
-
-
-![model](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_3.png)
-
----
-
-### 모델 엮기
-
-모델을 정의했다면 모델을 손실함수와 최적화 알고리즘으로 엮어봅니다. 
-- loss : 현재 가중치 세트를 평가하는 데 사용한 손실 함수 입니다. 다중 클래스 문제이므로 'categorical_crossentropy'으로 지정합니다.
-- optimizer : 최적의 가중치를 검색하는 데 사용되는 최적화 알고리즘으로 효율적인 경사 하강법 알고리즘 중 하나인 'adam'을 사용합니다.
-- metrics : 평가 척도를 나타내며 분류 문제에서는 일반적으로 'accuracy'으로 지정합니다.
-
-
-```python
 # 모델 엮기
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-```
 
-### 모델 학습시키기
-
-케라스에서는 모델을 학습시킬 때 주로 fit 함수를 사용하지만 제네레이터로 생성된 배치로 학습시킬 경우에는 fit_generator 함수를 사용합니다. 본 예제에서는 ImageDataGenerator라는 제네레이터로 이미지를 담고 있는 배치로 학습시키기 때문에 fit_generator 함수를 사용하겠습니다.
-
-- 첫번째 인자 : 훈련데이터셋을 제공할 제네레이터를 지정합니다. 본 예제에서는 앞서 생성한 train_generator으로 지정합니다.
-- samples_per_epoch : 한 epoch에 사용한 샘플 수를 지정합니다. 총 45개의 훈련 샘플이 있으므로 45로 지정합니다.
-- nb_epoch : 전체 훈련 데이터셋에 대해 학습 반복 횟수를 지정합니다. 100번을 반복적으로 학습시켜 보겠습니다.
-- validation_data : 검증데이터셋을 제공할 제네레이터를 지정합니다. 본 예제에서는 앞서 생성한 validation_generator으로 지정합니다.
-- nb_val_samples : 한 epoch 종료 시 마다 검증할 때 사용되는 검증 샘플 수를 지정합니다. 홍 15개의 검증 샘플이 있으므로 15로 지정합니다.
-
-
-```python
 # 모델 학습시키기
 model.fit_generator(
         train_generator,
-        samples_per_epoch=45,
-        nb_epoch=100,
-        validation_data=validation_generator,
-        nb_val_samples=15)
-```
+        steps_per_epoch=15 * 100,
+        epochs=200,
+        validation_data=test_generator,
+        validation_steps=5)
 
-    Epoch 1/100
-    45/45 [==============================] - 0s - loss: 6.3339 - acc: 0.4667 - val_loss: 6.0346 - val_acc: 0.6000
-    Epoch 2/100
-    45/45 [==============================] - 0s - loss: 5.6510 - acc: 0.6222 - val_loss: 5.6219 - val_acc: 0.6000
-    Epoch 3/100
-    45/45 [==============================] - 0s - loss: 5.5095 - acc: 0.6222 - val_loss: 5.9724 - val_acc: 0.6000
-    Epoch 4/100
-    45/45 [==============================] - 0s - loss: 5.5965 - acc: 0.6222 - val_loss: 6.3116 - val_acc: 0.6000
-    Epoch 5/100
-    45/45 [==============================] - 0s - loss: 5.4784 - acc: 0.6222 - val_loss: 6.4343 - val_acc: 0.6000
-    Epoch 6/100
-    45/45 [==============================] - 0s - loss: 5.3974 - acc: 0.6444 - val_loss: 6.3503 - val_acc: 0.6000
-    Epoch 7/100
-    45/45 [==============================] - 0s - loss: 5.3832 - acc: 0.6667 - val_loss: 6.4474 - val_acc: 0.6000
-    Epoch 8/100
-    45/45 [==============================] - 0s - loss: 5.3757 - acc: 0.6667 - val_loss: 6.4473 - val_acc: 0.6000
-    Epoch 9/100
-    45/45 [==============================] - 0s - loss: 5.3739 - acc: 0.6667 - val_loss: 6.4344 - val_acc: 0.6000
-    Epoch 10/100
-    45/45 [==============================] - 0s - loss: 5.3735 - acc: 0.6667 - val_loss: 6.4193 - val_acc: 0.6000
-    Epoch 11/100
-    45/45 [==============================] - 0s - loss: 5.3734 - acc: 0.6667 - val_loss: 6.4174 - val_acc: 0.6000
-    Epoch 12/100
-    45/45 [==============================] - 0s - loss: 5.3734 - acc: 0.6667 - val_loss: 6.4177 - val_acc: 0.6000
-    Epoch 13/100
-    45/45 [==============================] - 0s - loss: 5.3733 - acc: 0.6667 - val_loss: 6.4179 - val_acc: 0.6000
-    Epoch 14/100
-    45/45 [==============================] - 0s - loss: 5.3732 - acc: 0.6667 - val_loss: 6.4179 - val_acc: 0.6000
-    Epoch 15/100
-    45/45 [==============================] - 0s - loss: 5.3732 - acc: 0.6667 - val_loss: 6.4175 - val_acc: 0.6000
-    Epoch 16/100
-    45/45 [==============================] - 0s - loss: 5.3732 - acc: 0.6667 - val_loss: 6.4169 - val_acc: 0.6000
-    Epoch 17/100
-    45/45 [==============================] - 0s - loss: 5.3731 - acc: 0.6667 - val_loss: 6.4162 - val_acc: 0.6000
-    Epoch 18/100
-    45/45 [==============================] - 0s - loss: 5.3731 - acc: 0.6667 - val_loss: 6.4154 - val_acc: 0.6000
-    Epoch 19/100
-    45/45 [==============================] - 0s - loss: 5.3731 - acc: 0.6667 - val_loss: 6.4147 - val_acc: 0.6000
-    Epoch 20/100
-    45/45 [==============================] - 0s - loss: 5.3731 - acc: 0.6667 - val_loss: 6.4138 - val_acc: 0.6000
-    Epoch 21/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4130 - val_acc: 0.6000
-    Epoch 22/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4123 - val_acc: 0.6000
-    Epoch 23/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4116 - val_acc: 0.6000
-    Epoch 24/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4108 - val_acc: 0.6000
-    Epoch 25/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4100 - val_acc: 0.6000
-    Epoch 26/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4092 - val_acc: 0.6000
-    Epoch 27/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4084 - val_acc: 0.6000
-    Epoch 28/100
-    45/45 [==============================] - 0s - loss: 5.3730 - acc: 0.6667 - val_loss: 6.4077 - val_acc: 0.6000
-    Epoch 29/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.4070 - val_acc: 0.6000
-    Epoch 30/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.4062 - val_acc: 0.6000
-    Epoch 31/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.4045 - val_acc: 0.6000
-    Epoch 32/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.4022 - val_acc: 0.6000
-    Epoch 33/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.4000 - val_acc: 0.6000
-    Epoch 34/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3978 - val_acc: 0.6000
-    Epoch 35/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3956 - val_acc: 0.6000
-    Epoch 36/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3935 - val_acc: 0.6000
-    Epoch 37/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3914 - val_acc: 0.6000
-    Epoch 38/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3894 - val_acc: 0.6000
-    Epoch 39/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3874 - val_acc: 0.6000
-    Epoch 40/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3855 - val_acc: 0.6000
-    Epoch 41/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3837 - val_acc: 0.6000
-    Epoch 42/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3818 - val_acc: 0.6000
-    Epoch 43/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3800 - val_acc: 0.6000
-    Epoch 44/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3782 - val_acc: 0.6000
-    Epoch 45/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3765 - val_acc: 0.6000
-    Epoch 46/100
-    45/45 [==============================] - 0s - loss: 5.3729 - acc: 0.6667 - val_loss: 6.3747 - val_acc: 0.6000
-    Epoch 47/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3730 - val_acc: 0.6000
-    Epoch 48/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3711 - val_acc: 0.6000
-    Epoch 49/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3693 - val_acc: 0.6000
-    Epoch 50/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3675 - val_acc: 0.6000
-    Epoch 51/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3658 - val_acc: 0.6000
-    Epoch 52/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3641 - val_acc: 0.6000
-    Epoch 53/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3625 - val_acc: 0.6000
-    Epoch 54/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3609 - val_acc: 0.6000
-    Epoch 55/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3595 - val_acc: 0.6000
-    Epoch 56/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3580 - val_acc: 0.6000
-    Epoch 57/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3566 - val_acc: 0.6000
-    Epoch 58/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3553 - val_acc: 0.6000
-    Epoch 59/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3540 - val_acc: 0.6000
-    Epoch 60/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3529 - val_acc: 0.6000
-    Epoch 61/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3522 - val_acc: 0.6000
-    Epoch 62/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3514 - val_acc: 0.6000
-    Epoch 63/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3505 - val_acc: 0.6000
-    Epoch 64/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3498 - val_acc: 0.6000
-    Epoch 65/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3491 - val_acc: 0.6000
-    Epoch 66/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3485 - val_acc: 0.6000
-    Epoch 67/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3479 - val_acc: 0.6000
-    Epoch 68/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3474 - val_acc: 0.6000
-    Epoch 69/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3467 - val_acc: 0.6000
-    Epoch 70/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3463 - val_acc: 0.6000
-    Epoch 71/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3458 - val_acc: 0.6000
-    Epoch 72/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3451 - val_acc: 0.6000
-    Epoch 73/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3445 - val_acc: 0.6000
-    Epoch 74/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3441 - val_acc: 0.6000
-    Epoch 75/100
-    45/45 [==============================] - 0s - loss: 5.3728 - acc: 0.6667 - val_loss: 6.3435 - val_acc: 0.6000
-    Epoch 76/100
-    45/45 [==============================] - 0s - loss: 4.9170 - acc: 0.6889 - val_loss: 4.1193 - val_acc: 0.6000
-    Epoch 77/100
-    45/45 [==============================] - 0s - loss: 5.9025 - acc: 0.4889 - val_loss: 5.8147 - val_acc: 0.5333
-    Epoch 78/100
-    45/45 [==============================] - 0s - loss: 5.3822 - acc: 0.6667 - val_loss: 5.3762 - val_acc: 0.6667
-    Epoch 79/100
-    45/45 [==============================] - 0s - loss: 5.4691 - acc: 0.6222 - val_loss: 4.9733 - val_acc: 0.6000
-    Epoch 80/100
-    45/45 [==============================] - 0s - loss: 2.1073 - acc: 0.8000 - val_loss: 4.3309 - val_acc: 0.6667
-    Epoch 81/100
-    45/45 [==============================] - 0s - loss: 0.7885 - acc: 0.8444 - val_loss: 2.9247 - val_acc: 0.7333
-    Epoch 82/100
-    45/45 [==============================] - 0s - loss: 0.4819 - acc: 0.9556 - val_loss: 3.1835e-04 - val_acc: 1.0000
-    Epoch 83/100
-    45/45 [==============================] - 0s - loss: 1.7922 - acc: 0.8667 - val_loss: 1.4778 - val_acc: 0.8000
-    Epoch 84/100
-    45/45 [==============================] - 0s - loss: 0.4847 - acc: 0.9333 - val_loss: 0.5281 - val_acc: 0.9333
-    Epoch 85/100
-    45/45 [==============================] - 0s - loss: 0.3686 - acc: 0.9778 - val_loss: 0.7367 - val_acc: 0.9333
-    Epoch 86/100
-    45/45 [==============================] - 0s - loss: 0.4948 - acc: 0.9556 - val_loss: 0.6812 - val_acc: 0.9333
-    Epoch 87/100
-    45/45 [==============================] - 0s - loss: 0.3084 - acc: 0.9778 - val_loss: 0.4760 - val_acc: 0.9333
-    Epoch 88/100
-    45/45 [==============================] - 0s - loss: 0.0136 - acc: 1.0000 - val_loss: 0.1705 - val_acc: 0.9333
-    Epoch 89/100
-    45/45 [==============================] - 0s - loss: 3.1651e-04 - acc: 1.0000 - val_loss: 0.2161 - val_acc: 0.9333
-    Epoch 90/100
-    45/45 [==============================] - 0s - loss: 2.8808e-04 - acc: 1.0000 - val_loss: 0.3305 - val_acc: 0.9333
-    Epoch 91/100
-    45/45 [==============================] - 0s - loss: 1.8425e-04 - acc: 1.0000 - val_loss: 0.3816 - val_acc: 0.9333
-    Epoch 92/100
-    45/45 [==============================] - 0s - loss: 1.2954e-04 - acc: 1.0000 - val_loss: 0.4005 - val_acc: 0.9333
-    Epoch 93/100
-    45/45 [==============================] - 0s - loss: 1.0324e-04 - acc: 1.0000 - val_loss: 0.4085 - val_acc: 0.9333
-    Epoch 94/100
-    45/45 [==============================] - 0s - loss: 8.8324e-05 - acc: 1.0000 - val_loss: 0.4130 - val_acc: 0.9333
-    Epoch 95/100
-    45/45 [==============================] - 0s - loss: 7.8486e-05 - acc: 1.0000 - val_loss: 0.4163 - val_acc: 0.9333
-    Epoch 96/100
-    45/45 [==============================] - 0s - loss: 7.1322e-05 - acc: 1.0000 - val_loss: 0.4188 - val_acc: 0.9333
-    Epoch 97/100
-    45/45 [==============================] - 0s - loss: 6.5756e-05 - acc: 1.0000 - val_loss: 0.4209 - val_acc: 0.9333
-    Epoch 98/100
-    45/45 [==============================] - 0s - loss: 6.1240e-05 - acc: 1.0000 - val_loss: 0.4227 - val_acc: 0.9333
-    Epoch 99/100
-    45/45 [==============================] - 0s - loss: 5.7496e-05 - acc: 1.0000 - val_loss: 0.4243 - val_acc: 0.9333
-    Epoch 100/100
-    45/45 [==============================] - 0s - loss: 5.4306e-05 - acc: 1.0000 - val_loss: 0.4257 - val_acc: 0.9333
-
-
-
-
-
-    <keras.callbacks.History at 0x10bb0c110>
-
-
-
----
-
-### 모델 사용하기
-
-학습한 모델을 평가해봅니다. 제네레이터에서 제공되는 샘플로 평가할 때는 evaluate_generator 함수를 사용하고, 예측할 때는 predict_generator 함수를 사용합니다. 
-
-
-```python
 # 모델 평가하기
 print("-- Evaluate --")
 
 scores = model.evaluate_generator(
-            validation_generator, 
-            val_samples = 15)
+            test_generator, 
+            steps = 5)
 
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 
@@ -495,55 +370,34 @@ print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 print("-- Predict --")
 
 output = model.predict_generator(
-            validation_generator, 
-            val_samples = 15)
+            test_generator, 
+            steps = 5)
 
 np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
 print(output)
 ```
 
-    -- Evaluate --
-    acc: 93.33%
-    -- Predict --
-    [[0.000 0.000 1.000]
-     [1.000 0.000 0.000]
-     [0.000 1.000 0.000]
-     [0.000 0.000 1.000]
-     [0.000 1.000 0.000]
-     [1.000 0.000 0.000]
-     [0.000 0.000 1.000]
-     [0.000 0.000 1.000]
-     [1.000 0.000 0.000]
-     [1.000 0.000 0.000]
-     [1.000 0.000 0.000]
-     [0.000 0.000 1.000]
-     [0.000 1.000 0.000]
-     [0.000 0.002 0.998]
-     [0.000 1.000 0.000]]
+    Found 45 images belonging to 3 classes.
+    Found 15 images belonging to 3 classes.
+    Epoch 1/200
+    1500/1500 [==============================] - 31s - loss: 0.4396 - acc: 0.8109 - val_loss: 2.0550 - val_acc: 0.6000
+    Epoch 2/200
+    1500/1500 [==============================] - 41s - loss: 0.1653 - acc: 0.9427 - val_loss: 1.7761 - val_acc: 0.8000
+    Epoch 3/200
+    1500/1500 [==============================] - 42s - loss: 0.1155 - acc: 0.9609 - val_loss: 2.5279 - val_acc: 0.6000
+    Epoch 4/200
+    1500/1500 [==============================] - 43s - loss: 0.0958 - acc: 0.9689 - val_loss: 2.7588 - val_acc: 0.5333
+    Epoch 5/200
+    1500/1500 [==============================] - 44s - loss: 0.0624 - acc: 0.9789 - val_loss: 3.4055 - val_acc: 0.6000
 
-
-간단한 모델이고 데이터셋이 적은 데도 불구하고 93.33%라는 높은 정확도를 얻었습니다. 개수로 따지면 검증 샘플 15개 중 1개가 잘 못 분류가 되었네요. Predict 함수는 입력된 이미지에 대해서 모델의 결과를 알려주는 역할을 하는 데, 각 샘플별로 클래스별 확률을 확인할 수 있습니다. 각 열은 다음을 뜻합니다.
-- 첫번째 열 : 원일 확률
-- 두번째 열 : 사각형일 확률
-- 세번째 열 : 삼각형일 확률
-
-확인을 해보니 rectangle020.png 파일이 사격형이 아니라 삼각형으로 판정이 되었습니다. 사각형을 그릴 때는 몰랐었는데, 막상 모델에서 삼각형이라고 얘기하니 다른 사각형이랑 조금 다르게 그린 것 같습니다.
-
-![predict](http://tykimos.github.com/Keras/warehouse/2017-3-8_CNN_Getting_Started_4.png)
-
-
----
-
-### 전체 소스
+80%의 정확도를 얻었습니다. 만족할만한 수준은 아니지만, 도전 시험셋으로 기존 모델을 시험했을 때의 결과가 50%를 못 미치는 수준에 비하면 비약적인 개선이 일어났습니다. 이는 동일한 모델을 사용하면서 훈련 데이터만 부풀려서 학습을 시켰을 뿐인데 성능 향상이 일어났습니다.
 
 ---
 
 ### 결론
 
-본 강좌에서는 이미지 분류 문제를 직접 정의해보고 데이터셋도 직접 만들어봤습니다. 이미지 분류 문제에 높은 성능을 보이고 있는 컨볼루션 신경망 모델을 이용하여 직접 만든 데이터셋으로 학습 및 평가를 해보았습니다. 학습 결과는 좋게 나왔지만 이 모델은 한 사람이 그린 것에 대해서만 학습이 되어 있어서 다른 사람에 그린 모양은 잘 분류를 못할 것 같습니다. 이후 강좌에서는 다른 사람이 그린 모양으로 평가해보고 어떻게 모델 성능을 높일 수 있을 지 알아보겠습니다.
-
-그리고 실제 문제에 적용하기 전에 데이터셋을 직접 만들어보거나 좀 더 쉬운 문제로 추상화해서 프로토타이핑 하시는 것을 권장드립니다. 객담도말된 결핵 이미지 판별하는 모델을 만들 때, 결핵 이미지를 바로 사용하지 않고, MNIST의 손글씨 중 '1'과 '7'을 결핵이라고 보고, 나머지는 결핵이 아닌 것으로 학습시켜봤었습니다. 결핵균이 간균 (막대모양)이라 적절한 프로토타이핑이었습니다. 
+원, 삼각형, 사각형을 분류하는 간단한 문제에서도 개발 모델이 현실에 적용하기 위해서는 어떠한 어려움이 있는 지 알게되었습니다. 그리고 이를 극복하는 방안으로 데이터 부풀리기 방법에 대해서 알아보고, 각 파라미터 별로 어떻게 데이터를 부풀리는 지 생성된 이미지를 통해 살펴보왔습니다. 훈련셋이 충분하지 않거나 시험셋의 다양한 특성을 반영되어 있지 않다면 데이터 부풀리기 방법은 성능 개선에 큰 도움을 줄 수 있습니다. 
 
 ---
 

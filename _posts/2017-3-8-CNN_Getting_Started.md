@@ -99,7 +99,7 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 test_generator = test_datagen.flow_from_directory(
         'warehouse/handwriting_shape/test',
         target_size=(24, 24),    
-        batch_size=1,
+        batch_size=3,
         class_mode='categorical')
 ```
 
@@ -173,45 +173,45 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 케라스에서는 모델을 학습시킬 때 주로 fit 함수를 사용하지만 제네레이터로 생성된 배치로 학습시킬 경우에는 fit_generator 함수를 사용합니다. 본 예제에서는 ImageDataGenerator라는 제네레이터로 이미지를 담고 있는 배치로 학습시키기 때문에 fit_generator 함수를 사용하겠습니다.
 
 - 첫번째 인자 : 훈련데이터셋을 제공할 제네레이터를 지정합니다. 본 예제에서는 앞서 생성한 train_generator으로 지정합니다.
-- samples_per_epoch : 한 epoch에 사용한 샘플 수를 지정합니다. 총 45개의 훈련 샘플이 있으므로 45로 지정합니다.
+- steps_per_epoch : 한 epoch에 사용한 스텝 수를 지정합니다. 총 45개의 훈련 샘플이 있고 배치사이즈가 3이므로 15 스텝으로 지정합니다.
 - nb_epoch : 전체 훈련 데이터셋에 대해 학습 반복 횟수를 지정합니다. 100번을 반복적으로 학습시켜 보겠습니다.
 - validation_data : 검증데이터셋을 제공할 제네레이터를 지정합니다. 본 예제에서는 앞서 생성한 validation_generator으로 지정합니다.
-- nb_val_samples : 한 epoch 종료 시 마다 검증할 때 사용되는 검증 샘플 수를 지정합니다. 홍 15개의 검증 샘플이 있으므로 15로 지정합니다.
+- validation_steps : 한 epoch 종료 시 마다 검증할 때 사용되는 검증 스텝 수를 지정합니다. 홍 15개의 검증 샘플이 있고 배치사이즈가 3이므로 5 스텝으로 지정합니다.
 
 
 ```python
 # 모델 학습시키기
 model.fit_generator(
         train_generator,
-        steps_per_epoch=45,
+        steps_per_epoch=15,
         epochs=50,
         validation_data=test_generator,
-        validation_steps=15)
+        validation_steps=5)
 ```
 
     Epoch 1/50
-    45/45 [==============================] - 0s - loss: 0.3770 - acc: 0.8593 - val_loss: 0.0174 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.9365 - acc: 0.5778 - val_loss: 0.4891 - val_acc: 1.0000
     Epoch 2/50
-    45/45 [==============================] - 0s - loss: 0.0032 - acc: 1.0000 - val_loss: 0.0076 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.1786 - acc: 1.0000 - val_loss: 0.0791 - val_acc: 1.0000
     Epoch 3/50
-    45/45 [==============================] - 0s - loss: 1.9741e-04 - acc: 1.0000 - val_loss: 0.0054 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.0233 - acc: 1.0000 - val_loss: 0.1080 - val_acc: 1.0000
     Epoch 4/50
-    45/45 [==============================] - 0s - loss: 1.2982e-04 - acc: 1.0000 - val_loss: 0.0046 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.0148 - acc: 1.0000 - val_loss: 0.3807 - val_acc: 0.8667
     Epoch 5/50
-    45/45 [==============================] - 0s - loss: 9.6197e-05 - acc: 1.0000 - val_loss: 9.7093e-04 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.0338 - acc: 0.9778 - val_loss: 0.0335 - val_acc: 1.0000
     ...
     Epoch 45/50
-    45/45 [==============================] - 1s - loss: 1.6248e-07 - acc: 1.0000 - val_loss: 0.0031 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 7.1393e-07 - acc: 1.0000 - val_loss: 0.0054 - val_acc: 1.0000
     Epoch 46/50
-    45/45 [==============================] - 1s - loss: 1.5939e-07 - acc: 1.0000 - val_loss: 0.0061 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.9141e-07 - acc: 1.0000 - val_loss: 0.0031 - val_acc: 1.0000
     Epoch 47/50
-    45/45 [==============================] - 1s - loss: 1.5630e-07 - acc: 1.0000 - val_loss: 4.2299e-05 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.4638e-07 - acc: 1.0000 - val_loss: 0.0058 - val_acc: 1.0000
     Epoch 48/50
-    45/45 [==============================] - 1s - loss: 1.5409e-07 - acc: 1.0000 - val_loss: 0.0029 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.1592e-07 - acc: 1.0000 - val_loss: 0.0028 - val_acc: 1.0000
     Epoch 49/50
-    45/45 [==============================] - 1s - loss: 1.5056e-07 - acc: 1.0000 - val_loss: 1.6677e-04 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 5.9207e-07 - acc: 1.0000 - val_loss: 0.0058 - val_acc: 1.0000
     Epoch 50/50
-    45/45 [==============================] - 1s - loss: 1.4747e-07 - acc: 1.0000 - val_loss: 0.0057 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 5.6823e-07 - acc: 1.0000 - val_loss: 0.0031 - val_acc: 1.0000
 
     <keras.callbacks.History at 0x111497a90>
 
@@ -228,7 +228,7 @@ print("-- Evaluate --")
 
 scores = model.evaluate_generator(
             test_generator, 
-            steps = 15)
+            steps = 5)
 
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 
@@ -237,7 +237,7 @@ print("-- Predict --")
 
 output = model.predict_generator(
             test_generator, 
-            steps = 15)
+            steps = 5)
 
 np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
@@ -247,21 +247,21 @@ print(output)
     -- Evaluate --
     acc: 100.00%
     -- Predict --
-    [[0.009 0.959 0.032]
-     [0.000 0.000 1.000]
-     [1.000 0.000 0.000]
+    [[1.000 0.000 0.000]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
+     [0.998 0.000 0.002]
+     [0.000 1.000 0.000]
      [1.000 0.000 0.000]
+     [0.000 1.000 0.000]
+     [0.000 1.000 0.000]
+     [1.000 0.000 0.000]
+     [1.000 0.000 0.000]
+     [1.000 0.000 0.000]
+     [0.013 0.960 0.027]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
-     [0.000 0.000 1.000]
-     [1.000 0.000 0.000]
-     [0.000 0.001 0.999]
-     [0.000 0.001 0.999]
-     [0.000 0.000 1.000]
-     [0.000 1.000 0.000]
-     [1.000 0.000 0.000]]
+     [0.000 0.000 1.000]]
 
 
 간단한 모델이고 데이터셋이 적은 데도 불구하고 100%라는 높은 정확도를 얻었습니다. 
@@ -293,7 +293,7 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 test_generator = test_datagen.flow_from_directory(
         'warehouse/handwriting_shape/test',
         target_size=(24, 24),    
-        batch_size=1,
+        batch_size=3,
         class_mode='categorical')
 
 from keras.models import Sequential
@@ -319,17 +319,17 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 # 모델 학습시키기
 model.fit_generator(
         train_generator,
-        steps_per_epoch=45,
+        steps_per_epoch=15,
         epochs=50,
         validation_data=test_generator,
-        validation_steps=15)
+        validation_steps=5)
 
 # 모델 평가하기
 print("-- Evaluate --")
 
 scores = model.evaluate_generator(
             test_generator, 
-            steps = 15)
+            steps = 5)
 
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 
@@ -338,7 +338,7 @@ print("-- Predict --")
 
 output = model.predict_generator(
             test_generator, 
-            steps = 15)
+            steps = 5)
 
 np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
@@ -348,46 +348,47 @@ print(output)
     Found 45 images belonging to 3 classes.
     Found 15 images belonging to 3 classes.
     Epoch 1/50
-    45/45 [==============================] - 0s - loss: 0.3770 - acc: 0.8593 - val_loss: 0.0174 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.9365 - acc: 0.5778 - val_loss: 0.4891 - val_acc: 1.0000
     Epoch 2/50
-    45/45 [==============================] - 0s - loss: 0.0032 - acc: 1.0000 - val_loss: 0.0076 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.1786 - acc: 1.0000 - val_loss: 0.0679 - val_acc: 1.0000
     Epoch 3/50
-    45/45 [==============================] - 0s - loss: 1.9741e-04 - acc: 1.0000 - val_loss: 0.0054 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.0233 - acc: 1.0000 - val_loss: 0.0777 - val_acc: 1.0000
     Epoch 4/50
-    45/45 [==============================] - 0s - loss: 1.2982e-04 - acc: 1.0000 - val_loss: 0.0046 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 0.0148 - acc: 1.0000 - val_loss: 0.2377 - val_acc: 0.9333
     Epoch 5/50
+    15/15 [==============================] - 0s - loss: 0.0338 - acc: 0.9778 - val_loss: 0.0184 - val_acc: 1.0000
     45/45 [==============================] - 0s - loss: 9.6197e-05 - acc: 1.0000 - val_loss: 9.7093e-04 - val_acc: 1.0000
     ...
     Epoch 45/50
-    45/45 [==============================] - 1s - loss: 1.6204e-07 - acc: 1.0000 - val_loss: 9.4588e-05 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 7.0996e-07 - acc: 1.0000 - val_loss: 1.9109e-04 - val_acc: 1.0000
     Epoch 46/50
-    45/45 [==============================] - 1s - loss: 1.5939e-07 - acc: 1.0000 - val_loss: 0.0031 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.7420e-07 - acc: 1.0000 - val_loss: 1.8434e-04 - val_acc: 1.0000
     Epoch 47/50
-    45/45 [==============================] - 1s - loss: 1.5674e-07 - acc: 1.0000 - val_loss: 1.6953e-04 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.4373e-07 - acc: 1.0000 - val_loss: 0.0028 - val_acc: 1.0000
     Epoch 48/50
-    45/45 [==============================] - 1s - loss: 1.5453e-07 - acc: 1.0000 - val_loss: 0.0057 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 6.1194e-07 - acc: 1.0000 - val_loss: 0.0029 - val_acc: 1.0000
     Epoch 49/50
-    45/45 [==============================] - 1s - loss: 1.5056e-07 - acc: 1.0000 - val_loss: 1.6161e-04 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 5.9075e-07 - acc: 1.0000 - val_loss: 0.0030 - val_acc: 1.0000
     Epoch 50/50
-    45/45 [==============================] - 1s - loss: 1.4702e-07 - acc: 1.0000 - val_loss: 0.0056 - val_acc: 1.0000
+    15/15 [==============================] - 0s - loss: 5.6691e-07 - acc: 1.0000 - val_loss: 0.0029 - val_acc: 1.0000
     -- Evaluate --
     acc: 100.00%
     -- Predict --
-    [[0.009 0.960 0.032]
-     [0.000 0.000 1.000]
+    [[0.000 0.000 1.000]
+     [1.000 0.000 0.000]
      [1.000 0.000 0.000]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
-     [1.000 0.000 0.000]
      [0.000 0.000 1.000]
      [0.000 1.000 0.000]
      [0.000 0.000 1.000]
      [1.000 0.000 0.000]
-     [0.000 0.001 0.999]
-     [0.000 0.001 0.999]
-     [0.000 0.000 1.000]
+     [0.013 0.961 0.027]
      [0.000 1.000 0.000]
-     [1.000 0.000 0.000]]
+     [0.000 0.000 1.000]
+     [0.998 0.000 0.002]
+     [0.000 0.000 1.000]
+     [0.013 0.961 0.027]]
 
 
 ---
