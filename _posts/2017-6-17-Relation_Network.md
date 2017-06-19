@@ -343,7 +343,7 @@ pred = Dense(1, activation='sigmoid')(rn)
 구성하는 과정이 조금 복잡할 수 있는데, 2017년 2월에 나왔던 아래 논문을 보면 RN에 대해서 좀 더 상세하게 설명되었습니다. 
 
 (Ref, [arXiv:1702.05068](https://arxiv.org/abs/1702.05068))
-![paper](http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_paper1.png)
+![paper](http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_paper4.png)
 
 #### 모델 조합
 
@@ -366,8 +366,9 @@ from keras.utils.vis_utils import model_to_dot
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
-![svg](http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_model.svg)
+아래 그림은 구성된 모델을 도식화 한 것입니다. 잘 확대해서 보시기 바랍니다. 
 
+![svg](http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_model.svg)
 
 #### 모델 학습하기
 
@@ -421,7 +422,14 @@ print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
 ### 결론
 
-상당히 오버피팅이 되었는데, 무슨 이유인지 차근히 살펴봐야겠습니다. 참고로 Pytorch로 구현된 버전(https://github.com/kimhc6028/relational-networks)도 보입니다. 여기서는 결과가 관계형 질문 정확도가 89%, 비관계형 질문 정확도가 99%이라고 되어 있습니다.
+상당히 오버피팅이 되었는데, 무슨 이유인지 차근히 살펴봐야겠습니다. 참고로 Pytorch로 구현된 [코드](https://github.com/kimhc6028/relational-networks)도 보입니다. 여기서는 결과가 관계형 질문 정확도가 89%, 비관계형 질문 정확도가 99%이라고 되어있네요.
+
+같은 시기에 DeepMind에서 [Visual Interaction Networks](https://arxiv.org/abs/1706.01433)이란 논문도 나왔습니다. 아래 그림을 보시면 6 프레임을 입력하여 200프레임을 예측한 결과인데, 상당히 잘 맞습니다. 
+
+(Ref, [DeepMind](https://deepmind.com/blog/neural-approach-relational-reasoning/))
+![gif](http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_paper5.gif)
+
+Visual Interaction Network는 시각적 모듈과 물리적 추론 모듈의 두 가지 메커니즘으로 구성되며, 시각적 장면 처리는 물론 미래에 어떤 일이 일어날 지 예측할 수있는 암묵적 시스템 규칙(예를 들어 물리 시스템)을 학습한다고 합니다. 현상만 잘 학습시키면, 딥러닝 기반의 물리 엔진이 만들어질 기세입니다. 다양한 활용 사례를 기대해봅니다.
 
 ---
 
