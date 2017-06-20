@@ -49,6 +49,8 @@ comments: true
     * [딥러닝으로 꿈꾸기]
     * [딥러닝으로 그림그리기]
     * [딥러닝으로 화풍바꾸기]
+1. 딥러닝 실무 적용하기
+    * [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
 
 ---
 
