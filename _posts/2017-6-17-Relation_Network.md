@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Relation Network"
-author: Taeyoung, Kim
+title:  "Relation Networks for Visual QA"
+author: 김태영
 date:   2017-06-10 23:10:00
 categories: Study
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-6-17-Relation_Network_paper3.png
 ---
-관계형 추론(relational reasoning)을 위해 DeepMind가 제안한 신경망 모델인 `관계 네트워크(Relation Networks, 이하 RN)` 대해서 알아보고자 합니다. 이 모델은 [A simple neural network module for relational reasoning](https://arxiv.org/pdf/1706.01427.pdf)이란 논문에서 소개되었고, 컨볼루션 신경망에 RN를 추가하여 어떻게 객체와 그 관계에 대해 추론하는 지 설명되어 있습니다. 시각기반의 질의응답 문제에 대해 탁월한 성능을 보이고 있다고 합니다.
+Visual QA 문제에서 관계형 추론(relational reasoning)을 도출하고자 DeepMind가 제안한 신경망 모델인 `관계 네트워크(Relation Networks, 이하 RN)` 대해서 알아보고자 합니다. 이 모델은 [A simple neural network module for relational reasoning](https://arxiv.org/pdf/1706.01427.pdf)이란 논문에서 소개되었고, 컨볼루션 신경망에 RN를 추가하여 어떻게 객체와 그 관계에 대해 추론하는 지 설명되어 있습니다. 시각기반의 질의응답 문제에 대해 탁월한 성능을 보이고 있다고 합니다.
 
 ---
 
