@@ -11,3 +11,4 @@ comments: true
 - 이메일: [tykim@inspace.re.kr](mailto:tykim@inspace.re.kr)
 - 페이스북: [www.facebook.com/tykimo](https://www.facebook.com/tykimo)
 - 케라스 코리아 페이스북 그룹: [www.facebook.com/groups/KerasKorea/](https://www.facebook.com/groups/KerasKorea/)
+- (주)인스페이스 홈페이지: [www.inspace.re.kr](http://www.inspace.re.kr)
