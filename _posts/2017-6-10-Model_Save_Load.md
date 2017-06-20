@@ -5,7 +5,7 @@ author: 김태영
 date:   2017-06-10 23:10:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-6-10_Model_Save_Load_1.png
+image: http://tykimos.github.com/Keras/warehouse/2017-6-10-Model_Save_Load_1.png
 ---
 몇시간 동안 (또는 며칠 동안) 딥러닝 모델을 학습 시킨 후 만족할만한 결과를 얻었다면, 실무에 바로 적용시키고 싶으실 겁니다. 이 때 떠오르는 의문 중 하나가 "딥러닝 모델을 사용하려면 매번 이렇게 몇시간 동안 학습시켜야 되는 거야?"입니다. 대답은 "아니오" 입니다. 딥러닝 모델을 학습시킨다는 의미는 딥러닝 모델이 가지고 있는 뉴런들의 가중치(weight)을 조정한다는 의미이고, 우리는 이러한 가중치만 저장만 해놓으면, 필요할 때 저장한 가중치를 이용하여 사용하면 됩니다. 간단한 딥러닝 모델로 가중치를 저장 및 불러오는 방법에 대해서 알아보겠습니다.
 
