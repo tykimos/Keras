@@ -10,10 +10,11 @@ comments: true
 <div class="home">
   <ul class="post-list">
     {% for post in site.posts %}
+    {{post.categories}}
         {% if post.categories == "Study" %}
         <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
-            {{ post.title }}{{post.categories}}</a>
+            {{ post.title }}</a>
         </li>
         {% endif %}
     {% endfor %}
