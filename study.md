@@ -10,7 +10,7 @@ comments: true
   <ul class="post-list">
     {% for post in site.posts %}
     !!!{{post.categories}}!!!
-        {% if post.categories == Study %} !!!!!!!!
+        {% if post.categories == 'Study' %} !!!!!!!!
         {% endif % }
         <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
