@@ -1,5 +1,6 @@
 <header class="header">
 	<div class="header-container">
+		<div class="description"> {{ site.motto }} </div>					
 		<div class="nav">
 			{% if page.path == "index.html" %}
 			<span class="title">
@@ -34,17 +35,11 @@
 					<a href="{{ "/study" | prepend: site.baseurl }}">딥러닝 공부</a>
 				</li>			
 			{% endif %}			
-			{% if page.path == "discussion.md" %}
 			<span class="title">
 				<li>
-					<a href="{{ "/discussion" | prepend: site.baseurl }}">토론</a>
+					<a href="https://www.facebook.com/groups/KerasKorea/">케라스 모임</a>
 				</li>
-			</span>			
-			{% else %}
-				<li>
-					<a href="{{ "/discussion" | prepend: site.baseurl }}">토론</a>
-				</li>			
-			{% endif %}			
+			</span>
 			{% if page.path == "about.md" %}
 			<span class="title">
 				<li>
@@ -57,6 +52,5 @@
 				</li>			
 			{% endif %}			
 		</div>
-		<div class="description"> {{ site.motto }} </div>			
 	</div>
 </header>
