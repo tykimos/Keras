@@ -10,7 +10,8 @@ comments: true
   <ul class="post-list">
     {% for post in site.categories.Study %}
         <li>
-            <span>{{ page.date | date: "%b %-d, %Y" }}</span> » <a href="{{ site.baseurl}}{{ post.url }}">{{ post.title }}</a>
+            <span>{{ post.date | date: "%b %d" }}</span> » <a href="{{ site.baseurl}}{{ post.url }}">
+            {{ post.title }}</a>
         </li>
     {% endfor %}
   </ul>
