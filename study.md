@@ -7,6 +7,8 @@ comments: true
 
 <div class="home">
   <ul class="post-list">
+
+  asdf
     {% for post in site.posts %}
         {% if post.category == 'Study' %}
             <li>
