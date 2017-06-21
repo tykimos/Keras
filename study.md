@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "딥러닝 공부"
-author: 김태영
 categories: Study
 comments: true
 ---
@@ -10,10 +9,8 @@ comments: true
 
 <div class="home">
   <ul class="post-list">
-
-  asdf1
     {% for post in site.posts %}
-        {% if post.categories == "Study" %}
+        {% if post.categories == Study %}
         <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
             {{ post.title }}{{post.categories}}</a>
