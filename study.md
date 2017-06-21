@@ -13,7 +13,7 @@ comments: true
 
         <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
-            {{ post.title }}{{post.catalogies}}</a>
+            {{ post.title }}{{post.categories}}</a>
         </li>
 
         
