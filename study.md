@@ -10,12 +10,13 @@ comments: true
 
   asdf1
     {% for post in site.posts %}
-        {% if post.categories == 'Study' %}
-            <li>
+
+        <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
             {{ post.title }}</a>
-            </li>
-        {% endif %}
+        </li>
+
+        
     {% endfor %}
   </ul>
 </div>
