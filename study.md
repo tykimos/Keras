@@ -9,7 +9,7 @@ comments: true
 <div class="home">
   <ul class="post-list">
     {% for post in site.posts %}
-    {{post.categories}}
+    !!!{{post.categories}}!!!
         {% if post.categories == "Study" %} !!!!!!!!
         {% endif % }
         <li>
