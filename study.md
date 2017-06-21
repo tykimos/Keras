@@ -8,9 +8,9 @@ comments: true
 <div class="home">
   <ul class="post-list">
 
-  asdf
+  asdf1
     {% for post in site.posts %}
-        {% if post.category == 'Study' %}
+        {% if post.categories == 'Study' %}
             <li>
             <span>{{ post.date | date: "%b %d" }}</span>» <a href="{{ site.baseurl}}{{ post.url }}">
             {{ post.title }}</a>
