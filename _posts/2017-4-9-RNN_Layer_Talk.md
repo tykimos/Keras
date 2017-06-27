@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "순환 신경망 레이어 이야기"
+title:  "순환 신경망 이야기"
 author: 김태영
 date:   2017-04-09 04:00:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_10.png
+image: http://tykimos.github.com/Keras/warehouse/2017-4-9-RNN_Layer_Talk_train_stateful_LSTM.png
 ---
 순환 신경망 모델에서 주로 사용하는 LSTM 레이어에 대해서 알아보겠습니다. 시퀀스 데이터를 다루는 레이어라 설정 파라미터에 따라 다양하게 모델을 구성할 수 있습니다. 그만큼 헷갈리는 부분도 있지만 "나비야" 동요를 학습시켜보면서 차근히 살펴보겠습니다.
 
