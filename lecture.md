@@ -10,16 +10,22 @@ comments: true
     * [학습과정과 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
     * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)
-1. 딥러닝 모델 이야기
+1. 몇가지 도구들
+    * 모델 구성 보기
+    * 학습과정 보기
+    * [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
+1. 다층 퍼셉트론 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
+1. 컨볼루션 신경망 이야기
     * [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/)
     * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
-    * [순환 신경망 레이어 이야기]    
-    * [순환 신경망 모델 만들어보기]
+    * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/03/08/CNN_Data_Augmentation/) 
+1. 순환 신경망 이야기
+    * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/01/27/RNN_Layer_Talk/)    
+    * [순환 신경망 확장 모델 만들어보기]
 1. 딥러닝 성능 높히기
     * [TensorBoard 사용해보기]
-    * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/03/08/CNN_Data_Augmentation/) 
     * [드롭아웃 레이어 사용해보기]
     * [최적 모델 선택하는 법]
     * [경사하강법과 미니배치]
@@ -46,9 +52,6 @@ comments: true
     * [딥러닝으로 꿈꾸기]
     * [딥러닝으로 그림그리기]
     * [딥러닝으로 화풍바꾸기]
-1. 딥러닝 실무 적용하기
-    * [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
-
 ---
 
 ### 같이 보기
