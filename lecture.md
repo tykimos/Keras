@@ -22,7 +22,7 @@ comments: true
     * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
     * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/03/08/CNN_Data_Augmentation/) 
 1. 순환 신경망 이야기
-    * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/01/27/RNN_Layer_Talk/)    
+    * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)    
     * [순환 신경망 확장 모델 만들어보기]
 1. 딥러닝 성능 높히기
     * [TensorBoard 사용해보기]
