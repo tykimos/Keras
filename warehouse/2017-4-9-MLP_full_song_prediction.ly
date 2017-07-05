@@ -4,7 +4,7 @@
 
 \header{
   title = "나비야"
-  composer = "LSTM v1 one-step prediction"
+  composer = "MLP full song prediction"
 }
 
 melody = \relative c'' {
