@@ -74,9 +74,10 @@ LSTM 레이어는 return_sequences 인자에 따라 마지막 시퀀스에서 �
 
 ### 데이터셋 생성
 
-먼저 두 음절만 살펴보겠습니다. 
+먼저 두 마디만 살펴보겠습니다. 
 
-* g8 e8 e4 | f8 d8 d4 | 
+* g8 e8 e4
+* f8 d8 d4 
 
 여기서 우리가 정의한 문제대로 4개 음표 입력으로 다음 출력 음표를 예측하려면, 아래와 같이 데이터셋을 구성합니다.
 
@@ -127,11 +128,7 @@ print(dataset)
     [[11  9  2 10  8]
      [ 9  2 10  8  1]
      [ 2 10  8  1  7]
-     [10  8  1  7  8]
-     [ 8  1  7  8  9]
      ...
-     [ 8  1  7  9 11]
-     [ 1  7  9 11 11]
      [ 7  9 11 11  9]
      [ 9 11 11  9  9]
      [11 11  9  9  2]]
@@ -199,6 +196,16 @@ model.add(Dense(one_hot_vec_size, activation='softmax'))
 
 
 ```python
+import keras
+
+# 손실 이력 클래스 정의
+class LossHistory(keras.callbacks.Callback):
+    def init(self):
+        self.losses = []
+        
+    def on_epoch_end(self, batch, logs={}):
+        self.losses.append(logs.get('loss'))
+        
 # 코드 사전 정의
 
 code2idx = {'c4':0, 'd4':1, 'e4':2, 'f4':3, 'g4':4, 'a4':5, 'b4':6,
@@ -264,8 +271,21 @@ model.add(Dense(one_hot_vec_size, activation='softmax'))
 # 모델 엮기
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+history = LossHistory() # 손실 이력 객체 생성
+history.init()
+
 # 모델 학습시키기
-model.fit(train_X, train_Y, epochs=2000, batch_size=10, verbose=2)
+model.fit(train_X, train_Y, epochs=2000, batch_size=10, verbose=2, callbacks=[history])
+    
+# 학습 과정 표시하기
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.plot(history.losses)
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train'], loc='upper left')
+plt.show()
 
 # 모델 평가하기
 scores = model.evaluate(train_X, train_Y)
@@ -305,34 +325,45 @@ print("full song prediction : ", seq_out)
 ```
     ('one hot encoding vector size is ', 12)
     Epoch 1/2000
-    2s - loss: 2.4744 - acc: 0.1600
+    0s - loss: 2.4745 - acc: 0.1600
     Epoch 2/2000
-    0s - loss: 2.3733 - acc: 0.3400
+    0s - loss: 2.3729 - acc: 0.3400
     Epoch 3/2000
-    0s - loss: 2.2874 - acc: 0.3400
+    0s - loss: 2.2869 - acc: 0.3400
     Epoch 4/2000
-    0s - loss: 2.2074 - acc: 0.3400
+    0s - loss: 2.2067 - acc: 0.3400
     Epoch 5/2000
-    0s - loss: 2.1258 - acc: 0.3400
+    0s - loss: 2.1250 - acc: 0.3400
     ...
     Epoch 1996/2000
-    0s - loss: 0.1935 - acc: 0.9000
+    0s - loss: 0.1990 - acc: 0.9000
     Epoch 1997/2000
-    0s - loss: 0.1853 - acc: 0.9200
+    0s - loss: 0.1833 - acc: 0.9000
     Epoch 1998/2000
-    0s - loss: 0.1941 - acc: 0.9200
+    0s - loss: 0.1980 - acc: 0.9200
     Epoch 1999/2000
-    0s - loss: 0.1927 - acc: 0.9200
+    0s - loss: 0.1915 - acc: 0.9200
     Epoch 2000/2000
-    0s - loss: 0.1806 - acc: 0.9200
+    0s - loss: 0.1849 - acc: 0.9200
+
+
+
+![png](output_20_1.png)
+
+
     32/50 [==================>...........] - ETA: 0sacc: 92.00%
-    ('one step prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'e8', 'd8', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
+    ('one step prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'g4', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'f4', 'e8', 'e8', 'e8', 'e8', 'f8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
     ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8'])
 
 
 한 스텝 예측 결과와 곡 전체 예측 결과를 악보로 그려보았습니다. 이 중 틀린 부분을 빨간색 박스로 표시해봤습니다. 총 50개 예측 중 4개가 틀려서 92%의 정확도가 나왔습니다. 중간에 틀린 부분이 생기면 곡 전체를 예측하는 데 있어서는 그리 좋은 성능이 나오지 않습니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-4-9-RNN_Layer_Talk_MLP_song.png)
+
+위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
+
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_one_step_prediction.mp3)
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_LSTM_full_song_prediction.mp3)
 
 ---
 
@@ -367,6 +398,16 @@ train_X = np.reshape(train_X, (50, 4, 1)) # 샘플 수, 타임스텝 수, 속성
 
 
 ```python
+import keras
+
+# 손실 이력 클래스 정의
+class LossHistory(keras.callbacks.Callback):
+    def init(self):
+        self.losses = []
+        
+    def on_epoch_end(self, batch, logs={}):
+        self.losses.append(logs.get('loss'))
+        
 # 코드 사전 정의
 
 code2idx = {'c4':0, 'd4':1, 'e4':2, 'f4':3, 'g4':4, 'a4':5, 'b4':6,
@@ -433,8 +474,21 @@ model.add(Dense(one_hot_vec_size, activation='softmax'))
 # 모델 엮기
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+history = LossHistory() # 손실 이력 객체 생성
+history.init()
+
 # 모델 학습시키기
-model.fit(train_X, train_Y, epochs=2000, batch_size=1, verbose=2)
+model.fit(train_X, train_Y, epochs=2000, batch_size=1, verbose=2, callbacks=[history])
+
+# 학습 과정 표시하기
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.plot(history.losses)
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train'], loc='upper left')
+plt.show()
 
 # 모델 평가하기
 scores = model.evaluate(train_X, train_Y)
@@ -476,7 +530,7 @@ print("full song prediction : ", seq_out)
     (50, 5)
     ('one hot encoding vector size is ', 12)
     Epoch 1/2000
-    2s - loss: 2.4062 - acc: 0.2200
+    1s - loss: 2.4061 - acc: 0.2200
     Epoch 2/2000
     0s - loss: 2.0701 - acc: 0.3400
     Epoch 3/2000
@@ -487,15 +541,21 @@ print("full song prediction : ", seq_out)
     0s - loss: 1.9421 - acc: 0.3400
     ...
     Epoch 1996/2000
-    0s - loss: 0.1449 - acc: 0.8600
+    0s - loss: 0.1462 - acc: 0.9000
     Epoch 1997/2000
-    0s - loss: 0.1440 - acc: 0.9000
+    0s - loss: 0.1453 - acc: 0.9000
     Epoch 1998/2000
-    0s - loss: 0.1441 - acc: 0.9200
+    0s - loss: 0.1444 - acc: 0.9200
     Epoch 1999/2000
-    0s - loss: 0.1429 - acc: 0.8800
+    0s - loss: 0.1434 - acc: 0.8800
     Epoch 2000/2000
-    0s - loss: 0.1470 - acc: 0.9000
+    0s - loss: 0.1476 - acc: 0.9000
+
+
+
+![png](output_29_1.png)
+
+
     32/50 [==================>...........] - ETA: 0sacc: 92.00%
     ('one step prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'g4', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'f4', 'e8', 'e8', 'e8', 'e8', 'f8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
     ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8', 'd8'])
@@ -504,6 +564,11 @@ print("full song prediction : ", seq_out)
 한 스텝 예측 결과와 곡 전체 예측 결과를 악보로 그려보았습니다. 이 중 틀린 부분을 빨간색 박스로 표시해봤습니다. 총 50개 예측 중 4개가 틀려서 92%의 정확도가 나왔습니다. 중간에 틀릭 부분이 생기면 곡 전체를 예측하는 데 있어서는 그리 좋은 성능이 나오지 않습니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-4-9-RNN_Layer_Talk_LSTM_song.png)
+
+위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
+
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_one_step_prediction.mp3)
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_full_song_prediction.mp3)
 
 ---
 
@@ -663,6 +728,8 @@ pred_out = model.predict(train_X, batch_size=1)
 for i in range(pred_count):
     idx = np.argmax(pred_out[i]) # one-hot 인코딩을 인덱스 값으로 변환
     seq_out.append(idx2code[idx]) # seq_out는 최종 악보이므로 인덱스 값을 코드로 변환하여 저장
+
+model.reset_states()
     
 print("one step prediction : ", seq_out)
 
@@ -703,33 +770,36 @@ print("full song prediction : ", seq_out)
     epochs : 4
     Epoch 1/1
     0s - loss: 1.9369 - acc: 0.3400
-    epochs : 5
-    Epoch 1/1
-    0s - loss: 1.9301 - acc: 0.3400
     ...
     epochs : 1995
     Epoch 1/1
-    0s - loss: 5.1300e-04 - acc: 1.0000
+    0s - loss: 1.8445e-04 - acc: 1.0000
     epochs : 1996
     Epoch 1/1
-    0s - loss: 4.9585e-04 - acc: 1.0000
+    0s - loss: 1.7874e-04 - acc: 1.0000
     epochs : 1997
     Epoch 1/1
-    0s - loss: 4.7963e-04 - acc: 1.0000
+    0s - loss: 1.7251e-04 - acc: 1.0000
     epochs : 1998
     Epoch 1/1
-    0s - loss: 4.6399e-04 - acc: 1.0000
+    0s - loss: 1.6655e-04 - acc: 1.0000
     epochs : 1999
     Epoch 1/1
-    0s - loss: 4.4967e-04 - acc: 1.0000
+    0s - loss: 1.6054e-04 - acc: 1.0000
 
-    43/50 [========================>.....] - ETA: 0sacc: 100.00%
+    25/50 [==============>...............] - ETA: 0s acc: 100.00%
     ('one step prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'd8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
-    ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8'])
+    ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'd8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
+
 
 한 스텝 예측 결과와 곡 전체 예측 결과를 악보로 그려보았습니다. Stateful LSTM은 음표를 모두 맞추어서, 전체 곡 예측도 정확하게 했습니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-4-9-RNN_Layer_Talk_Stateful_LSTM_song.png)
+
+위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
+
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f1_one_step_prediction.mp3)
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
 
 ### 입력 속성이 여러 개인 모델 구성
 
@@ -888,6 +958,8 @@ for i in range(pred_count):
     
 print("one step prediction : ", seq_out)
 
+model.reset_states()
+
 # 곡 전체 예측
 
 seq_in = ['g8', 'e8', 'e4', 'f8']
@@ -915,15 +987,13 @@ model.reset_states()
 print("full song prediction : ", seq_out)
 ```
 
-    (50, 5)
-    ('one hot encoding vector size is ', 12)
     ('one hot encoding vector size is ', 12)
     epochs : 0
     Epoch 1/1
-    1s - loss: 2.3096 - acc: 0.1400
+    1s - loss: 2.3099 - acc: 0.1400
     epochs : 1
     Epoch 1/1
-    0s - loss: 2.0183 - acc: 0.3400
+    0s - loss: 2.0182 - acc: 0.3400
     epochs : 2
     Epoch 1/1
     0s - loss: 1.9620 - acc: 0.3400
@@ -934,28 +1004,36 @@ print("full song prediction : ", seq_out)
     Epoch 1/1
     0s - loss: 1.9356 - acc: 0.3400
     ...
-    epochs : 1994
-    Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
     epochs : 1995
     Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
+    0s - loss: 3.5048e-07 - acc: 1.0000
     epochs : 1996
     Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
+    0s - loss: 3.3498e-07 - acc: 1.0000
     epochs : 1997
     Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
+    0s - loss: 3.3855e-07 - acc: 1.0000
     epochs : 1998
     Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
+    0s - loss: 3.0041e-07 - acc: 1.0000
     epochs : 1999
     Epoch 1/1
-    0s - loss: 1.1921e-07 - acc: 1.0000
+    0s - loss: 3.2544e-07 - acc: 1.0000
 
-    31/50 [=================>............] - ETA: 0s acc: 100.00%
+    27/50 [===============>..............] - ETA: 0s acc: 100.00%
     ('one step prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'd8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
-    ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4'])
+    ('full song prediction : ', ['g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'd8', 'e8', 'f8', 'g8', 'g8', 'g4', 'g8', 'e8', 'e8', 'e8', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4', 'd8', 'd8', 'd8', 'd8', 'd8', 'e8', 'f4', 'e8', 'e8', 'e8', 'e8', 'e8', 'f8', 'g4', 'g8', 'e8', 'e4', 'f8', 'd8', 'd4', 'c8', 'e8', 'g8', 'g8', 'e8', 'e8', 'e4'])
+
+
+수행결과는 곡 전체를 정확하게 예측을 했습니다.
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-4-9-RNN_Layer_Talk_LSTM_features_song.png)
+
+위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
+
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3)
+![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
+
 ---
 
 ### 결론
@@ -976,8 +1054,3 @@ print("full song prediction : ", seq_out)
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
 * [순환 신경망 모델 만들어보기]
-
-
-```python
-
-```
