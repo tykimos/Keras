@@ -1032,7 +1032,9 @@ print("full song prediction : ", seq_out)
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
 !audio[ title ](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3){ size=10 duration=10 cycle=forever }
-
+ㄴ
+![title](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3)
+ㄴ
 ![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3)
 ![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
 
