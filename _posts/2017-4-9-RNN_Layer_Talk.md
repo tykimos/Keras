@@ -363,7 +363,7 @@ print("full song prediction : ", seq_out)
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
 * [MLP_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_one_step_prediction.mp3)
-* [MLP_LSTM_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_LSTM_full_song_prediction.mp3)
+* [MLP_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_full_song_prediction.mp3)
 
 ---
 
