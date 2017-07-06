@@ -362,8 +362,8 @@ print("full song prediction : ", seq_out)
 
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_one_step_prediction.mp3)
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_LSTM_full_song_prediction.mp3)
+* [MLP_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_one_step_prediction.mp3)
+* [MLP_LSTM_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-MLP_LSTM_full_song_prediction.mp3)
 
 ---
 
@@ -567,8 +567,8 @@ print("full song prediction : ", seq_out)
 
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_one_step_prediction.mp3)
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_full_song_prediction.mp3)
+* [Stateless_LSTM_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_one_step_prediction.mp3)
+* [Stateless_LSTM_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateless_LSTM_full_song_prediction.mp3)
 
 ---
 
@@ -798,8 +798,8 @@ print("full song prediction : ", seq_out)
 
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f1_one_step_prediction.mp3)
-![](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
+* [Stateful_LSTM_f1_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f1_one_step_prediction.mp3)
+* [Stateful_LSTM_f1_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f1_full_song_prediction.mp3)
 
 ### 입력 속성이 여러 개인 모델 구성
 
@@ -1031,9 +1031,8 @@ print("full song prediction : ", seq_out)
 
 위 악보로 연주한 곡은 아래 링크에서 다운로드 받으실 수 있습니다.
 
-![Stateful_LSTM_f2_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3)
-
-![Stateful_LSTM_f2_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
+* [Stateful_LSTM_f2_one_step_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_one_step_prediction.mp3)
+* [Stateful_LSTM_f2_full_song_prediction.mp3](http://tykimos.github.com/Keras/warehouse/2017-4-9-Stateful_LSTM_f2_full_song_prediction.mp3)
 
 ---
 
