@@ -26,20 +26,32 @@ import numpy as np
 np.random.seed(3)
 
 # 1. 데이터셋 준비하기
+
+# 훈련셋과 시험셋 로딩
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-X_train = X_train.reshape(60000, 784).astype('float32') / 255.0
 
-train_rand_idxs = np.random.choice(60000, 700)
-X_train = X_train[train_rand_idxs]
-Y_train = Y_train[train_rand_idxs]
+# 훈련셋과 검증셋 분리
+X_val = X_train[50000:]
+Y_val = Y_train[50000:]
+X_train = X_train[:50000]
+Y_train = Y_train[:50000]
 
+X_train = X_train.reshape(50000, 784).astype('float32') / 255.0
+X_val = X_val.reshape(10000, 784).astype('float32') / 255.0
 X_test = X_test.reshape(10000, 784).astype('float32') / 255.0
 
-test_rand_idxs = np.random.choice(10000, 300)
-X_test = X_test[test_rand_idxs]
-Y_test = Y_test[test_rand_idxs]
+# 훈련셋, 검증셋 고르기
+train_rand_idxs = np.random.choice(50000, 700)
+val_rand_idxs = np.random.choice(10000, 300)
 
+X_train = X_train[train_rand_idxs]
+Y_train = Y_train[train_rand_idxs]
+X_val = X_val[val_rand_idxs]
+Y_val = Y_val[val_rand_idxs]
+
+# 라벨링 전환
 Y_train = np_utils.to_categorical(Y_train)
+Y_val = np_utils.to_categorical(Y_val)
 Y_test = np_utils.to_categorical(Y_test)
 
 # 2. 모델 구성하기
@@ -51,34 +63,22 @@ model.add(Dense(units=10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 # 4. 모델 학습시키기
-hist = model.fit(X_train, Y_train, epochs=1000, batch_size=10, validation_data=(X_test, Y_test))
+hist = model.fit(X_train, Y_train, epochs=3000, batch_size=10, validation_data=(X_val, Y_val))
 ```
 
     Train on 700 samples, validate on 300 samples
-    Epoch 1/1000
-    700/700 [==============================] - 0s - loss: 2.2596 - acc: 0.1514 - val_loss: 2.2248 - val_acc: 0.1567
-    Epoch 2/1000
-    700/700 [==============================] - 0s - loss: 2.1993 - acc: 0.1929 - val_loss: 2.1812 - val_acc: 0.1867
-    Epoch 3/1000
-    700/700 [==============================] - 0s - loss: 2.1578 - acc: 0.2057 - val_loss: 2.1529 - val_acc: 0.1800
-    Epoch 4/1000
-    700/700 [==============================] - 0s - loss: 2.1236 - acc: 0.2171 - val_loss: 2.1235 - val_acc: 0.2133
-    Epoch 5/1000
-    700/700 [==============================] - 0s - loss: 2.0861 - acc: 0.2457 - val_loss: 2.0852 - val_acc: 0.2300
+    Epoch 1/3000
+    700/700 [==============================] - 0s - loss: 2.3067 - acc: 0.1171 - val_loss: 2.2751 - val_acc: 0.0933
+    Epoch 2/3000
+    700/700 [==============================] - 0s - loss: 2.2731 - acc: 0.1257 - val_loss: 2.2508 - val_acc: 0.1267
+    Epoch 3/3000
+    700/700 [==============================] - 0s - loss: 2.2479 - acc: 0.1343 - val_loss: 2.2230 - val_acc: 0.1267
+    Epoch 4/3000
+    700/700 [==============================] - 0s - loss: 2.2220 - acc: 0.1471 - val_loss: 2.1984 - val_acc: 0.1233
+    Epoch 5/3000
+    700/700 [==============================] - 0s - loss: 2.1957 - acc: 0.1400 - val_loss: 2.1724 - val_acc: 0.1233
     ...
-    Epoch 996/1000
-    700/700 [==============================] - 0s - loss: 0.6739 - acc: 0.7757 - val_loss: 2.2726 - val_acc: 0.4133
-    Epoch 997/1000
-    700/700 [==============================] - 0s - loss: 0.6737 - acc: 0.7757 - val_loss: 2.2723 - val_acc: 0.4100
-    Epoch 998/1000
-    700/700 [==============================] - 0s - loss: 0.6732 - acc: 0.7714 - val_loss: 2.2893 - val_acc: 0.4167
-    Epoch 999/1000
-    700/700 [==============================] - 0s - loss: 0.6735 - acc: 0.7729 - val_loss: 2.2732 - val_acc: 0.4100
-    Epoch 1000/1000
-    700/700 [==============================] - 0s - loss: 0.6735 - acc: 0.7743 - val_loss: 2.2751 - val_acc: 0.4100
 
-
-    Using Theano backend.
 
 ```python
 # 5. 모델 학습 과정 표시하기
@@ -89,15 +89,15 @@ fig, loss_ax = plt.subplots()
 
 acc_ax = loss_ax.twinx()
 
-loss_ax.plot(hist.history['loss'], 'g', label='train loss')
-loss_ax.plot(hist.history['val_loss'], 'g--', label='val loss')
+loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
 
 acc_ax.plot(hist.history['acc'], 'b', label='train acc')
-acc_ax.plot(hist.history['val_acc'], 'b--', label='val acc')
+acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
 
 loss_ax.set_xlabel('epoch')
-loss_ax.set_ylabel('loss', color='g')
-acc_ax.set_ylabel('accuray', color='b')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('accuray')
 
 loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
@@ -115,11 +115,13 @@ val_loss를 보면 에포크 횟수가 많아질 수록 감소하다가 150 에�
 loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
 
 print('')
-print('loss_and_metrics : ' + str(loss_and_metrics))
+print('loss : ' + str(loss_and_metrics[0]))
+print('accuray : ' + str(loss_and_metrics[1]))
 ```
 
-     32/300 [==>...........................] - ETA: 0s
-    loss_and_metrics : [2.2750992266337078, 0.40999999999999998]
+       32/10000 [..............................] - ETA: 0s
+    loss : 3.73021918621
+    accuray : 0.4499
 
 
 ---
@@ -152,26 +154,37 @@ from keras.utils import np_utils
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Activation
-from keras.callbacks import EarlyStopping
 import numpy as np
 
 np.random.seed(3)
 
 # 1. 데이터셋 준비하기
+
+# 훈련셋과 시험셋 로딩
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-X_train = X_train.reshape(60000, 784).astype('float32') / 255.0
 
-train_rand_idxs = np.random.choice(60000, 700)
-X_train = X_train[train_rand_idxs]
-Y_train = Y_train[train_rand_idxs]
+# 훈련셋과 검증셋 분리
+X_val = X_train[50000:]
+Y_val = Y_train[50000:]
+X_train = X_train[:50000]
+Y_train = Y_train[:50000]
 
+X_train = X_train.reshape(50000, 784).astype('float32') / 255.0
+X_val = X_val.reshape(10000, 784).astype('float32') / 255.0
 X_test = X_test.reshape(10000, 784).astype('float32') / 255.0
 
-test_rand_idxs = np.random.choice(10000, 300)
-X_test = X_test[test_rand_idxs]
-Y_test = Y_test[test_rand_idxs]
+# 훈련셋, 검증셋 고르기
+train_rand_idxs = np.random.choice(50000, 700)
+val_rand_idxs = np.random.choice(10000, 300)
 
+X_train = X_train[train_rand_idxs]
+Y_train = Y_train[train_rand_idxs]
+X_val = X_val[val_rand_idxs]
+Y_val = Y_val[val_rand_idxs]
+
+# 라벨링 전환
 Y_train = np_utils.to_categorical(Y_train)
+Y_val = np_utils.to_categorical(Y_val)
 Y_test = np_utils.to_categorical(Y_test)
 
 # 2. 모델 구성하기
@@ -183,35 +196,29 @@ model.add(Dense(units=10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 # 4. 모델 학습시키기
+from keras.callbacks import EarlyStopping
 early_stopping = EarlyStopping() # 조기종료 콜백함수 정의
-hist = model.fit(X_train, Y_train, epochs=1000, batch_size=10, validation_data=(X_test, Y_test), callbacks=[early_stopping])
+hist = model.fit(X_train, Y_train, epochs=3000, batch_size=10, validation_data=(X_val, Y_val), callbacks=[early_stopping])
 ```
 
     Train on 700 samples, validate on 300 samples
-    Epoch 1/1000
-    700/700 [==============================] - 0s - loss: 2.2596 - acc: 0.1514 - val_loss: 2.2248 - val_acc: 0.1567
-    Epoch 2/1000
-    700/700 [==============================] - 0s - loss: 2.1993 - acc: 0.1929 - val_loss: 2.1812 - val_acc: 0.1867
-    Epoch 3/1000
-    700/700 [==============================] - 0s - loss: 2.1578 - acc: 0.2057 - val_loss: 2.1529 - val_acc: 0.1800
-    Epoch 4/1000
-    700/700 [==============================] - 0s - loss: 2.1236 - acc: 0.2171 - val_loss: 2.1235 - val_acc: 0.2133
-    Epoch 5/1000
-    700/700 [==============================] - 0s - loss: 2.0861 - acc: 0.2457 - val_loss: 2.0852 - val_acc: 0.2300
+    Epoch 1/3000
+    700/700 [==============================] - 0s - loss: 2.3067 - acc: 0.1171 - val_loss: 2.2751 - val_acc: 0.0933
+    Epoch 2/3000
+    700/700 [==============================] - 0s - loss: 2.2731 - acc: 0.1257 - val_loss: 2.2508 - val_acc: 0.1267
+    Epoch 3/3000
+    700/700 [==============================] - 0s - loss: 2.2479 - acc: 0.1343 - val_loss: 2.2230 - val_acc: 0.1267
     ...
-    Epoch 22/1000
-    700/700 [==============================] - 0s - loss: 1.6917 - acc: 0.4371 - val_loss: 1.7889 - val_acc: 0.3933
-    Epoch 23/1000
-    700/700 [==============================] - 0s - loss: 1.6768 - acc: 0.4429 - val_loss: 1.7758 - val_acc: 0.4133
-    Epoch 24/1000
-    700/700 [==============================] - 0s - loss: 1.6617 - acc: 0.4414 - val_loss: 1.7639 - val_acc: 0.4233
-    Epoch 25/1000
-    700/700 [==============================] - 0s - loss: 1.6492 - acc: 0.4457 - val_loss: 1.7555 - val_acc: 0.4233
-    Epoch 26/1000
-    700/700 [==============================] - 0s - loss: 1.6348 - acc: 0.4457 - val_loss: 1.7605 - val_acc: 0.4067
+    Epoch 51/3000
+    700/700 [==============================] - 0s - loss: 1.2842 - acc: 0.5014 - val_loss: 1.4463 - val_acc: 0.4533
+    Epoch 52/3000
+    700/700 [==============================] - 0s - loss: 1.2760 - acc: 0.5057 - val_loss: 1.4358 - val_acc: 0.4633
+    Epoch 53/3000
+    700/700 [==============================] - 0s - loss: 1.2683 - acc: 0.5129 - val_loss: 1.4406 - val_acc: 0.4467
+
+
 
 ```python
-
 # 5. 모델 학습 과정 표시하기
 %matplotlib inline
 import matplotlib.pyplot as plt
@@ -220,15 +227,15 @@ fig, loss_ax = plt.subplots()
 
 acc_ax = loss_ax.twinx()
 
-loss_ax.plot(hist.history['loss'], 'g', label='train loss')
-loss_ax.plot(hist.history['val_loss'], 'g--', label='val loss')
+loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
 
 acc_ax.plot(hist.history['acc'], 'b', label='train acc')
-acc_ax.plot(hist.history['val_acc'], 'b--', label='val acc')
+acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
 
 loss_ax.set_xlabel('epoch')
-loss_ax.set_ylabel('loss', color='g')
-acc_ax.set_ylabel('accuray', color='b')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('accuray')
 
 loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
@@ -238,17 +245,18 @@ plt.show()
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-7-9-Early_Stopping_2.png)
 
-
 ```python
 # 6. 모델 사용하기
 loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
 
 print('')
-print('loss_and_metrics : ' + str(loss_and_metrics))
+print('loss : ' + str(loss_and_metrics[0]))
+print('accuray : ' + str(loss_and_metrics[1]))
 ```
 
-     32/300 [==>...........................] - ETA: 0s
-    loss_and_metrics : [1.760471485455831, 0.40666666666666668]
+       32/10000 [..............................] - ETA: 0s
+    loss : 1.439551894
+    accuray : 0.4443
 
 
 val_loss 값이 감소되다가 증가되자마자 학습이 종료되었습니다. 하지만 이 모델은 좀 더 학습이 될 수 있는 모델임을 이미 알고 있습니다. val_loss 특성 상 증가/감소를 반복하므로 val_loss가 증가되는 시점에 바로 종료하지말고 지속적으로 증가되는 시점에서 종료해보겠습니다. 이를 위해 EarlyStopping 콜백함수에서 patience 인자를 사용합니다.
@@ -263,26 +271,37 @@ from keras.utils import np_utils
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Activation
-from keras.callbacks import EarlyStopping
 import numpy as np
 
 np.random.seed(3)
 
 # 1. 데이터셋 준비하기
+
+# 훈련셋과 시험셋 로딩
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-X_train = X_train.reshape(60000, 784).astype('float32') / 255.0
 
-train_rand_idxs = np.random.choice(60000, 700)
-X_train = X_train[train_rand_idxs]
-Y_train = Y_train[train_rand_idxs]
+# 훈련셋과 검증셋 분리
+X_val = X_train[50000:]
+Y_val = Y_train[50000:]
+X_train = X_train[:50000]
+Y_train = Y_train[:50000]
 
+X_train = X_train.reshape(50000, 784).astype('float32') / 255.0
+X_val = X_val.reshape(10000, 784).astype('float32') / 255.0
 X_test = X_test.reshape(10000, 784).astype('float32') / 255.0
 
-test_rand_idxs = np.random.choice(10000, 300)
-X_test = X_test[test_rand_idxs]
-Y_test = Y_test[test_rand_idxs]
+# 훈련셋, 검증셋 고르기
+train_rand_idxs = np.random.choice(50000, 700)
+val_rand_idxs = np.random.choice(10000, 300)
 
+X_train = X_train[train_rand_idxs]
+Y_train = Y_train[train_rand_idxs]
+X_val = X_val[val_rand_idxs]
+Y_val = Y_val[val_rand_idxs]
+
+# 라벨링 전환
 Y_train = np_utils.to_categorical(Y_train)
+Y_val = np_utils.to_categorical(Y_val)
 Y_test = np_utils.to_categorical(Y_test)
 
 # 2. 모델 구성하기
@@ -294,32 +313,27 @@ model.add(Dense(units=10, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 # 4. 모델 학습시키기
+from keras.callbacks import EarlyStopping
 early_stopping = EarlyStopping(patience = 20) # 조기종료 콜백함수 정의
-hist = model.fit(X_train, Y_train, epochs=1000, batch_size=10, validation_data=(X_test, Y_test), callbacks=[early_stopping])
+hist = model.fit(X_train, Y_train, epochs=3000, batch_size=10, validation_data=(X_val, Y_val), callbacks=[early_stopping])
 ```
 
     Train on 700 samples, validate on 300 samples
-    Epoch 1/1000
-    700/700 [==============================] - 0s - loss: 2.2596 - acc: 0.1514 - val_loss: 2.2248 - val_acc: 0.1567
-    Epoch 2/1000
-    700/700 [==============================] - 0s - loss: 2.1993 - acc: 0.1929 - val_loss: 2.1812 - val_acc: 0.1867
-    Epoch 3/1000
-    700/700 [==============================] - 0s - loss: 2.1578 - acc: 0.2057 - val_loss: 2.1529 - val_acc: 0.1800
-    Epoch 4/1000
-    700/700 [==============================] - 0s - loss: 2.1236 - acc: 0.2171 - val_loss: 2.1235 - val_acc: 0.2133
-    Epoch 5/1000
-    700/700 [==============================] - 0s - loss: 2.0861 - acc: 0.2457 - val_loss: 2.0852 - val_acc: 0.2300
+    Epoch 1/3000
+    700/700 [==============================] - 0s - loss: 2.3067 - acc: 0.1171 - val_loss: 2.2751 - val_acc: 0.0933
+    Epoch 2/3000
+    700/700 [==============================] - 0s - loss: 2.2731 - acc: 0.1257 - val_loss: 2.2508 - val_acc: 0.1267
+    Epoch 3/3000
+    700/700 [==============================] - 0s - loss: 2.2479 - acc: 0.1343 - val_loss: 2.2230 - val_acc: 0.1267
     ...
-    Epoch 146/1000
-    700/700 [==============================] - 0s - loss: 1.0858 - acc: 0.5857 - val_loss: 1.4855 - val_acc: 0.4467
-    Epoch 147/1000
-    700/700 [==============================] - 0s - loss: 1.0839 - acc: 0.5743 - val_loss: 1.4848 - val_acc: 0.4467
-    Epoch 148/1000
-    700/700 [==============================] - 0s - loss: 1.0836 - acc: 0.5786 - val_loss: 1.4843 - val_acc: 0.4533
-    Epoch 149/1000
-    700/700 [==============================] - 0s - loss: 1.0805 - acc: 0.5857 - val_loss: 1.4863 - val_acc: 0.4567
-    Epoch 150/1000
-    700/700 [==============================] - 0s - loss: 1.0794 - acc: 0.5771 - val_loss: 1.4880 - val_acc: 0.4533
+    Epoch 127/3000
+    700/700 [==============================] - 0s - loss: 0.9536 - acc: 0.6557 - val_loss: 1.3753 - val_acc: 0.5467
+    Epoch 128/3000
+    700/700 [==============================] - 0s - loss: 0.9494 - acc: 0.6543 - val_loss: 1.3785 - val_acc: 0.5400
+    Epoch 129/3000
+    700/700 [==============================] - 0s - loss: 0.9483 - acc: 0.6400 - val_loss: 1.3825 - val_acc: 0.5467
+
+
 
 ```python
 # 5. 모델 학습 과정 표시하기
@@ -330,15 +344,15 @@ fig, loss_ax = plt.subplots()
 
 acc_ax = loss_ax.twinx()
 
-loss_ax.plot(hist.history['loss'], 'g', label='train loss')
-loss_ax.plot(hist.history['val_loss'], 'g--', label='val loss')
+loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
 
 acc_ax.plot(hist.history['acc'], 'b', label='train acc')
-acc_ax.plot(hist.history['val_acc'], 'b--', label='val acc')
+acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
 
 loss_ax.set_xlabel('epoch')
-loss_ax.set_ylabel('loss', color='g')
-acc_ax.set_ylabel('accuray', color='b')
+loss_ax.set_ylabel('loss')
+acc_ax.set_ylabel('accuray')
 
 loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
@@ -348,17 +362,18 @@ plt.show()
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-7-9-Early_Stopping_3.png)
 
-
 ```python
 # 6. 모델 사용하기
 loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
 
 print('')
-print('loss_and_metrics : ' + str(loss_and_metrics))
+print('loss : ' + str(loss_and_metrics[0]))
+print('accuray : ' + str(loss_and_metrics[1]))
 ```
 
-     32/300 [==>...........................] - ETA: 0s
-    loss_and_metrics : [1.4880069160461427, 0.45333333293596906]
+       32/10000 [..............................] - ETA: 0s
+    loss : 1.34829078026
+    accuray : 0.5344
 
 
 모델의 정확도도 향상됨을 확인할 수 있습니다.
@@ -367,7 +382,7 @@ print('loss_and_metrics : ' + str(loss_and_metrics))
 
 ### 결론
 
-본 절에서는 과적합되는 모델을 만들어보고, 조기종료 시키는 방법에 대해서 알아보았습니다. 케라스에서는 EarlyStopping이라는 콜백함수로 간단하게 적용해볼 수 있습니다.
+본 절에서는 과적합되는 모델을 만들어보고, 조기종료 시키는 방법에 대해서 알아보았습니다. 케라스에서 제공하는 EarlyStopping 콜백함수를 조기종료에 사용해보았고, 설정 인자를 살펴보았습니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-7-9-Early_Stopping_4.png)
 
