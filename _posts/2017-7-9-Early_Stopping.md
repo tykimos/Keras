@@ -380,7 +380,7 @@ print('accuray : ' + str(loss_and_metrics[1]))
 
 ---
 
-### 결론
+### 요약
 
 본 절에서는 과적합되는 모델을 만들어보고, 조기종료 시키는 방법에 대해서 알아보았습니다. 케라스에서 제공하는 EarlyStopping 콜백함수를 조기종료에 사용해보았고, 설정 인자를 살펴보았습니다.
 
@@ -391,3 +391,5 @@ print('accuray : ' + str(loss_and_metrics[1]))
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
+* 이전 : [학습과정 표시하기 (텐서보드 포함)](https://tykimos.github.io/Keras/2017/07/09/Training_Monitoring/)    
+* 다음 : [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
