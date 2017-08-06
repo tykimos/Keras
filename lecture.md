@@ -14,13 +14,17 @@ comments: true
     * [유닉스에서 케라스 설치하기]    
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)    
     * [학습과정과 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
-    * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)
+1. 파이썬 살펴보기
+    * [개념, 기초, 입출력]
+    * [클래스, 모듈]
+    * [실용 패키지]
 1. 몇가지 도구들
     * 모델 구성 보기
     * 데이터셋 전처리하기
     * [학습과정 표시하기 (텐서보드 포함)](https://tykimos.github.io/Keras/2017/07/09/Training_Monitoring/)    
     * [학습 조기종료 시키기](https://tykimos.github.io/Keras/2017/07/09/Early_Stopping/)
     * [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
+    * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)    
 1. 다층 퍼셉트론 이야기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
