@@ -9,7 +9,7 @@ comments: true
 
 1. 딥러닝 이야기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-    * [맥에서 케라스 설치하기]
+    * [맥에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Mac/)
     * [윈도우에서 케라스 설치하기]
     * [유닉스에서 케라스 설치하기]    
     * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)    
