@@ -5,6 +5,7 @@ author: 김태영
 date:   2017-08-07 16:00:00
 categories: Lecture
 comments: true
+image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4.png
 ---
 본 강좌에서는 맥에서 케라스 개발 환경을 구축해보겠습니다.
 
