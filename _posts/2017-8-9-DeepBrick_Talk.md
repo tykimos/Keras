@@ -67,7 +67,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-9-DeepBrick_Talk_3.png)
 
-두 개 버전을 비교하면 좀 더 추상화가 되어 간단해졌고, 실사에 가깝게 되었습니다~
+두 개 버전을 비교하면 좀 더 추상화가 되어 간단해졌고, 실사에 가깝게 되었습니다~ 블록 표시하는 것에 대해서는 갈때까지 간 것 같습니다.
 
 ---
 
