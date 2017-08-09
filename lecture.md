@@ -36,7 +36,7 @@ comments: true
     * [미리 학습된 신경망 이용하기]
 1. 순환 신경망 이야기
     * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)
-    * [순환 신경망 모델로 분류해보기](https://tykimos.github.io/Keras/2017/08/04/RNN_Classification/)
+    * [순환 신경망 모델로 분류해보기]
 1. 다양한 신경망 이야기
     * [문제 파악하기]
     * [시계열 영상입력으로 분류해보기]    
