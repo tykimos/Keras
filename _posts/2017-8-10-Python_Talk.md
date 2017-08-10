@@ -5,7 +5,6 @@ author: 김태영
 date:   2017-08-10 04:00:00
 categories: Study
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-9-DeepBrick_Talk_4.png
 ---
 케라스로 딥러닝 모델을 만들고, 데이터를 전처리하기 위해 필요한 최소한의 파이썬 내용을 다루고자 합니다. 
 

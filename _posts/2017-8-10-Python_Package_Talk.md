@@ -5,7 +5,6 @@ author: 김태영
 date:   2017-08-10 05:00:00
 categories: Study
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-9-DeepBrick_Talk_4.png
 ---
 딥러닝 모델 개발에 유용한 파이썬 패키지에 대해서 다뤄봅니다.
 
