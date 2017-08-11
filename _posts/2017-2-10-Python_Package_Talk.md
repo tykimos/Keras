@@ -2,7 +2,7 @@
 layout: post
 title:  "파이썬 패키지 이야기"
 author: 김태영
-date:   2017-08-10 05:00:00
+date:   2017-02-10 05:00:00
 categories: Study
 comments: true
 ---
