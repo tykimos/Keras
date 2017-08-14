@@ -21,3 +21,4 @@ venv
 .ipynb_checkpoints
 _writing/warehouse
 _deepbrick/*
+_writing/abstract/*
