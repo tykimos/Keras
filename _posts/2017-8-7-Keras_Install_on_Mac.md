@@ -7,9 +7,16 @@ categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4.png
 ---
-본 강좌에서는 맥에서 케라스 개발 환경을 구축해보겠습니다.
+본 강좌에서는 맥에서 케라스 개발 환경을 구축해보겠습니다. 진행순서는 다음과 같습니다.
 
+* 프로젝트 디렉토리 만들기
+* 가상 개발환경 만들기
+* 웹기반 파이썬 개발환경인 주피터 노트북 설치
+* 주요 패키지 설치
+* 딥러닝 라이브러리 설치
+* 설치 환경 테스트 해보기
 
+---
 ### 프로젝트 디렉토리 만들기
 
 사용자 로컬 디렉토리에서부터 시작하겠습니다. 아래 명령을 입력하면 사용자 로컬 디렉토리로 이동합니다.
@@ -34,6 +41,7 @@ Projects $ cd keras_talk
 keras_talk $ _
 ```
 
+---
 ### 가상 개발환경 만들기
 
 프로젝트별로 개발환경이 다양할 수 있기 때문에 가상환경을 이용하면 편리합니다. 위에서 생성한 프로젝트에 가상 환경을 구축해보겠습니다. 가상환경을 제공하는 virtualenv을 먼저 설치하겠습니다. 이 과정은 프로젝트 별로 할 필요는 없고, 시스템에 한 번만 수행하면 됩니다.
@@ -90,6 +98,7 @@ Shutdown this notebook server (y/[n])?  y
 (venv) keras_talk $ _
 ```
 
+---
 ### 주요 패키지 설치
 
 케라스를 사용한 데 있어서 필요한 주요 패키지를 다음 명령을 통해서 설치합니다.
@@ -104,6 +113,14 @@ Shutdown this notebook server (y/[n])?  y
 (venv) keras_talk $ pip install h5py
 ```
 
+pydot은 모델 가시화할 때 필요한 것인데 이를 사용하려면, graphviz가 필요합니다. brew라는 툴을 이용해서 graphviz를 설치하기 위해 brew를 먼저 설치합니다.
+
+```
+(venv) keras_talk $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+(venv) keras_talk $ brew install graphviz
+```
+
+---
 ### 딥러닝 라이브러리 설치
 
 케라스에서 사용하는 딥러닝 라이브러리인 티아노(Theano)와 텐서플로우(Tensorflow)를 설치합니다. 둘 중에 하나만 사용한다면 해당하는 것만 설치하시면 됩니다. 
@@ -119,6 +136,7 @@ Shutdown this notebook server (y/[n])?  y
 (venv) keras_talk $ pip install keras
 ```
 
+---
 ### 설치 환경 테스트 해보기
 
 #### 설치된 패키지 버전 확인
@@ -251,7 +269,6 @@ model = load_model('mnist_mlp_model.h5')
 맥 환경에서 케라스를 구동하기 위해, 주피터 노트북 개발환경, 주요 패치키, 딥러링 라이브러리 설치 및 구동을 해봤습니다. 
 
 ---
-
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
