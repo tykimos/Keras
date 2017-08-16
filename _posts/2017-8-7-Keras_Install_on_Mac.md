@@ -75,11 +75,11 @@ keras_talk $ source venv/bin/activate
 (venv) keras_talk $ pip install ipython[notebook]
 ```
 
-> "Your pip version is out of date, ..."이라는 에러가 발생하면 pip 버전을 업그레이드 한 후 다시 설치합니다.
-> ``` 
+"Your pip version is out of date, ..."이라는 에러가 발생하면 pip 버전을 업그레이드 한 후 다시 설치합니다.
+``` 
 (venv) keras_talk $ pip install --upgrade pip
 (venv) keras_talk $ pip install ipython[notebook]
-> ```
+```
 
 주피터 노트북을 다음 명령으로 실행시킵니다. 
 

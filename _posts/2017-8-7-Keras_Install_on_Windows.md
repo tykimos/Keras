@@ -286,23 +286,23 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_10.png)
 
-> 설치가 정상적으로 완료되지 않고 ‘GraphViz's executables not found’ 또는 ‘Failed to import pydot. You must install pydot and graphviz for `pydotprint` to work.’ 문장이 뜨면서 에러가 나는 경우, 다음과 같이 진행합니다.
+설치가 정상적으로 완료되지 않고 ‘GraphViz's executables not found’ 또는 ‘Failed to import pydot. You must install pydot and graphviz for `pydotprint` to work.’ 문장이 뜨면서 에러가 나는 경우, 다음과 같이 진행합니다.
 
-> * http://www.graphviz.org/Download_windows.php 에 접속하여 graphviz-2.38.zip 파일을 다운로드 받습니다.
+* http://www.graphviz.org/Download_windows.php 에 접속하여 graphviz-2.38.zip 파일을 다운로드 받습니다.
 * 파일의 압축을 해제하고 graphviz를 설치합니다.
 * 설치가 완료되면 제어판 > 시스템 및 보안 > 시스템 > 고급 시스템 설정 > 환경 변수에 다음과 같이 변수를 추가합니다.
 
-> ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_11.png)
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_11.png)
 
-> * 환경 변수의 [시스템 변수] 중 Path 에 다음과 같이 경로를 추가합니다.
+* 환경 변수의 [시스템 변수] 중 Path 에 다음과 같이 경로를 추가합니다.
 
-> ```
+```
     C:\Program Files (x86)\Graphviz2.38\bin
 ```
 
-> ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_20.png)
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_20.png)
 
-> * 환경 변수를 저장한 후 jupyter notebook이 실행되고 있는 cmd 창을 종료하고 다시 시작합니다.
+* 환경 변수를 저장한 후 jupyter notebook이 실행되고 있는 cmd 창을 종료하고 다시 시작합니다.
 * 다시 위 예제 코드를 실행시켜서 잘 그림과 같이 이미지가 잘 나오면 성공적으로 설치된 것입니다.
 
 #### 딥러닝 모델 저장 기능 확인
