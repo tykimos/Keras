@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "수치예측 모델 레시피"
+title:  "수치입력 수치예측 모델 레시피"
 author: 김태영
 date:   2017-08-13 23:10:00
 categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-8-12-Numerical_Prediction_Model_Recipe_4m.png
 ---
-수치예측을 위한 모델들에 대해서 알아보겠습니다. 수치예측을 위한 데이터셋 생성을 해보고, 선형회귀를 위한 가장 간단한 퍼셉트론 모델부터 깊은 다층퍼셉트론 모델까지 구성 및 학습을 시켜보겠습니다
+수치를 입력해서 수치를 예측하는 모델들에 대해서 알아보겠습니다. 수치예측을 위한 데이터셋 생성을 해보고, 선형회귀를 위한 가장 간단한 퍼셉트론 모델부터 깊은 다층퍼셉트론 모델까지 구성 및 학습을 시켜보겠습니다
 
 ---
 ### 데이터셋 준비
