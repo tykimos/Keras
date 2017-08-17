@@ -46,7 +46,11 @@ plt.scatter(plot_x, plot_y, c=plot_color)
 plt.show()
 ```
 
-![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_0_1.png)
+
+![png](output_5_0.png)
+
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_01.png)
 
 실제 데이터에서는 첫번째 인자와 두번째 인자사이의 상관관계가 있다면 그래프에서 패턴을 보실 수 있습니다. 우리는 임의의 값으로 데이터셋을 만들었으므로 예상대로 패턴을 찾을 수 없습니다. 이번에는 첫번째, 두번째, 세번째의 인자값을 이용하여 3차원으로 그래프를 확인해보겠습니다.
 
@@ -67,7 +71,11 @@ ax.scatter(plot_x, plot_y, plot_z, c=plot_color)
 plt.show()
 ```
 
-![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_0_2.png)
+
+![png](output_8_0.png)
+
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_02.png)
 
 역시나 패턴을 찾아볼 수는 없습니다. 하지만 실제 데이터에서는 인자 간의 상관관계가 있을 경우 패턴을 확인할 수 있므으로 이와 같은 방식으로 모델을 설계하기 전에 데이터셋을 먼저 확인해보는 것은 권장해드립니다. 
 
@@ -199,6 +207,7 @@ plt.show()
     1000/1000 [==============================] - 0s - loss: 0.6842 - acc: 0.5530     
      32/100 [========>.....................] - ETA: 0sloss_and_metrics : [0.71497900724411012, 0.5]
 
+
 #### 다층퍼셉트론 모델
 
 
@@ -261,7 +270,7 @@ plt.show()
     1000/1000 [==============================] - 0s - loss: 0.6942 - acc: 0.5350     
     Epoch 3/1000
     1000/1000 [==============================] - 0s - loss: 0.6921 - acc: 0.5370     
-    ...    
+    ...   
     Epoch 998/1000
     1000/1000 [==============================] - 0s - loss: 0.4246 - acc: 0.8100     
     Epoch 999/1000
@@ -269,6 +278,7 @@ plt.show()
     Epoch 1000/1000
     1000/1000 [==============================] - 0s - loss: 0.4262 - acc: 0.8110     
      32/100 [========>.....................] - ETA: 0sloss_and_metrics : [1.0172318077087403, 0.46000000000000002]
+
 
 #### 깊은 다층퍼셉트론 모델
 
@@ -333,7 +343,7 @@ plt.show()
     1000/1000 [==============================] - 0s - loss: 0.6922 - acc: 0.5350     
     Epoch 3/1000
     1000/1000 [==============================] - 0s - loss: 0.6908 - acc: 0.5330     
-    ...
+    ...   
     Epoch 998/1000
     1000/1000 [==============================] - 0s - loss: 0.0118 - acc: 1.0000     
     Epoch 999/1000
@@ -350,15 +360,15 @@ plt.show()
 
 |퍼셉트론|다층퍼셉트론|깊은 다층퍼셉트론|
 |:-:|:-:|:-:|
-|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_0_3.png)|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_0_4.png)|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_0_5.png)|
+|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_03.png)|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_04.png)|![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_05.png)|
 
 ---
 
 ### 결론
 
-수치예측을 위한 퍼셉트론, 다층퍼셉트론, 깊은 다층퍼셉트론 모델을 살펴보고, 그 성능을 확인 해봤습니다.
+수치를 입력하여 이진분류를 할 수 있는 위한 퍼셉트론, 다층퍼셉트론, 깊은 다층퍼셉트론 모델을 살펴보고, 그 성능을 확인 해봤습니다.
 
-![img](http://tykimos.github.com/Keras/warehouse/2017-8-12-Numerical_Prediction_Model_Recipe_4m.png)
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_4m.png)
 
 ---
 
