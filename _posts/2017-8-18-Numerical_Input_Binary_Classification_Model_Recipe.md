@@ -5,7 +5,7 @@ author: 김태영
 date:   2017-08-13 23:10:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-12-Numerical_Prediction_Model_Recipe_4m.png
+image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_4m.png
 ---
 수치를 입력해서 이진분류할 수 있는 모델들에 대해서 알아보겠습니다. 이진분류를 위한 데이터셋 생성을 해보고, 가장 간단한 퍼셉트론 모델부터 깊은 다층퍼셉트론 모델까지 구성 및 학습을 시켜보겠습니다.
 
