@@ -38,29 +38,18 @@ comments: true
     * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)
     * [순환 신경망 모델로 분류해보기]
 1. 다양한 신경망 이야기
-    * [수치예측 모델 레시피] https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/
-    * [수치예측 모델 실전]    
-    * [분류 모델 레시피]
-    * [분류 모델 실전]    
-    * [영상기반 분류 모델 레시피]
-    * [영상기반 분류 모델 실전]    
-    * [시계열 수치예측 모델 레시피]
-    * [시계열 수치예측 모델 실전]
-    * [시계열 분류 모델 레시피]        
-    * [시계열 분류 모델 실전]    
-
-- [수치입력 수치예측 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/)
-- [시계열수치입력 수치예측 모델 레시피]
-- [수치입력 이진분류 모델 레시피]
-- [영상입력 이진분류 모델 레시피]
-- [시계열수치입력 이진분류 모델 레시피]
-- [시계열영상입력 이진분류 모델 레시피]
-- [문장입력 이진분류 모델 레시피]
-- [수치입력 다중클래스분류 모델 레시피]
-- [영상입력 다중클래스분류 모델 레시피]
-- [시계열수치입력 다중클래스분류 모델 레시피]
-- [시계열영상입력 다중클래스분류 모델 레시피]
-- [문장입력 다중클래스분류 모델 레시피]
+    * [수치입력 수치예측 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/)
+    * [수치입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Input_Binary_Classification_Model_Recipe/)    
+    * [수치입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/19/Numerical_Input_Multiclass_Classification_Model_Recipe/)    
+    * [영상입력 이진분류 모델 레시피]    
+    * [영상입력 다중클래스분류 모델 레시피]    
+    * [시계열수치입력 수치예측 모델 레시피]
+    * [시계열수치입력 이진분류 모델 레시피]
+    * [시계열수치입력 다중클래스분류 모델 레시피]    
+    * [시계열영상입력 이진분류 모델 레시피]
+    * [시계열영상입력 다중클래스분류 모델 레시피]
+    * [문장입력 이진분류 모델 레시피]
+    * [문장입력 다중클래스분류 모델 레시피]
 
 ### 2부 케라스로 컴퓨터비전 해보기
 
