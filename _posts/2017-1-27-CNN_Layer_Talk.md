@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "컨볼루션 신경망 레이어 이야기"
-author: Taeyoung, Kim
+author: 김태영
 date:   2017-01-27 04:00:00
 categories: Lecture
 comments: true
@@ -15,38 +15,36 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 케라스에서 제공되는 컨볼루션 레이어 종류에도 여러가지가 있으나 영상 처리에 주로 사용되는 Convolution2D 레이어를 살펴보겠습니다. 레이어는 영상 인식에 주로 사용되며, 필터가 탑재되어 있습니다. 아래는 Convolution2D 클래스 사용 예제입니다.
 
-    Convolution2D(32, 5, 5, border_mode='valid', input_shape=(1, 28, 28), activation='relu')
+    Conv2D(32, (5, 5), padding='valid', input_shape=(28, 28, 1), activation='relu')
     
 주요 인자는 다음과 같습니다.
 * 첫번째 인자 : 컨볼루션 필터의 수 입니다.
-* 두번째 인자 : 컨볼루션 커널의 행 수 입니다.
-* 세번째 인자 : 컨볼루션 커널의 열 수 입니다.
-* border_mode : 경계 처리 방법을 정의합니다.
+* 두번째 인자 : 컨볼루션 커널의 (행, 열) 입니다.
+* padding : 경계 처리 방법을 정의합니다.
     * 'valid' : 유효한 영역만 출력이 됩니다. 따라서 출력 이미지 사이즈는 입력 사이즈보다 작습니다.
     * 'same' : 출력 이미지 사이즈가 입력 이미지 사이즈와 동일합니다.
 * input_shape : 샘플 수를 제외한 입력 형태를 정의 합니다. 모델에서 첫 레이어일 때만 정의하면 됩니다. 
-    * (채널 수, 행, 열)로 정의합니다. 흑백영상인 경우에는 채널이 1이고, 컬러(RGB)영상인 경우에는 채널을 3으로 설정합니다. 
-* dim_ordering: 차원의 순서를 정의합니다. 
-    * 'th' : input_shape을 정의할 때 채널 수를 나타내는 차원이 가장 먼저 나옵니다.
-    * 'tf' : input_shape을 정의할 때 채널 수를 나타내는 차원이 가장 마지막에 나옵니다.
+    * (행, 열, 채널 수)로 정의합니다. 흑백영상인 경우에는 채널이 1이고, 컬러(RGB)영상인 경우에는 채널을 3으로 설정합니다. 
 * activation : 활성화 함수 설정합니다.
     * 'linear' : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옵니다.
     * 'relu' : rectifier 함수, 은익층에 주로 쓰입니다.
     * 'sigmoid' : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰입니다.
     * 'softmax' : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
-    
+
 입력 형태는 다음과 같습니다. 
-* dim_ordering이 'th'인 경우 (샘플 수, 채널 수, 행, 열)로 이루어진 4D 텐서입니다.
-* dim_ordering이 'tf'인 경우 (샘플 수, 행, 열, 채널 수)로 이루어진 4D 텐서입니다.
+* image_data_format이 'channels_first'인 경우 (샘플 수, 채널 수, 행, 열)로 이루어진 4D 텐서입니다.
+* image_data_format이 'channels_last'인 경우 (샘플 수, 행, 열, 채널 수)로 이루어진 4D 텐서입니다.
+
+    image_data_format 옵션은 "keras.json" 파일 안에 있는 설정입니다. 콘솔에서 "vi ~/.keras/keras.json"으로 keras.json 파일 내용을 변경할 수 있습니다. 
 
 출력 형태는 다음과 같습니다.
-* dim_ordering이 'th'인 경우 (샘플 수, 필터 수, 행, 열)로 이루어진 4D 텐서입니다.
-* dim_ordering이 'tf'인 경우 (샘플 수, 행, 열, 필터 수)로 이루어진 4D 텐서입니다.
-* 행과 열의 크기는 border_mode가 'same'인 경우에는 입력 형태의 행과 열의 크기가 동일합니다.
+* image_data_format이 'channels_first'인 경우 (샘플 수, 필터 수, 행, 열)로 이루어진 4D 텐서입니다.
+* image_data_format이 'channels_last'인 경우 (샘플 수, 행, 열, 필터 수)로 이루어진 4D 텐서입니다.
+* 행과 열의 크기는 padding가 'same'인 경우에는 입력 형태의 행과 열의 크기가 동일합니다.
 
-간단한 예제로 컨볼루션 레이어와 필터에 대해서 알아보겠습니다. 입력 이미지는 채널 수가 1, 너비가 3 픽셀, 높이가 3 픽셀이고, 크기가 2 x 2인 필터가 하나인 경우를 레이어로 표시하면 다음과 같습니다.
+간단한 예제로 컨볼루션 레이어와 필터에 대해서 알아보겠습니다. 입력 이미지는 채널 수가 1, 너비가 3 픽셀, 높이가 3 픽셀이고, 크기가 2 x 2인 필터가 하나인 경우를 레이어로 표시하면 다음과 같습니다. 단 image_data_format이 'channels_last'인 경우 입니다.
 
-    Convolution2D(1, 2, 2, border_mode='valid', input_shape=(1, 3, 3))
+    Conv2D(1, (2, 2), padding='valid', input_shape=(3, 3, 1))
     
 이를 도식화하면 다음과 같습니다.
 
@@ -84,7 +82,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 다음은 필터의 개수에 대해서 알아봅니다. 입력 이미지가 단채널의 3 x 3이고, 2 x 2인 필터가 하나 있다면 다음과 같이 컨볼루션 레이어를 정의할 수 있습니다.
 
-    Convolution2D(1, 2, 2, border_mode='same', input_shape=(1, 3, 3))
+    Conv2D(1, (2, 2), padding='same', input_shape=(3, 3, 1))
     
 이를 도식화하면 다음과 같습니다.
 
@@ -92,7 +90,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 만약 여기서 사이즈가 2 x 2 필터를 3개 사용한다면 다음과 같이 정의할 수 있습니다.
 
-    Convolution2D(3, 2, 2, border_mode='same', input_shape=(1, 3, 3))
+    Conv2D(3, (2, 2), padding='same', input_shape=(3, 3, 1))
     
 이를 도식화하면 다음과 같습니다.
 
@@ -113,7 +111,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 다음은 입력 이미지의 채널이 여러 개인 경우를 살펴보겠습니다. 만약 입력 이미지의 채널이 3개이고 사이즈가 3 x 3이고, 사이즈가 2 x 2 필터를 1개 사용한다면 다음과 같이 컨볼루션 레이어를 정의할 수 있습니다.
 
-    Convolution2D(1, 2, 2, border_mode='same', input_shape=(3, 3, 3))
+    Conv2D(1, (2, 2), padding='same', input_shape=(3, 3, 3))
 
 이를 도식화하면 다음과 같습니다.
 
@@ -130,7 +128,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 마지막으로 입력 이미지의 사이즈가 3 x 3이고 채널이 3개이고, 사이즈가 2 x 2인 필터가 2개인 경우를 살펴보겠습니다. 
 
-    Convolution2D(2, 2, 2, border_mode='same', input_shape=(3, 3, 3))
+    Conv2D(2, (2, 2), padding='same', input_shape=(3, 3, 3))
     
 이를 도식화하면 다음과 같습니다. 
 
@@ -224,18 +222,10 @@ import numpy
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Flatten
-from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
 from keras.utils import np_utils
-
-import numpy
-
-from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
 ```
-
-    Using Theano backend.
-
 
 Sequential 모델을 하나 생성한 뒤 위에서 정의한 레이어를 차례차레 추가하면 컨볼루션 모델이 생성됩니다.
 
@@ -243,13 +233,23 @@ Sequential 모델을 하나 생성한 뒤 위에서 정의한 레이어를 차�
 ```python
 model = Sequential()
 
-model.add(Convolution2D(2, 3, 3, border_mode='same', input_shape=(1, 8, 8), activation='relu'))
+model.add(Conv2D(2, (3, 3), padding='same', activation='relu', input_shape=(8, 8, 1)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Convolution2D(3, 2, 2, border_mode='same', activation='relu'))
+model.add(Conv2D(3, (2, 2), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
 model.add(Dense(8, activation='relu'))
 model.add(Dense(3, activation='softmax'))
+```
+
+생성한 모델을 케라스에서 제공하는 함수를 이용하여 가시화 시켜봅니다.
+
+
+```python
+from IPython.display import SVG
+from keras.utils.vis_utils import model_to_dot
+
+%matplotlib inline
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
@@ -269,8 +269,3 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * 이전 : [딥러닝 이야기/다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
 * 다음 : [딥러닝 이야기/컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
-
-
-```python
-
-```
