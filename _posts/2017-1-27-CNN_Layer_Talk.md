@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "컨볼루션 신경망 레이어 이야기"
-author: 김태영
+author: Taeyoung, Kim
 date:   2017-01-27 04:00:00
 categories: Lecture
 comments: true
@@ -13,7 +13,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_lego_1
 
 ### 필터로 특징을 뽑아주는 컨볼루션(Convolution) 레이어
 
-케라스에서 제공되는 컨볼루션 레이어 종류에도 여러가지가 있으나 영상 처리에 주로 사용되는 Convolution2D 레이어를 살펴보겠습니다. 레이어는 영상 인식에 주로 사용되며, 필터가 탑재되어 있습니다. 아래는 Convolution2D 클래스 사용 예제입니다.
+케라스에서 제공되는 컨볼루션 레이어 종류에도 여러가지가 있으나 영상 처리에 주로 사용되는 Conv2D 레이어를 살펴보겠습니다. 레이어는 영상 인식에 주로 사용되며, 필터가 탑재되어 있습니다. 아래는 Conv2D 클래스 사용 예제입니다.
 
     Conv2D(32, (5, 5), padding='valid', input_shape=(28, 28, 1), activation='relu')
     
@@ -253,7 +253,7 @@ from keras.utils.vis_utils import model_to_dot
 
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
-
+å
 ![model](http://tykimos.github.com/Keras/warehouse/2017-1-27_CNN_Layer_Talk_model.png)
 
 ---
