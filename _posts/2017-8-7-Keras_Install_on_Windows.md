@@ -303,6 +303,8 @@ model = load_model('mnist_mlp_model.h5')
 
 ### 오류 대처
 
+#### pydot 에러
+
 > 딥러닝 모델 가시화 기능 실행 시 ‘GraphViz's executables not found’ 또는 ‘Failed to import pydot. You must install pydot and graphviz for `pydotprint` to work.’ 문장이 뜨면서 에러가 납니다.
 
 이 오류는 graphviz가 정상적으로 설치되지 않았거나 경로가 설정되지 않은 경우에 발생합니다.
@@ -323,6 +325,15 @@ model = load_model('mnist_mlp_model.h5')
 
 * 환경 변수를 저장한 후 jupyter notebook이 실행되고 있는 cmd 창을 종료하고 다시 시작합니다.
 * 다시 위 예제 코드를 실행시켜서 잘 그림과 같이 이미지가 잘 나오면 성공적으로 설치된 것입니다.
+
+#### 주피터 실행 에러
+
+> 주피터 실행 시 아래와 같은 에러가 발생합니다. 
+> Copy/paste this URL into your browser when you connect for the first time,
+> to login with a token:
+> http://localhost:8888/?token=7c0dxxx
+
+이 경우 브러우저의 권한 등의 문제로 발생하는 것인데, 브라우저을 열어서 콘솔창에 출력된 링크로 한 번 접속하시면 해결됩니다.
 
 ---
 

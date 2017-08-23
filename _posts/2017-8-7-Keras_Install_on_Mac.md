@@ -263,9 +263,11 @@ model = load_model('mnist_mlp_model.h5')
 
 ### 오류 대처
 
+#### 주피터 실행 에러
+
 > jupyter notebook를 실행하면, "Open location 메시지를 인식할수 없습니다. (-1708)" 또는 "execution error: doesn’t understand the “open location” message. (-1708)" 메시지가 뜹니다. 
 
-운영체제 버전 등의 문제로 쥬피터가 실행할 브라우저를 찾지 못하는 경우 발생하는 메시지입니다. 이 경우 쥬피터 옵션에 브라우저를 직접 셋팅하시면 됩니다. '.jupyter_notebook_config.py' 파일이 있는 지 확인합니다.
+운영체제 버전 등의 문제로 주피터가 실행할 브라우저를 찾지 못하는 경우 발생하는 메시지입니다. 이 경우 주피터 옵션에 브라우저를 직접 셋팅하시면 됩니다. '.jupyter_notebook_config.py' 파일이 있는 지 확인합니다.
 
     (venv) keras_talk $ find ~/.jupyter -name jupyter_notebook_config.py
 
@@ -290,7 +292,7 @@ model = load_model('mnist_mlp_model.h5')
     c.NotebookApp.browser = u’safari’
     c.NotebookApp.browser = u’firefox’
 
-이 파일을 저장 후 (esc키 누른 후 wq! 입력하고 엔터칩니다.) 다시 쥬피터를 실행하면 지정한 브라우져에서 정상적으로 실행되는 것을 볼 수 있습니다. 설정한 이후에도 해당 브라우저의 경로가 설정되어 있지 않다면 아래과 같은 오류가 발생합니다.
+이 파일을 저장 후 (esc키 누른 후 wq! 입력하고 엔터칩니다.) 다시 주피터를 실행하면 지정한 브라우져에서 정상적으로 실행되는 것을 볼 수 있습니다. 설정한 이후에도 해당 브라우저의 경로가 설정되어 있지 않다면 아래과 같은 오류가 발생합니다.
 
     No web browser found: could not locate runnable browser.
 
