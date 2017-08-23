@@ -15,7 +15,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4
 * 주요 패키지 설치
 * 딥러닝 라이브러리 설치
 * 설치 환경 테스트 해보기
-* 오류 메시지
+* 오류 대처
 
 ---
 ### 프로젝트 디렉토리 만들기
@@ -261,7 +261,7 @@ model = load_model('mnist_mlp_model.h5')
 
 ---
 
-### 오류 메시지
+### 오류 대처
 
 > jupyter notebook를 실행하면, "Open location 메시지를 인식할수 없습니다. (-1708)" 또는 "execution error: doesn’t understand the “open location” message. (-1708)" 메시지가 뜹니다. 
 
