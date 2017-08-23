@@ -16,6 +16,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windo
 * 주요 패키지 설치
 * 딥러닝 라이브러리 설치
 * 설치 환경 테스트 해보기
+* 오류 대처
 
 ### 아나콘다 설치하기
 
@@ -195,7 +196,6 @@ c:\Projects\keras_talk>_
 
 녹색 박스로 표시된 영역에 아래 코드를 삽입한 뒤 'shift키 + enter키'를 눌러서 실행시킵니다.
 
-
 ```python
 import scipy
 import numpy
@@ -227,7 +227,6 @@ print('keras ' + keras.__version__)
 #### 딥러닝 기본 모델 구동 확인
 
 아래 코드는 기본적인 딥러닝 모델에 손글씨 데이터셋을 학습시킨 뒤 평가하는 기본 예제입니다. 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
-
 
 ```python
 from keras.utils import np_utils
@@ -272,7 +271,6 @@ Epoch 5/5
 
 아래 딥러닝 모델 구성을 가시화하는 코드입니다. 마찬가지로 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
 
-
 ```python
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
@@ -286,7 +284,28 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_10.png)
 
-설치가 정상적으로 완료되지 않고 ‘GraphViz's executables not found’ 또는 ‘Failed to import pydot. You must install pydot and graphviz for `pydotprint` to work.’ 문장이 뜨면서 에러가 나는 경우, 다음과 같이 진행합니다.
+#### 딥러닝 모델 저장 기능 확인
+
+아래 딥러닝 모델의 구성 및 가중치를 저장 및 로딩하는 코드입니다. 마찬가지로 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
+
+```python
+from keras.models import load_model
+
+model.save('mnist_mlp_model.h5')
+model = load_model('mnist_mlp_model.h5')
+```
+
+위 코드 실행 시 에러가 발생하지 않고, 로컬 디렉토리에 'mnist_mlp_model.h5' 파일이 생성되었으면 정상적으로 작동되는 것입니다. 지금까지 정상적으로 실행이 되었다면 상단 메뉴에서 'File > Save and Checkpoint'로 현재까지 테스트한 파일을 저장합니다. 
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_4.png)
+
+---
+
+### 오류 대처
+
+> 딥러닝 모델 가시화 기능 실행 시 ‘GraphViz's executables not found’ 또는 ‘Failed to import pydot. You must install pydot and graphviz for `pydotprint` to work.’ 문장이 뜨면서 에러가 납니다.
+
+이 오류는 graphviz가 정상적으로 설치되지 않았거나 경로가 설정되지 않은 경우에 발생합니다.
 
 * http://www.graphviz.org/Download_windows.php 에 접속하여 graphviz-2.38.zip 파일을 다운로드 받습니다.
 * 파일의 압축을 해제하고 graphviz를 설치합니다.
@@ -304,22 +323,6 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 * 환경 변수를 저장한 후 jupyter notebook이 실행되고 있는 cmd 창을 종료하고 다시 시작합니다.
 * 다시 위 예제 코드를 실행시켜서 잘 그림과 같이 이미지가 잘 나오면 성공적으로 설치된 것입니다.
-
-#### 딥러닝 모델 저장 기능 확인
-
-아래 딥러닝 모델의 구성 및 가중치를 저장 및 로딩하는 코드입니다. 마찬가지로 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
-
-
-```python
-from keras.models import load_model
-
-model.save('mnist_mlp_model.h5')
-model = load_model('mnist_mlp_model.h5')
-```
-
-위 코드 실행 시 에러가 발생하지 않고, 로컬 디렉토리에 'mnist_mlp_model.h5' 파일이 생성되었으면 정상적으로 작동되는 것입니다. 지금까지 정상적으로 실행이 되었다면 상단 메뉴에서 'File > Save and Checkpoint'로 현재까지 테스트한 파일을 저장합니다. 
-
-![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_4.png)
 
 ---
 
