@@ -15,6 +15,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4
 * 주요 패키지 설치
 * 딥러닝 라이브러리 설치
 * 설치 환경 테스트 해보기
+* 오류 메시지
 
 ---
 ### 프로젝트 디렉토리 만들기
@@ -157,7 +158,6 @@ pydot은 모델 가시화할 때 필요한 것인데 이를 사용하려면, gra
 
 녹색 박스로 표시된 영역에 아래 코드를 삽입한 뒤 'shift키 + enter키'를 눌러서 실행시킵니다.
 
-
 ```python
 import scipy
 import numpy
@@ -189,7 +189,6 @@ print('keras ' + keras.__version__)
 #### 딥러닝 기본 모델 구동 확인
 
 아래 코드는 기본적인 딥러닝 모델에 손글씨 데이터셋을 학습시킨 뒤 평가하는 기본 예제입니다. 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
-
 
 ```python
 from keras.utils import np_utils
@@ -234,7 +233,6 @@ Epoch 5/5
 
 아래 딥러닝 모델 구성을 가시화하는 코드입니다. 마찬가지로 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
 
-
 ```python
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
@@ -252,7 +250,6 @@ SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 
 아래 딥러닝 모델의 구성 및 가중치를 저장 및 로딩하는 코드입니다. 마찬가지로 새로운 셀에서 실행시키기 위해 상단 메뉴에서 'Insert > Insert Cell Below'을 선택하여 새로운 셀을 생성합니다. 새로 생긴 셀에 아래 코드를 입력한 후 'shift키 + enter키'를 눌러 해당 코드를 실행합니다.
 
-
 ```python
 from keras.models import load_model
 
@@ -261,6 +258,45 @@ model = load_model('mnist_mlp_model.h5')
 ```
 
 위 코드 실행 시 에러가 발생하지 않고, 로컬 디렉토리에 'mnist_mlp_model.h5' 파일이 생성되었으면 정상적으로 작동되는 것입니다. 지금까지 정상적으로 실행이 되었다면 상단 메뉴에서 'File > Save and Checkpoint'로 현재까지 테스트한 파일을 저장합니다. 
+
+---
+
+### 오류 메시지
+
+> jupyter notebook를 실행하면, "Open location 메시지를 인식할수 없습니다. (-1708)" 또는 "execution error: doesn’t understand the “open location” message. (-1708)" 메시지가 뜹니다. 
+
+운영체제 버전 등의 문제로 쥬피터가 실행할 브라우저를 찾지 못하는 경우 발생하는 메시지입니다. 이 경우 쥬피터 옵션에 브라우저를 직접 셋팅하시면 됩니다. '.jupyter_notebook_config.py' 파일이 있는 지 확인합니다.
+
+    (venv) keras_talk $ find ~/.jupyter -name jupyter_notebook_config.py
+
+출력되는 내용이 없다면 파일이 없는 것입니다. 파일이 없다면 아래 명령으로 파일을 생성합니다.
+
+    (venv) keras_talk $ jupyter notebook --generate-config 
+    
+'jupyter_notebook_config.py'파일을 엽니다. 
+
+    (venv) keras_talk $ vi ~/.jupyter/jupyter_notebook_config.py
+    
+아래와 같이 'c.Notebook.App.browser'변수를 찾습니다. 
+    
+    # If not specified, the default browser will be determined by the `webbrowser`
+    # standard library module, which allows setting of the BROWSER environment
+    # variable to override it.
+    # c.NotebookApp.browser = u''
+
+'c.NotebookApp.browser' 변수를 원하는 브러우저 이름으로 설정합니다. 아래 행 중 하나만 설정하시고, 앞에 '#'은 제거해야 합니다.
+
+    c.NotebookApp.browser = u’chrome’
+    c.NotebookApp.browser = u’safari’
+    c.NotebookApp.browser = u’firefox’
+
+이 파일을 저장 후 (esc키 누른 후 wq! 입력하고 엔터칩니다.) 다시 쥬피터를 실행하면 지정한 브라우져에서 정상적으로 실행되는 것을 볼 수 있습니다. 설정한 이후에도 해당 브라우저의 경로가 설정되어 있지 않다면 아래과 같은 오류가 발생합니다.
+
+    No web browser found: could not locate runnable browser.
+
+이 경우 해당 브러우저의 전체 경로를 설정합니다.
+
+    c.NotebookApp.browser = u'open -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome %s'
 
 ---
 
