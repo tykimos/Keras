@@ -5,49 +5,49 @@ comments: true
 ---
 케라스로 배워보는 딥러닝 강좌를 아래 내용를 아래 순서대로 진행하고자 합니다.
 
-### 1권 케라스 이야기
+### 1권 브릭과 함께하는 딥러닝 "케라스 이야기"
 
-1. 딥러닝 이야기
+1. 케라스 시작하기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
     * [맥에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Mac/)
-    * [윈도우에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Windows/)
-    * [유닉스에서 케라스 설치하기]    
-    * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)        
-    * [학습과정과 데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
+    * [윈도우에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Windows/)    
+1. 딥러닝 개념잡기
+    * [데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
+    * [학습과정 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_Talk/)
+    * [학습과정 살펴보기](https://tykimos.github.io/Keras/2017/07/09/Training_Monitoring/)          
+    * [학습 조기종료 시키기](https://tykimos.github.io/Keras/2017/07/09/Early_Stopping/)
     * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)    
-1. 파이썬 살펴보기
-    * [개념, 기초, 입출력]
-    * [클래스, 모듈]
-    * [실용 패키지]
+    * [학습 모델 보기/저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
 1. 레이어 개념잡기
     * [다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
     * [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/)
     * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
     * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/06/10/CNN_Data_Augmentation/) 
-    * [특징맵 살펴보기]
-    * [미리 학습된 신경망 이용하기]
-    * [순환 신경망 레이어 및 기본 모델 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)
-    * [순환 신경망 모델로 분류해보기]
+    * [순환 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Getting_Started/)
+    * [순환 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)
 1. 레시피 따라해보기
     * [수치입력 수치예측 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/)
-    * [수치입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Input_Binary_Classification_Model_Recipe/)    
+    * [수치입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Input_Binary_Classification_Model_Recipe/)  
     * [수치입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/19/Numerical_Input_Multiclass_Classification_Model_Recipe/)
+    * [영상입력 수치예측 모델 레시피]    
     * [영상입력 이진분류 모델 레시피]    
     * [영상입력 다중클래스분류 모델 레시피]    
     * [시계열수치입력 수치예측 모델 레시피]
-    * [시계열수치입력 이진분류 모델 레시피]
-    * [시계열수치입력 다중클래스분류 모델 레시피]    
+    * [시계열수치입력(문장) 이진분류 모델 레시피]
+    * [시계열수치입력(문장) 다중클래스분류 모델 레시피]    
     * [시계열영상입력 이진분류 모델 레시피]
-    * [시계열영상입력 다중클래스분류 모델 레시피]
+    * [시계열영상입력 다중클래스분류 모델 레시피]    
+1. 기타
+    * [파이썬 이야기](https://tykimos.github.io/Keras/2017/02/10/Python_Talk/)
+    * [파이썬 패키지 이야기](https://tykimos.github.io/Keras/2017/02/10/Python_Package_Talk/)
+    * [오프라인 설치](https://tykimos.github.io/Keras/2017/03/15/Keras_Offline_Install/)        
+    * [특징맵 살펴보기]
+    * [미리 학습된 신경망 이용하기]
+    * [순환 신경망 모델로 분류해보기]    
+    * [유닉스에서 케라스 설치하기]        
     * [문장입력 이진분류 모델 레시피]
-    * [문장입력 다중클래스분류 모델 레시피]
-1. 실전 케라스
-    * 모델 구성 보기
-    * 데이터셋 전처리하기
-    * [학습과정 표시하기 (텐서보드 포함)](https://tykimos.github.io/Keras/2017/07/09/Training_Monitoring/)    
-    * [학습 조기종료 시키기](https://tykimos.github.io/Keras/2017/07/09/Early_Stopping/)
-    * [학습 모델 저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/)
+    * [문장입력 다중클래스분류 모델 레시피]    
     * [딥러닝 모델 기반 운영시스템 설계하기]
 
 ### 2권 케라스로 컴퓨터비전 해보기

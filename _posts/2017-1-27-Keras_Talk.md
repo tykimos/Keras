@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "케라스 이야기"
-author: Taeyoung, Kim
+author: 김태영
 date:   2017-01-27 01:00:00
 categories: Lecture
 comments: true
@@ -9,7 +9,7 @@ image: http://tykimos.github.io/Keras/warehouse/gates.jpg
 ---
 케라스(Keras) - 그 간결함에 빠지다.
 
-케라스는 널리 사용되고 있는 티아노(Theano)와 요즘 많이 쓰고 있는 텐서플로우(TensorFlow)를 위한 딥러닝 라이브러리입니다. 케라스는 아이디어를 빨리 구현하고 실험하기 위한 목적에 포커스가 맞춰진 만큼 굉장히 간결하고 쉽게 사용할 수 있도록 파이썬으로 구현된 상위 레벨의 라이브러리입니다. 즉 내부적으론 티아노와 텐서플로우가 구동되지만 연구자는 복잡한 티아노와 텐서플로우를 알 필요는 없습니다. 케라스는 쉽게 컨볼루션 신경망, 순환 신경망 또는 이를 조합한 신경망은 물론 다중 입력 또는 다중 출력 등 다양한 연결 구성을 할 수 있습니다.
+케라스는 파이썬으로 구현된 쉽고 간결한 딥러닝 라이브러리입니다. 딥러닝 비전문가라도 각자 분야에서 손쉽게 딥러닝 모델을 개발하고 활용할 수 있도록 케라스는 직관적인 API를 제공하고 있습니다. 내부적으로는 텐서플로우(TensorFlow), 티아노(Theano), CNTK 등의 딥러닝 전용 엔진이 구동되지만 케라스 사용자는 복잡한  내부 엔진을 알 필요는 없습니다. 직관적인 API로 쉽게 다층퍼셉트론 모델, 컨볼루션 신경망 모델, 순환 신경망 모델 또는 이를 조합한 모델은 물론 다중 입력 또는 다중 출력 등 다양한 구성을 할 수 있습니다.
 
 ---
 
@@ -38,72 +38,93 @@ image: http://tykimos.github.io/Keras/warehouse/gates.jpg
 
 케라스의 가장 핵심적인 데이터 구조는 바로 `모델`입니다. 케라스에서 제공하는 시퀀스 모델로 원하는 레이어를 쉽게 순차적으로 쌓을 수 있습니다. 다중 출력이 필요하는 등 좀 더 복잡한 모델을 구성하려면 케라스 함수 API를 사용하면 됩니다. 케라스로 딥러닝 모델을 만들 때는 다음과 같은 순서로 작성합니다. 다른 딥러닝 라이브러리와 비슷한 순서이지만 훨씬 직관적이고 간결합니다. 
 
-1. 데이터셋 준비하기
-    * 필요한 훈련셋, 검증셋, 테스트셋을 준비합니다.
-    * 딥러닝 모델의 학습 및 평가를 할 수 있도록 포맷 변환을 합니다.
+1. 데이터셋 생성하기
+    * 원본 데이터를 불러오거나 시뮬레이션을 통해 데이터를 생성합니다.
+    * 데이터로부터 훈련셋, 검증셋, 시험셋을 생성합니다.
+    * 이 때 딥러닝 모델의 학습 및 평가를 할 수 있도록 포맷 변환을 합니다.
 1. 모델 구성하기
     * 시퀀스 모델을 생성한 뒤 필요한 레이어를 추가하여 구성합니다.
     * 좀 더 복잡한 모델이 필요할 때는 케라스 함수 API를 사용합니다.
-1. 모델 엮기
+1. 모델 학습과정 설정하기
+    * 학습하기 전에 학습에 대한 설정을 수행합니다.
     * 손실 함수 및 최적화 방법을 정의합니다.
     * 케라스에서는 compile() 함수를 사용합니다.
 1. 모델 학습시키기
     * 훈련셋을 이용하여 구성한 모델로 학습시킵니다.
     * 케라스에서는 fit() 함수를 사용합니다.
-1. 모델 사용하기
-    * 학습한 모델을 사용합니다. 
-    * 평가를 한다면, 준비된 테스트셋으로 evaluate() 함수를 사용하여 평가합니다.
-    * 예측을 하고자 한다면 predict() 함수를 사용합니다.
+1. 학습과정 살펴보기
+    * 모델 학습 시 훈련셋, 검증셋의 손실 및 정확도를 측정합니다.
+    * 반복횟수에 따른 손실 및 정확도 추이를 보면서 학습 상황을 판단합니다.
+1. 모델 평가하기 
+    * 준비된 시험셋으로 학습한 모델을 평가합니다.
+    * 케라스에서는 evaluate() 함수를 사용합니다.
+1. 모델 사용하기 
+    * 임의의 입력으로 모델의 출력을 얻습니다.
+    * 케라스에서는 predict() 함수를 사용합니다.
 
-손글씨 영상을 분류하는 문제를 케라스로 간단히 구현해봤습니다. 가로세로 픽셀이 28 x 28인 이미지를 입력받아 이를 784 벡터로 구성한 다음 이를 학습 및 평가하는 코드입니다. 이 간단한 코드로 93.4%의 정확도 결과를 얻었습니다. 각 함수의 설명 및 인자에 대한 설명은 여러 모델을 실습해보면서 하나씩 설명드리겠습니다. 
-
+손글씨 영상을 분류하는 모델을 케라스로 간단히 구현해봤습니다. 가로세로 픽셀이 28 x 28인 이미지를 입력받아 이를 784 벡터로 구성한 다음 이를 학습 및 평가하는 코드입니다. 이 간단한 코드로 93.4%의 정확도 결과를 얻었습니다. 각 함수의 설명 및 인자에 대한 설명은 여러 모델을 실습해보면서 하나씩 설명드리겠습니다. 
 
 ```python
+# 0. 사용할 패키지 불러오기
 from keras.utils import np_utils
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 
-# 1. 데이터셋 준비하기
-(X_train, Y_train), (X_test, Y_test) = mnist.load_data()
-X_train = X_train.reshape(60000, 784).astype('float32') / 255.0
-X_test = X_test.reshape(10000, 784).astype('float32') / 255.0
-Y_train = np_utils.to_categorical(Y_train)
-Y_test = np_utils.to_categorical(Y_test)
+# 1. 데이터셋 생성하기
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train = x_train.reshape(60000, 784).astype('float32') / 255.0
+x_test = x_test.reshape(10000, 784).astype('float32') / 255.0
+y_train = np_utils.to_categorical(y_train)
+y_test = np_utils.to_categorical(y_test)
 
 # 2. 모델 구성하기
 model = Sequential()
-model.add(Dense(output_dim=64, input_dim=28*28, activation='relu'))
-model.add(Dense(output_dim=10, activation='softmax'))
+model.add(Dense(units=64, input_dim=28*28, activation='relu'))
+model.add(Dense(units=10, activation='softmax'))
 
-# 3. 모델 엮기
+# 3. 모델 학습과정 설정하기
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 # 4. 모델 학습시키기
-model.fit(X_train, Y_train, nb_epoch=5, batch_size=32)
+hist = model.fit(x_train, y_train, epochs=5, batch_size=32)
 
-# 5. 모델 사용하기
-loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
+# 5. 학습과정 살펴보기
+print('## training loss and acc ##')
+print(hist.history['loss'])
+print(hist.history['acc'])
 
-print('loss_and_metrics : ' + str(loss_and_metrics))
+# 6. 모델 평가하기
+loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
+print('## evaluation loss and_metrics ##')
+print(loss_and_metrics)
+
+# 7. 모델 사용하기
+xhat = x_test[0:1]
+yhat = model.predict(xhat)
+print('## yhat ##')
+print(yhat)
 ```
 
     Epoch 1/5
-    60000/60000 [==============================] - 1s - loss: 0.6704 - acc: 0.8259     
+    60000/60000 [==============================] - 2s - loss: 0.6861 - acc: 0.8214     
     Epoch 2/5
-    60000/60000 [==============================] - 1s - loss: 0.3438 - acc: 0.9043     
+    60000/60000 [==============================] - 2s - loss: 0.3472 - acc: 0.9021     
     Epoch 3/5
-    60000/60000 [==============================] - 1s - loss: 0.2959 - acc: 0.9162     
+    60000/60000 [==============================] - 2s - loss: 0.2972 - acc: 0.9159     
     Epoch 4/5
-    60000/60000 [==============================] - 1s - loss: 0.2678 - acc: 0.9239     
+    60000/60000 [==============================] - 2s - loss: 0.2671 - acc: 0.9243     
     Epoch 5/5
-    60000/60000 [==============================] - 1s - loss: 0.2474 - acc: 0.9305     
-     8704/10000 [=========================>....] - ETA: 0sloss_and_metrics : [0.2339999158129096, 0.93320000000000003]
-
-
-    Using Theano backend.
-
-
+    60000/60000 [==============================] - 2s - loss: 0.2444 - acc: 0.9311     
+    ## training loss and acc ##
+    [0.68605235149065658, 0.34716726491451261, 0.29719433775146803, 0.26708923313419025, 0.24437546383142472]
+    [0.82138333333333335, 0.90213333333333334, 0.91591666666666671, 0.92433333333333334, 0.93113333333333337]
+     9728/10000 [============================>.] - ETA: 0s## evaluation loss and_metrics ##
+    [0.229048886179924, 0.93520000000000003]
+    ## yhat ##
+    [[  8.87035931e-05   1.47768702e-07   9.51653055e-04   3.75617994e-03
+        2.82607380e-06   4.90140701e-05   2.10885389e-08   9.94055033e-01
+        6.05004097e-05   1.03587494e-03]]
 
 ---
 
@@ -124,15 +145,9 @@ print('loss_and_metrics : ' + str(loss_and_metrics))
 
 _(본 문단은 신화에 박식한 wingikaros님의 도움으로 작성되었습니다)_
 
-
 ---
 
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
 * 다음 : [딥러닝 이야기/다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
-
-
-```python
-
-```
