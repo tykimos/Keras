@@ -16,6 +16,8 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windo
 * 주요 패키지 설치
 * 딥러닝 라이브러리 설치
 * 설치 환경 테스트 해보기
+* 딥러닝 엔진 바꾸기
+* 다시 시작하기
 * 오류 대처
 
 ### 아나콘다 설치하기
@@ -301,6 +303,37 @@ model = load_model('mnist_mlp_model.h5')
 
 ---
 
+### 딥러닝 엔진 바꾸기
+
+백엔드로 구동되는 딥러닝 엔진을 바꾸려먼 'C:/Users/사용자이름/.keras/keras.json' 파일을 열어서 'backend' 부분을 수정하시면 됩니다. 만약 현재 설정이 텐서플로우일 경우 아래와 같이 표시됩니다.
+
+```
+    ...
+    "backend": "tensorflow"
+    ...
+```
+
+텐서플로우에서 티아노로 변경할 경우 위의 설정을 아래와 같이 수정합니다.
+
+```
+    ...
+    "backend": "theano"
+    ...
+```
+
+---
+
+### 다시 시작하기
+
+재부팅하거나 새로운 명령창에서 다시 시작할 때는 다음의 명령을 수행합니다.
+
+```
+    c:\Projects\keras_talk>activate venv
+    (venv) c:\Projects\keras_talk>jupyter notebook
+```
+
+---
+
 ### 오류 대처
 
 #### pydot 에러
@@ -339,7 +372,7 @@ model = load_model('mnist_mlp_model.h5')
 
 ### 요약
 
-윈도우 환경에서 케라스를 구동하기 위해, 주피터 노트북 개발환경, 주요 패치키, 딥러링 라이브러리 설치 및 구동을 해봤습니다. 
+윈도우 환경에서 케라스를 구동하기 위해, 주피터 노트북 개발환경, 주요 패키지, 딥러닝 라이브러리 설치 및 구동을 해봤습니다.
 
 ---
 

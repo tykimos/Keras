@@ -285,29 +285,13 @@ model = load_model('mnist_mlp_model.h5')
 
 ### 다시 시작하기
 
-재부팅하거나 새로운 터미널 윈도우에서 다시 시작할 때는 다음의 명령합니다.
+재부팅하거나 새로운 터미널 윈도우에서 다시 시작할 때는 다음의 명령을 수행합니다.
 
 ```
-$ cd ~/Projects/keras_talk
-$ source venv/bin/activate
-(venv) $ jupyter notebook
+    $ cd ~/Projects/keras_talk
+    $ source venv/bin/activate
+    (venv) $ jupyter notebook
 ```
-
-안녕하세요. 김태영입니다. 
- 
-운영체제 문제 때문에 텐서플로우가 설치 안되시는 분들은 티아노(Theano)로 실습을 진행하셔도 무방합니다. 윈도우 경우 C:/Users/사용자이름/.keras/keras.json 파일을 여시고, 맥인 경우에는 ~/.keras/keras.json 파일을 열어서 아래 부분을 수정해주세요.
-
-"backend": "tensorflow" 을 "backend": "theano"로 수정하시면 됩니다.
-
-혹시 아직까지 pydot이나 pydotplus, graphviz, svg 등에 오류를 해결하시지 못하신 분들은 실습에 크게 지장없으니 염려안하셔도 됩니다. 
-
-재부팅이나 설치 완료 후 다시 실행할 때는 다음과 같이 하시면 됩니다.
-
-[윈도우]
-
-c:\Projects\keras_talk>activate venv
-(venv) c:\Projects\keras_talk>jupyter notebook
-[맥]
 
 ---
 
