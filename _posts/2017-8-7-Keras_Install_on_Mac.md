@@ -150,7 +150,7 @@ pydot은 모델 가시화할 때 필요한 것인데 이를 사용하려면, gra
 (venv) keras_talk $ jupyter notebook
 ```
 
-아래 그림처럼 우측 상단에 있는 'new' 버튼을 클릭해서 예제 코드를 작성할 파이션 파일을 생성합니다.
+아래 그림처럼 우측 상단에 있는 'new' 버튼을 클릭해서 예제 코드를 작성할 파이썬 파일을 생성합니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_2.png)
 
@@ -342,7 +342,7 @@ c:\Projects\keras_talk>activate venv
     c.NotebookApp.browser = u’safari’
     c.NotebookApp.browser = u’firefox’
 
-이 파일을 저장 후 (esc키 누른 후 wq! 입력하고 엔터칩니다.) 다시 주피터를 실행하면 지정한 브라우져에서 정상적으로 실행되는 것을 볼 수 있습니다. 설정한 이후에도 해당 브라우저의 경로가 설정되어 있지 않다면 아래과 같은 오류가 발생합니다.
+이 파일을 저장 후 (esc키 누른 후 wq! 입력하고 엔터칩니다.) 다시 주피터를 실행하면 지정한 브라우저에서 정상적으로 실행되는 것을 볼 수 있습니다. 설정한 이후에도 해당 브라우저의 경로가 설정되어 있지 않다면 아래와 같은 오류가 발생합니다.
 
     No web browser found: could not locate runnable browser.
 
@@ -354,7 +354,7 @@ c:\Projects\keras_talk>activate venv
 
 ### 요약
 
-맥 환경에서 케라스를 구동하기 위해, 주피터 노트북 개발환경, 주요 패치키, 딥러링 라이브러리 설치 및 구동을 해봤습니다. 
+맥 환경에서 케라스를 구동하기 위해, 주피터 노트북 개발환경, 주요 패키지, 딥러닝 라이브러리 설치 및 구동을 해봤습니다. 
 
 ---
 ### 같이 보기
