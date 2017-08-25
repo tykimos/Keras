@@ -7,7 +7,7 @@ categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4.png
 ---
-본 강좌에서는 맥에서 케라스 개발 환경을 구축해보겠습니다. 진행순서는 다음과 같습니다.
+맥에서 케라스 개발 환경을 구축하는 방법에 대해서 알아보겠습니다. 진행순서는 다음과 같습니다.
 
 * 프로젝트 디렉토리 만들기
 * 가상 개발환경 만들기
@@ -15,6 +15,8 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Mac_4
 * 주요 패키지 설치
 * 딥러닝 라이브러리 설치
 * 설치 환경 테스트 해보기
+* 딥러닝 엔진 바꾸기
+* 다시 시작하기
 * 오류 대처
 
 ---
@@ -258,6 +260,54 @@ model = load_model('mnist_mlp_model.h5')
 ```
 
 위 코드 실행 시 에러가 발생하지 않고, 로컬 디렉토리에 'mnist_mlp_model.h5' 파일이 생성되었으면 정상적으로 작동되는 것입니다. 지금까지 정상적으로 실행이 되었다면 상단 메뉴에서 'File > Save and Checkpoint'로 현재까지 테스트한 파일을 저장합니다. 
+
+---
+
+### 딥러닝 엔진 바꾸기
+
+백엔드로 구동되는 딥러닝 엔진을 바꾸려먼 '~/.keras/keras.json' 파일을 열어서 'backend' 부분을 수정하시면 됩니다. 만약 현재 설정이 텐서플로우일 경우 아래와 같이 표시됩니다.
+
+    ```
+    ...
+    "backend": "tensorflow"
+    ...
+    ```
+
+텐서플로우에서 티아노로 변경할 경우 위의 설정을 아래와 같이 수정합니다.
+
+    ```
+    ...
+    "backend": "theano"
+    ...
+    ```
+
+---
+
+### 다시 시작하기
+
+재부팅하거나 새로운 터미널 윈도우에서 다시 시작할 때는 다음의 명령합니다.
+
+```
+$ cd ~/Projects/keras_talk
+$ source venv/bin/activate
+(venv) $ jupyter notebook
+```
+
+안녕하세요. 김태영입니다. 
+ 
+운영체제 문제 때문에 텐서플로우가 설치 안되시는 분들은 티아노(Theano)로 실습을 진행하셔도 무방합니다. 윈도우 경우 C:/Users/사용자이름/.keras/keras.json 파일을 여시고, 맥인 경우에는 ~/.keras/keras.json 파일을 열어서 아래 부분을 수정해주세요.
+
+"backend": "tensorflow" 을 "backend": "theano"로 수정하시면 됩니다.
+
+혹시 아직까지 pydot이나 pydotplus, graphviz, svg 등에 오류를 해결하시지 못하신 분들은 실습에 크게 지장없으니 염려안하셔도 됩니다. 
+
+재부팅이나 설치 완료 후 다시 실행할 때는 다음과 같이 하시면 됩니다.
+
+[윈도우]
+
+c:\Projects\keras_talk>activate venv
+(venv) c:\Projects\keras_talk>jupyter notebook
+[맥]
 
 ---
 
