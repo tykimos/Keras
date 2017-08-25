@@ -188,7 +188,7 @@ c:\Projects\keras_talk>_
     (venv) c:\Projects\keras_talk>jupyter notebook
 ```
 
-아래 그림처럼 우측 상단에 있는 'New' 버튼을 클릭해서 예제 코드를 작성할 파이션 파일을 생성합니다.
+아래 그림처럼 우측 상단에 있는 'New' 버튼을 클릭해서 예제 코드를 작성할 파이썬 파일을 생성합니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_19.png)
 
@@ -366,7 +366,7 @@ model = load_model('mnist_mlp_model.h5')
 > to login with a token:
 > http://localhost:8888/?token=7c0dxxx
 
-이 경우 브러우저의 권한 등의 문제로 발생하는 것인데, 브라우저을 열어서 콘솔창에 출력된 링크로 한 번 접속하시면 해결됩니다.
+이 경우 브라우저의 권한 등의 문제로 발생하는 것인데, 브라우저를 열어서 콘솔창에 출력된 링크로 한 번 접속하시면 해결됩니다.
 
 ---
 
