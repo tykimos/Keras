@@ -13,7 +13,7 @@ comments: true
     * [윈도우에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Windows/)    
 1. 딥러닝 개념잡기
     * [데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
-    * [학습과정 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_Talk/)
+    * [학습과정 이야기](https://tykimos.github.io/Keras/2017/03/25/Fit_Talk/)
     * [학습과정 살펴보기](https://tykimos.github.io/Keras/2017/07/09/Training_Monitoring/)          
     * [학습 조기종료 시키기](https://tykimos.github.io/Keras/2017/07/09/Early_Stopping/)
     * [평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)    
