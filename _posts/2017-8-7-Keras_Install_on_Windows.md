@@ -20,6 +20,8 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windo
 * 다시 시작하기
 * 오류 대처
 
+---
+
 ### 아나콘다 설치하기
 
 https://repo.continuum.io/archive/에 접속하여 시스템환경에 맞는 버전을 선택하여 Anaconda3을 다운로드 받습니다.
@@ -73,6 +75,8 @@ Windows키 + r을 눌러 cmd(명령 프롬프트)를 실행시키고, cmd 창에
     >python [Enter]
 ```
 
+---
+
 ### 프로젝트 디렉토리 만들기
 Windows키+ r을 눌러 cmd(명령 프롬프트)를 실행시킵니다. 이 때, 권한 문제를 막기 위해 관리자 권한으로 명령 프롬프트를 실행시킵니다. 다음 명령어를 입력하여 C드라이브로 이동합니다.
 
@@ -101,6 +105,8 @@ c:\Projects\keras_talk>_
 ```
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_15.png)
 
+---
+
 ### 가상 개발환경 만들기
 
 프로젝트별로 개발환경이 다양할 수 있기 때문에 가상환경을 이용하면 편리합니다. 위에서 생성한 프로젝트에 가상 환경을 구축해보겠습니다. 명령 프롬프트에서 다음 명령어를 실행하여 가상환경을 생성합니다. 이 때, 권한 문제를 막기 위해 관리자 권한으로 명령 프롬프트가 실행되어 있어야 합니다. 설치를 확인하는 문장이 나타나면 ‘y’를 입력하여 설치를 진행합니다.
@@ -116,6 +122,8 @@ c:\Projects\keras_talk>_
 ```
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_14.png)
+
+---
 
 ### 웹기반 파이썬 개발환경인 주피터 노트북 설치 
 
@@ -141,6 +149,8 @@ c:\Projects\keras_talk>_
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-7-Keras_Install_on_Windows_7.png)
 
+---
+
 ### 주요 패키지 설치
 
 다음 명령어를 입력하여 케라스 사용에 필요한 주요 패키지들을 설치합니다. 중간에 설치를 묻는 창이 뜨면 ‘y’를 입력하여 설치를 진행합니다.
@@ -149,6 +159,8 @@ c:\Projects\keras_talk>_
     (venv) c:\Projects\keras_talk>conda install -n venv numpy matplotlib pandas pydotplus h5py scikit-learn
     (venv) c:\Projects\keras_talk>conda install -n venv scipy mkl-service libpython m2w64-toolchain   
 ```
+
+---
 
 ### 딥러닝 라이브러리 설치
 
@@ -175,6 +187,8 @@ c:\Projects\keras_talk>_
 ```
     (venv) c:\Projects\keras_talk\keras>python setup.py install
 ```
+
+---
 
 ### 설치 환경 테스트 해보기
 
@@ -379,3 +393,6 @@ model = load_model('mnist_mlp_model.h5')
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
+* 이전 : [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
+* 이전 : [맥에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Mac/)
+* 다음 : [데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)

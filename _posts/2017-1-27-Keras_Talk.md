@@ -150,4 +150,6 @@ _(본 문단은 신화에 박식한 wingikaros님의 도움으로 작성되었�
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
-* 다음 : [딥러닝 이야기/다층 퍼셉트론 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/MLP_Layer_Talk/)
+* 다음 : [맥에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Mac/)
+* 다음 : [윈도우에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Windows/)
+* 다음 : [데이터셋 이야기](https://tykimos.github.io/Keras/2017/03/25/Dataset_and_Fit_Talk/)
