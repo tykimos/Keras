@@ -11,7 +11,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_
 
 ---
 
-## 훈련셋, 검증셋, 시험셋
+### 훈련셋, 검증셋, 시험셋
 
 당신이 고등학교 담임선생님이고 수능 볼 학생이 3명이 있다고 가정을 해봅시다. 이 세 명 중 누가 수능을 가장 잘 볼지 알아 맞혀보도록 하겠습니다. 당신에게는 모의고사 5회분과 작년 수능 문제 1회분을 가지고 있습니다. 다음과 같이 비유될 수 있습니다. 
 - 모의고사 5회분 : 훈련셋
@@ -23,17 +23,17 @@ image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_
 
 참고로 '학습'의 의미는 문제와 해답지를 같이 준 후 문제 푼 뒤 정답과 맞추어서 학습을 하라는 것이고, '평가'의 의미는 문제만 주고 풀게한 뒤 맞는 지 틀린 지 점수만 계산하는 것입니다. 이 과정에서는 학생이 풀이과정을 보지 않고 점수만 매기는 것과 동일하기 때문에 학습이 일어나지 않습니다.
 
-### 경우 1
+#### 경우 1
 올해 수능을 가장 볼 수 있는 학생을 고르는 가장 쉬운 방법은 무엇일까요? 바로 올해 수능 문제로 시험 쳐서 점수가 가장 높은 학생을 고르면 됩니다. 하지만 안타깝게도 올해 수능 문제를 수능 전에 알아낼 수 없습니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_4.png)
 
-### 경우 2
+#### 경우 2
 그럼 모의고사 5회분을 학습시킨 뒤 작년 수능 문제로 평가해서 가장 점수가 높은 학생을 고를까요? 작년 수능 문제로 점수가 높다고 해서 올해 수능도 점수가 높은지는 장담은 못하지만 그나마 해볼 수 있는 평가 방법입니다. 여기서 공정한 평가를 위해서 작년 수능 문제는 학생들에게 학습시키면 안 됩니다. 
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_5.png)
 
-### 경우 3
+#### 경우 3
 학생들이 스스로 학습 상태를 확인하고 학습 방법을 바꾸거나 학습을 중단하는 시점을 정할 수 없을까요? 이를 위해서 검증셋이 필요합니다. 학습할 때는 모의고사 1회~4회만 사용하고, 모의고사 5회분을 검증셋으로 두어 학습할 때는 사용하지 않습니다. 이 방식은 두 가지 효과를 얻을 수 있습니다. 
 첫번째로 학습 방법을 바꾼 후 훈련셋으로 학습을 해보고 검증셋으로 평가해볼 수 있습니다. 검증셋으로 가장 높은 평가를 받은 학습 방법이 최적의 학습 방법이라고 생각하면 됩니다. 이러한 학습 방법을 결정하는 파라미터를 `하이퍼파라미터(hyperparameter)`라고 하고 최적의 학습 방법을 찾아가는 것을 하이퍼파라미터 튜닝이라고 합니다.
 
@@ -53,7 +53,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_
 
 ![plot](http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_plot3.png)
 
-### 경우 4
+#### 경우 4
 
 모의고사 5회로만 검증셋을 사용할 경우 여러 가지 문제가 발생할 수 있습니다. 
 
@@ -77,7 +77,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-3-25-Dataset_and_Fit_Talk_
 
 ---
 
-## Q & A
+### Q & A
 
 Q1) 검증셋이 학습 시에 사용되기 때문에 가중치 갱신에 영향을 미치나요?
 
@@ -100,5 +100,7 @@ A2) 맞습니다. 첫번째 검증 시 모의고사 5회를 사용하였고, 두
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
-* 이전 : [딥러닝 이야기/케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
-* 다음 : [딥러닝 이야기/평가 이야기](https://tykimos.github.io/Keras/2017/05/22/Evaluation_Talk/)
+* 이전 : [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
+* 이전 : [맥에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Mac/)
+* 이전 : [윈도우에서 케라스 설치하기](https://tykimos.github.io/Keras/2017/08/07/Keras_Install_on_Windows/)    
+* 다음 : [학습과정 이야기](https://tykimos.github.io/Keras/2017/03/25/Fit_Talk/)
