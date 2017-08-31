@@ -23,7 +23,7 @@ comments: true
     * [다층 퍼셉트론 모델 만들어보기](https://tykimos.github.io/Keras/2017/02/04/MLP_Getting_Started/)
     * [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/)
     * [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/)
-    * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/06/10/CNN_Data_Augmentation/) 
+    * [컨볼루션 신경망 모델을 위한 데이터 부풀리기](https://tykimos.github.io/Keras/2017/06/10/CNN_Data_Augmentation/)
     * [순환 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/04/09/RNN_Getting_Started/)
     * [순환 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/04/09/RNN_Layer_Talk/)
 1. 레시피 따라해보기
