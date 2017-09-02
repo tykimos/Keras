@@ -12,7 +12,7 @@ comments: true
 |레이어|Dense|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png)|MLP나 FC에 사용|
 |레이어|Conv2D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Conv2D_s.png)|CNN에 사용|
 |레이어|MaxPooling2D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_MaxPooling2D_s.png)|CNN에 사용|
-|레이어|LSTM|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_LSTM_s.png)|RNN에 사용|
+|레이어|LSTM|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_LSTM_s.png)|RNN에 사용, 내부활성화함수로 tanh 사용|
 |레이어|Flatten|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Flatten_s.png)|FC 연결용|
 |레이어|Dropout|1D|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dropout_1D_s.png)|과적합 방지용|
 |레이어|Dropout|2D|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dropout_2D_s.png)|과적합 방지용, CNN모델에 사용|
