@@ -19,8 +19,10 @@ Keras.egg-info
 .idea
 venv
 .ipynb_checkpoints
+_writing/.ipynb_checkpoints/*
 _writing/warehouse
 _deepbrick/*
 _writing/abstract/*
 _posts/waiting/*
 _projects/*
+_writing/graph/*
