@@ -17,9 +17,8 @@ comments: true
 |레이어|Dropout|1D|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dropout_1D_s.png)|과적합 방지용|
 |레이어|Dropout|2D|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dropout_2D_s.png)|과적합 방지용, CNN모델에 사용|
 |레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png)|Dense 은닉층에 주로 사용|
-|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_2D_s.png)|Conv2D 은닉층에 주로 사용|
+|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_relu_2D_s.png)|Conv2D 은닉층에 주로 사용|
 |레이어|Activation|sigmoid|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png)|이진분류 모델의 출력층에 주로 사용|
-|레이어|Activation|hard_sigmoid|![img]
-(http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_hard_sigmoid_s.png)|LSTM 은닉층에 주로 사용|
+|레이어|Activation|hard_sigmoid|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_hard_sigmoid_s.png)|LSTM 은닉층에 주로 사용|
 |레이어|Activation|softmax|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_softmax_s.png)|다중클래스분류 모델의 출력층에 주로 사용|
 |레이어|Activation|tanh|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_tanh_s.png)|-|
