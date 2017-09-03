@@ -14,7 +14,6 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 
 훈련에 사용할 임의의 값을 가진 인자 12개로 구성된 입력(x) 1000개와 각 입력에 대해 0과 1 중 임의로 지정된 출력(y)를 가지는 데이터셋을 생성해봤습니다. 시험에 사용할 데이터는 100개 준비했습니다.
 
-
 ```python
 import numpy as np
 
@@ -32,7 +31,6 @@ y_test = np.random.randint(2, size=(100, 1))
 
 12개 입력인자 중 첫번째와 두번째 인자 값만 이용하여 2차원으로 데이터 분포를 살펴보겠습니다. 라벨값에 따라 점의 색상을 다르게 표시했습니다. 
 
-
 ```python
 %matplotlib inline
 import matplotlib.pyplot as plt
@@ -46,14 +44,9 @@ plt.scatter(plot_x, plot_y, c=plot_color)
 plt.show()
 ```
 
-
-![png](output_5_0.png)
-
-
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_01.png)
 
 실제 데이터에서는 첫번째 인자와 두번째 인자사이의 상관관계가 있다면 그래프에서 패턴을 보실 수 있습니다. 우리는 임의의 값으로 데이터셋을 만들었으므로 예상대로 패턴을 찾을 수 없습니다. 이번에는 첫번째, 두번째, 세번째의 인자값을 이용하여 3차원으로 그래프를 확인해보겠습니다.
-
 
 ```python
 # 데이터셋 확인 (3차원)
@@ -71,25 +64,18 @@ ax.scatter(plot_x, plot_y, plot_z, c=plot_color)
 plt.show()
 ```
 
-
-![png](output_8_0.png)
-
-
 ![img](http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_02.png)
 
-역시나 패턴을 찾아볼 수는 없습니다. 하지만 실제 데이터에서는 인자 간의 상관관계가 있을 경우 패턴을 확인할 수 있므으로 이와 같은 방식으로 모델을 설계하기 전에 데이터셋을 먼저 확인해보는 것은 권장해드립니다. 
+역시나 패턴을 찾아볼 수는 없습니다. 하지만 실제 데이터에서는 인자 간의 상관관계가 있을 경우 패턴을 확인할 수 있므으로 이와 같은 방식으로 모델을 설계하기 전에 데이터셋을 먼저 확인해보는 것은 권장해드립니다. 단, 훈련데이터셋에 과적합되는 것을 가정하고 있으므로 시험셋의 정확도는 무시하셔도 됩니다.
 
 ---
 ### 레이어 준비
 
-이진분류 모델에 사용할 레이어는 `Dense`와 `Activation`입니다. `Activation`에는 은닉층(hidden layer)에 사용할 `relu`와 출력층(output layer)에 사용할 `sigmoid`입니다. `sigmoid`는 출력값을 0과 1사이의 값으로 변환시키는 역할을 수행합니다. 따라서 특정 임계값(예를 들어 0.5) 이상이면 양성, 이하이면 음성이라고 판별할 수 있는 이진분류 모델이 될 수 있습니다. 데이터셋은 일차원 벡터만 다루도록 하겠습니다.
+본 장에서 새롭게 소개되는 블록은 'sigmoid'입니다.
 
-|종류|구분|상세구분|브릭|
-|:-:|:-:|:-:|:-:|
-|데이터셋|Vector|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset_Vector_s.png)|
-|레이어|Dense|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png)|
-|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png)|
-|레이어|Activation|sigmoid|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png)|
+|블록|이름|설명|
+|:-:|:-:|:-|
+|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png)|sigmoid|활성화 함수로 입력되는 값을 0과 1사이의 값으로 출력시킵니다. 출력값이 특정 임계값(예를 들어 0.5) 이상이면 양성, 이하이면 음성이라고 판별할 수 있기 때문에 이진분류 모델의 출력층에 주로 사용됩니다.|
 
 ---
 ### 모델 준비
@@ -139,16 +125,14 @@ Dense 레이어가 총 세 개인 다층퍼셉트론 모델입니다. 첫 번째
 
 #### 퍼셉트론 모델
 
-
 ```python
-# 퍼셉트론 모델로 수치예측하기
-
+# 0. 사용할 패키지 불러오기
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 import random
 
-# 1. 데이터셋 준비하기
+# 1. 데이터셋 생성하기
 x_train = np.random.random((1000, 12))
 y_train = np.random.randint(2, size=(1000, 1))
 x_test = np.random.random((100, 12))
@@ -164,11 +148,7 @@ model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accurac
 # 4. 모델 학습시키기
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=64)
 
-# 5. 모델 평가하기
-loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
-print('loss_and_metrics : ' + str(loss_and_metrics))
-
-# 6. 학습과정 확인하기
+# 5. 학습과정 살펴보기
 %matplotlib inline
 import matplotlib.pyplot as plt
 
@@ -190,6 +170,10 @@ loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
 
 plt.show()
+
+# 6. 모델 평가하기
+loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
+print('loss_and_metrics : ' + str(loss_and_metrics))
 ```
 
     Epoch 1/1000
@@ -198,7 +182,7 @@ plt.show()
     1000/1000 [==============================] - 0s - loss: 0.7241 - acc: 0.4900     
     Epoch 3/1000
     1000/1000 [==============================] - 0s - loss: 0.7234 - acc: 0.4950     
-    ...    
+    ...
     Epoch 998/1000
     1000/1000 [==============================] - 0s - loss: 0.6843 - acc: 0.5500     
     Epoch 999/1000
@@ -207,19 +191,16 @@ plt.show()
     1000/1000 [==============================] - 0s - loss: 0.6842 - acc: 0.5530     
      32/100 [========>.....................] - ETA: 0sloss_and_metrics : [0.71497900724411012, 0.5]
 
-
 #### 다층퍼셉트론 모델
 
-
 ```python
-# 다층퍼셉트론 모델로 수치예측하기
-
+# 0. 사용할 패키지 불러오기
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 import random
 
-# 1. 데이터셋 준비하기
+# 1. 데이터셋 생성하기
 x_train = np.random.random((1000, 12))
 y_train = np.random.randint(2, size=(1000, 1))
 x_test = np.random.random((100, 12))
@@ -236,11 +217,7 @@ model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accurac
 # 4. 모델 학습시키기
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=64)
 
-# 5. 모델 평가하기
-loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
-print('loss_and_metrics : ' + str(loss_and_metrics))
-
-# 6. 학습과정 확인하기
+# 5. 학습과정 살펴보기
 %matplotlib inline
 import matplotlib.pyplot as plt
 
@@ -262,36 +239,40 @@ loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
 
 plt.show()
+
+# 6. 모델 평가하기
+loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
+print('loss_and_metrics : ' + str(loss_and_metrics))
 ```
 
     Epoch 1/1000
-    1000/1000 [==============================] - 0s - loss: 0.6988 - acc: 0.5180     
+    1000/1000 [==============================] - 0s - loss: 0.7249 - acc: 0.4900     
     Epoch 2/1000
-    1000/1000 [==============================] - 0s - loss: 0.6942 - acc: 0.5350     
+    1000/1000 [==============================] - 0s - loss: 0.7241 - acc: 0.4900     
     Epoch 3/1000
-    1000/1000 [==============================] - 0s - loss: 0.6921 - acc: 0.5370     
-    ...   
+    1000/1000 [==============================] - 0s - loss: 0.7234 - acc: 0.4950     
+    ...
     Epoch 998/1000
-    1000/1000 [==============================] - 0s - loss: 0.4246 - acc: 0.8100     
+    1000/1000 [==============================] - 0s - loss: 0.4608 - acc: 0.7990     
     Epoch 999/1000
-    1000/1000 [==============================] - 0s - loss: 0.4251 - acc: 0.8130     
+    1000/1000 [==============================] - 0s - loss: 0.4608 - acc: 0.7940     
     Epoch 1000/1000
-    1000/1000 [==============================] - 0s - loss: 0.4262 - acc: 0.8110     
-     32/100 [========>.....................] - ETA: 0sloss_and_metrics : [1.0172318077087403, 0.46000000000000002]
+    1000/1000 [==============================] - 0s - loss: 0.4599 - acc: 0.7980     
 
+    Using Theano backend.
+
+     32/100 [========>.....................] - ETA: 0sloss_and_metrics : [0.90548927903175358, 0.52000000000000002]
 
 #### 깊은 다층퍼셉트론 모델
 
-
 ```python
-# 깊은 다층퍼셉트론 모델로 수치예측하기
-
+# 0. 사용할 패키지 불러오기
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 import random
 
-# 1. 데이터셋 준비하기
+# 1. 데이터셋 생성하기
 x_train = np.random.random((1000, 12))
 y_train = np.random.randint(2, size=(1000, 1))
 x_test = np.random.random((100, 12))
@@ -309,11 +290,7 @@ model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accurac
 # 4. 모델 학습시키기
 hist = model.fit(x_train, y_train, epochs=1000, batch_size=64)
 
-# 5. 모델 평가하기
-loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
-print('loss_and_metrics : ' + str(loss_and_metrics))
-
-# 6. 학습과정 확인하기
+# 5. 학습과정 살펴보기
 %matplotlib inline
 import matplotlib.pyplot as plt
 
@@ -335,15 +312,19 @@ loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
 
 plt.show()
+
+# 6. 모델 평가하기
+loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
+print('loss_and_metrics : ' + str(loss_and_metrics))
 ```
 
     Epoch 1/1000
-    1000/1000 [==============================] - 0s - loss: 0.6954 - acc: 0.5190     
+    1000/1000 [==============================] - 0s - loss: 0.7249 - acc: 0.4900     
     Epoch 2/1000
-    1000/1000 [==============================] - 0s - loss: 0.6922 - acc: 0.5350     
+    1000/1000 [==============================] - 0s - loss: 0.7241 - acc: 0.4900     
     Epoch 3/1000
-    1000/1000 [==============================] - 0s - loss: 0.6908 - acc: 0.5330     
-    ...   
+    1000/1000 [==============================] - 0s - loss: 0.7234 - acc: 0.4950     
+    ...
     Epoch 998/1000
     1000/1000 [==============================] - 0s - loss: 0.0118 - acc: 1.0000     
     Epoch 999/1000
@@ -364,7 +345,7 @@ plt.show()
 
 ---
 
-### 결론
+### 요약
 
 수치를 입력하여 이진분류를 할 수 있는 위한 퍼셉트론, 다층퍼셉트론, 깊은 다층퍼셉트론 모델을 살펴보고, 그 성능을 확인 해봤습니다.
 
@@ -375,15 +356,5 @@ plt.show()
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
-* [수치입력 수치예측 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/)
-* [수치입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Input_Binary_Classification_Model_Recipe/)    
-* [수치입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/19/Numerical_Input_Multiclass_Classification_Model_Recipe/)    
-* [영상입력 이진분류 모델 레시피]    
-* [영상입력 다중클래스분류 모델 레시피]    
-* [시계열수치입력 수치예측 모델 레시피]
-* [시계열수치입력 이진분류 모델 레시피]
-* [시계열수치입력 다중클래스분류 모델 레시피]    
-* [시계열영상입력 이진분류 모델 레시피]
-* [시계열영상입력 다중클래스분류 모델 레시피]
-* [문장입력 이진분류 모델 레시피]
-* [문장입력 다중클래스분류 모델 레시피]
+* 이전 : [수치입력 수치예측 모델 레시피](https://tykimos.github.io/Keras/2017/08/13/Numerical_Prediction_Model_Recipe/)
+* 다음 : [수치입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/19/Numerical_Input_Multiclass_Classification_Model_Recipe/)
