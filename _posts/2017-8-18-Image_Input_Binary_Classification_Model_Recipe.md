@@ -5,7 +5,7 @@ author: 김태영
 date:   2017-08-18 02:00:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Classification_Model_Recipe_4m.png
+image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Classification_Model_Recipe_title_m.png
 ---
 영상을 입력해서 이진분류할 수 있는 모델들에 대해서 알아보겠습니다. 숫자 손글씨 데이터셋인 MNIST을 이용하여 홀수/짝수를 구분을 위한 데이터셋을 생성해보고,  다층퍼셉트론 및 컨볼루션 신경망 모델을 구성 및 학습 시켜보겠습니다. 이 모델은 임의의 영상으로부터 A와 B를 구분하는 문제나 양성과 음성을 구분하는 문제를 풀 수 있습니다. 아래 문제들에 활용 기대해봅니다.
 * 입력된 얼굴 사진에 남자인지 여자인지 구분
