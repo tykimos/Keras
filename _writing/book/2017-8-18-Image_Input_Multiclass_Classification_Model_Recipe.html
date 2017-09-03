@@ -11784,9 +11784,10 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Cl
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>영상을 입력해서 다중클래스를 분류할 수 있는 모델들에 대해서 알아보겠습니다. 숫자 손글씨 데이터셋인 MNIST을 이용하여 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성하고 학습 시켜보겠습니다. 이 모델들은 아래 문제들에 활용 기대해봅니다.</p>
 <ul>
-<li>입력된 얼굴 사진에 남자인지 여자인지 구분</li>
-<li>촬영된 부품 사진이 정상인지 불량인지 구분</li>
-<li>의료영상을 보고 질병유무 판독</li>
+<li>동양인 얼굴 사진으로 한국인, 일본인, 중국인 구분</li>
+<li>현미경 촬영 영상으로부터 다양한 균 구분</li>
+<li>스마트폰으로 찍은 식물 종류 구분</li>
+<li>기상위성영상으로부터 태풍 타입 분류</li>
 </ul>
 
 </div>
@@ -11866,7 +11867,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Cl
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>라벨값은 다중클래스 분류로 0에서 9까지 지정되어 있으나 이것을 홀수/짝수로 바꾸어서 이진분류 라벨로 지정하겠습니다. '1'은 홀수를 의미하고, '0'은 짝수를 의미합니다.</p>
+<p>다중클래스분류 모델의 출력과 맞추기 위해서 0에서 9까지의 값이 저장된 라벨에 'one-hot 인코딩' 처리를 수행합니다.</p>
 
 </div>
 </div>
@@ -11940,6 +11941,15 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Cl
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_11_0.png" alt="img"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <hr>
 <h3 id="&#47112;&#51060;&#50612;-&#51456;&#48708;">&#47112;&#51060;&#50612; &#51456;&#48708;<a class="anchor-link" href="#&#47112;&#51060;&#50612;-&#51456;&#48708;">&#194;&#182;</a></h3><p>본 장에서 새롭게 소개되는 블록은 없습니다. 앞서 살펴본 블록들로 구성해보겠습니다.</p>
 
@@ -11951,16 +11961,16 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Cl
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#47784;&#45944;-&#51456;&#48708;">&#47784;&#45944; &#51456;&#48708;<a class="anchor-link" href="#&#47784;&#45944;-&#51456;&#48708;">&#194;&#182;</a></h3><p>영상입력 수치예측을 하기 위해 <code>다층퍼셉트론 신경망 모델</code>, <code>컨볼루션 신경망 모델</code>, 을 준비했습니다.</p>
+<h3 id="&#47784;&#45944;-&#51456;&#48708;">&#47784;&#45944; &#51456;&#48708;<a class="anchor-link" href="#&#47784;&#45944;-&#51456;&#48708;">&#194;&#182;</a></h3><p>영상을 입력하여 다중클래스분류를 하기 위해 <code>다층퍼셉트론 신경망 모델</code>, <code>컨볼루션 신경망 모델</code>, <code>깊은 컨볼루션 신경망 모델</code>을 준비했습니다.</p>
 <h4 id="&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
 <pre><code>model = Sequential()
-model.add(Dense(256, activation='relu', input_dim = width*height))
+model.add(Dense(256, input_dim=width*height, activation='relu'))
 model.add(Dense(256, activation='relu'))
-model.add(Dense(256))
-model.add(Dense(1))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 
 </code></pre>
-<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_1m.png" alt="img"></p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_0m.png" alt="img"></p>
 <h4 id="&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#52968;&#48380;&#47336;&#49496; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
 <pre><code>model = Sequential()
 model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(width, height, 1)))
@@ -11969,10 +11979,27 @@ model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
 model.add(Dense(256, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(10, activation='softmax'))
 
 </code></pre>
-<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_2m.png" alt="img"></p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_1m.png" alt="img"></p>
+<h4 id="&#44618;&#51008;-&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#44618;&#51008; &#52968;&#48380;&#47336;&#49496; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
+<pre><code>model = Sequential()
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(width, height, 1)))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(256, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='softmax'))
+
+</code></pre>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_2m.png" alt="img"></p>
 
 </div>
 </div>
@@ -11982,7 +12009,7 @@ model.add(Dense(1))
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#51204;&#52404;-&#49548;&#49828;">&#51204;&#52404; &#49548;&#49828;<a class="anchor-link" href="#&#51204;&#52404;-&#49548;&#49828;">&#194;&#182;</a></h3><p>앞서 살펴본 <code>다층퍼셉트론 신경망 모델</code>, <code>컨볼루션 신경망 모델</code>의 전체 소스는 다음과 같습니다.</p>
+<h3 id="&#51204;&#52404;-&#49548;&#49828;">&#51204;&#52404; &#49548;&#49828;<a class="anchor-link" href="#&#51204;&#52404;-&#49548;&#49828;">&#194;&#182;</a></h3><p>앞서 살펴본 <code>다층퍼셉트론 신경망 모델</code>, <code>컨볼루션 신경망 모델</code>, <code>깊은 컨볼루션 신경망 모델</code>의 전체 소스는 다음과 같습니다.</p>
 
 </div>
 </div>
@@ -12166,6 +12193,16 @@ Epoch 30/30
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>시험셋을 입력하여 예측한 결과와 실제 결과가 차이나는 데이터만 표시해봤습니다. 분류하기 애매한 데이터도 많지만 모델이 잘못 예측한 경우도 많아 보입니다.</p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_17_3.png" alt="img"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#52968;&#48380;&#47336;&#49496; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
 </div>
 </div>
@@ -12344,7 +12381,17 @@ Epoch 30/30
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#52968;&#48380;&#47336;&#49496; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
+<p>시험셋을 입력하여 예측한 결과와 실제 결과가 차이나는 데이터만 표시해봤습니다. 점점 분류하기 애매한 데이터가 많이 보입니다.</p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_20_3.png" alt="img"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#44618;&#51008;-&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#44618;&#51008; &#52968;&#48380;&#47336;&#49496; &#49888;&#44221;&#47581; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#52968;&#48380;&#47336;&#49496;-&#49888;&#44221;&#47581;-&#47784;&#45944;">&#194;&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -12529,11 +12576,46 @@ Epoch 30/30
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<hr>
-<h3 id="&#44057;&#51060;-&#48372;&#44592;">&#44057;&#51060; &#48372;&#44592;<a class="anchor-link" href="#&#44057;&#51060;-&#48372;&#44592;">&#194;&#182;</a></h3><ul>
-<li><a href="https://tykimos.github.io/Keras/lecture/">강좌 목차</a></li>
-</ul>
+<p>시험셋으로 예측한 결과 일부를 비교해봤습니다. 사람이 봐도 애매한 데이터가 많이 보입니다.</p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_23_3.png" alt="img"></p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#54617;&#49845;&#44208;&#44284; &#48708;&#44368;<a class="anchor-link" href="#&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#194;&#182;</a></h3><p>다층퍼셉트론 신경망 모델은 훈련정확도는 검증 손실값은 높아지고 있어 과적합이 발생하였습니다. 컨볼루션 신경망 모델은 다층퍼셉트론 신경망 모델에 비해 높은 성능을 보이고 있습니다. 깊은 컨볼루션 신경망 모델은 드랍아웃(Dropout) 레이어 덕분에 과적합이 발생하지 않고 검증 손실값이 지속적으로 떨어지고 있음을 확인할 수 있습니다.</p>
+<table>
+<thead><tr>
+<th style="text-align:center">다층퍼셉트론 신경망 모델</th>
+<th style="text-align:center">컨볼루션 신경망 모델</th>
+<th style="text-align:center">깊은 컨볼루션 신경망 모델</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_17_1.png" alt="img"></td>
+<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_20_1.png" alt="img"></td>
+<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_23_1.png" alt="img"></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<h3 id="&#50836;&#50557;">&#50836;&#50557;<a class="anchor-link" href="#&#50836;&#50557;">&#194;&#182;</a></h3><p>영상를 입력하여 다중클래스분류하는 다층퍼셉트론 신경망 모델, 컨볼루션 신경망 모델, 깊은 컨볼루션 신경망 모델을 살펴보고 그 성능을 확인 해봤습니다.</p>
+<p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_title.png" alt="img"></p>
+
+</div>
 </div>
 </div>
 </div>
