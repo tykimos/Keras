@@ -5,19 +5,16 @@ author: 김태영
 date:   2017-08-20 01:00:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_4m.png
+image: http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_15_3.png
 ---
-영상을 입력해서 수치를 예측하는 모델들에 대해서 알아보겠습니다. 수치예측을 위한 영상 데이터셋 생성을 해보고, 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성 및 학습 시켜보겠습니다.
+영상을 입력해서 수치를 예측하는 모델들에 대해서 알아보겠습니다. 간단한 테스트를 위해 수치예측을 위한 영상 데이터셋 생성을 해보고, 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성 및 학습 시켜보겠습니다. 이 모델은 고정된 지역에서 촬영된 영상으로부터 복잡도, 밀도 등을 수치화하는 문제를 풀 수 있습니다. 예를 들어 CCTV 등 촬영 영상으로부터 미세먼지 지수를 예측하거나 위성영상으로부터 녹조, 적조 등의 지수를 예측하는 데 활용될 수 있습니다.
 
 ---
 ### 데이터셋 준비
 
-임의의 픽셀 수를 가지는 영상을 생성합니다.
-
+너비가 16, 높이가 16이고, 픽셀값을 0과 1을 가지는 영상을 만들어보겠습니다. 임의의 값이 주어지면, 그 값만큼 반복하여 영상 내에 1인 픽셀을 찍었습니다. 여기서 임의의 값이 라벨값으로 지정했습니다.
 
 ```python
-import numpy as np
-
 width = 16
 height = 16
 
@@ -47,17 +44,17 @@ def generate_image(points):
     return img.reshape(width, height, 1)
 ```
 
+데이터셋으로 훈련셋을 1500개, 검증셋을 300개, 시험셋을 100개 생성합니다.
 
 ```python
-x_train, y_train = generate_dataset(1000)
+x_train, y_train = generate_dataset(1500)
+x_val, y_val = generate_dataset(300)
 x_test, y_test = generate_dataset(100)
 ```
 
 만든 데이터셋 일부를 가시화 해보겠습니다.
 
-
 ```python
-# 데이터셋 확인
 %matplotlib inline
 import matplotlib.pyplot as plt
         
@@ -77,33 +74,41 @@ for i in range(plt_row*plt_col):
 plt.show()
 ```
 
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_7_0.png)
 
-![png](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_1.png)
-
+R(Real)은 1인 값을 가진 픽셀 수를 의미합니다. 한 번 표시한 픽셀에 다시 표시가 될 수 있기 때문에 실제 픽셀 수와 조금 차이는 날 수 있습니다.
 
 ---
 ### 레이어 준비
 
-수치예측 모델에 사용할 레이어는 `Dense`와 `Activation`입니다. `Activation`에는 은닉층(hidden layer)에 사용할 `relu`를 준비했습니다. 데이터셋은 일차원 벡터만 다루도록 하겠습니다.
+영상입력 수치예측 모델에서 사용할 레이어는 다음과 같습니다. 
 
-|종류|구분|상세구분|브릭|
-|:-:|:-:|:-:|:-:|
-|데이터셋|Vector|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset_Vector_s.png)|
-|레이어|Dense||![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png)|
-|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png)|
+|종류|구분|상세구분|브릭|비고|
+|:-:|:-:|:-:|:-:|:-:|
+|데이터셋|1D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset_Vector_s.png)|MLP 모델 입력과 출력, CNN 모델 출력으로 사용|
+|데이터셋|2D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset2D_s.png)|CNN 모델 입력으로 2D 영상데이터 입력|
+|레이어|Dense|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png)|MLP 모델이나 CNN 모델의 FC에 사용|
+|레이어|Conv2D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Conv2D_s.png)|CNN 모델에 사용|
+|레이어|MaxPooling2D|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_MaxPooling2D_s.png)|CNN 모델에 사용|
+|레이어|Flatten|-|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Flatten_s.png)|CNN 모델에서 FC 연결용으로 사용|
+|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png)|Dense 레이어의 은닉층에 사용|
+|레이어|Activation|relu|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_relu_2D_s.png)|Conv2D 레이어의 은닉층에 사용|
+|레이어|Activation|sigmoid|![img](http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png)|이진분류 모델의 출력층에 사용|
 
 ---
 ### 모델 준비
 
-수치예측을 하기 위해 `다층퍼셉트론 모델`, `컨볼루션 신경망 모델`을 준비했습니다.
+영상입력 수치예측을 하기 위해 `다층퍼셉트론 신경망 모델`, `컨볼루션 신경망 모델`을 준비했습니다.
 
-#### 다층퍼셉트론 모델
+#### 다층퍼셉트론 신경망 모델
 
     model = Sequential()
     model.add(Dense(256, activation='relu', input_dim = width*height))
     model.add(Dense(256, activation='relu'))
-    model.add(Dense(256, activation='relu'))
+    model.add(Dense(256))
     model.add(Dense(1))
+    
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_1m.png)
 
 #### 컨볼루션 신경망 모델
 
@@ -115,38 +120,21 @@ plt.show()
     model.add(Flatten())
     model.add(Dense(256, activation='relu'))
     model.add(Dense(1))
-
-
----
-### 학습과정 정의
-
-
-```python
-model.compile(loss='mse', optimizer='rmsprop')
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-4-30afb3e2b95c> in <module>()
-    ----> 1 model.compile(loss='mse', optimizer='rmsprop')
     
-
-    NameError: name 'model' is not defined
-
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_2m.png)    
 
 ---
 ### 전체 소스
 
-앞서 살펴본 `다층퍼셉트론 모델`, `컨볼루션 신경망 모델`의 전체 소스는 다음과 같습니다. 
+앞서 살펴본 `다층퍼셉트론 신경망 모델`, `컨볼루션 신경망 모델`의 전체 소스는 다음과 같습니다. 
 
-#### 다층퍼셉트론 소스
-
+#### 다층퍼셉트론 신경망 모델
 
 ```python
+# 0. 사용할 패키지 불러오기
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
 
 width = 16
 height = 16
@@ -176,31 +164,50 @@ def generate_image(points):
     
     return img.reshape(width, height, 1)
 
-x_train, y_train = generate_dataset(1000)
+# 1. 데이터셋 생성하기
+x_train, y_train = generate_dataset(1500)
+x_val, y_val = generate_dataset(300)
 x_test, y_test = generate_dataset(100)
 
 x_train_1d = x_train.reshape(x_train.shape[0], width*height)
+x_val_1d = x_val.reshape(x_val.shape[0], width*height)
 x_test_1d = x_test.reshape(x_test.shape[0], width*height)
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-
+# 2. 모델 구성하기
 model = Sequential()
 model.add(Dense(256, activation='relu', input_dim = width*height))
 model.add(Dense(256, activation='relu'))
-model.add(Dense(256, activation='relu'))
+model.add(Dense(256))
 model.add(Dense(1))
 
-model.compile(loss='mse', optimizer='rmsprop')
+# 3. 모델 학습과정 설정하기
+model.compile(loss='mse', optimizer='adam')
 
-model.fit(x_train_1d, y_train, batch_size=32, epochs=1000)
+# 5. 모델 학습시키기
+hist = model.fit(x_train_1d, y_train, batch_size=32, epochs=1000, validation_data=(x_val_1d, y_val))
 
+# 6. 학습과정 살펴보기
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.plot(hist.history['loss'])
+plt.plot(hist.history['val_loss'])
+plt.ylim(0.0, 300.0)
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.show()
+
+# 7. 모델 평가하기
 score = model.evaluate(x_test_1d, y_test, batch_size=32)
 
 print(score)
 
+# 8. 모델 사용하기
 yhat_test = model.predict(x_test_1d, batch_size=32)
+
+%matplotlib inline
+import matplotlib.pyplot as plt
 
 plt_row = 5
 plt_col = 5
@@ -218,64 +225,43 @@ for i in range(plt_row*plt_col):
 plt.show()
 ```
 
+    Train on 1500 samples, validate on 300 samples
     Epoch 1/1000
-    1000/1000 [==============================] - 0s - loss: 3386.0288     
+    1500/1500 [==============================] - 1s - loss: 4547.2297 - val_loss: 489.0028
     Epoch 2/1000
-    1000/1000 [==============================] - 0s - loss: 387.0066     
+    1500/1500 [==============================] - 0s - loss: 270.5862 - val_loss: 250.0564
     Epoch 3/1000
-    1000/1000 [==============================] - 0s - loss: 412.2721     
-    Epoch 4/1000
-    1000/1000 [==============================] - 0s - loss: 304.1660     
-    Epoch 5/1000
-    1000/1000 [==============================] - 0s - loss: 335.3021     
-    Epoch 6/1000
-    1000/1000 [==============================] - 0s - loss: 323.2166     
-    Epoch 7/1000
-    1000/1000 [==============================] - 0s - loss: 265.4491     
-    Epoch 8/1000
-    1000/1000 [==============================] - 0s - loss: 281.8839     
-    Epoch 9/1000
-    1000/1000 [==============================] - 0s - loss: 265.7890     
-    Epoch 10/1000
-    1000/1000 [==============================] - 0s - loss: 246.3170     
-    Epoch 11/1000
-    1000/1000 [==============================] - 0s - loss: 246.5573     
-    Epoch 12/1000
-    1000/1000 [==============================] - 0s - loss: 225.7056     
-    Epoch 13/1000
-    1000/1000 [==============================] - 0s - loss: 209.3804     
-    Epoch 14/1000
-    1000/1000 [==============================] - 0s - loss: 236.1048     
-    Epoch 15/1000
-    1000/1000 [==============================] - 0s - loss: 207.1810     
-    Epoch 16/1000
-    1000/1000 [==============================] - 0s - loss: 194.5086     
-    Epoch 17/1000
-    1000/1000 [==============================] - 0s - loss: 194.6921     
-    Epoch 18/1000
-    1000/1000 [==============================] - 0s - loss: 189.0231     
-    Epoch 19/1000
-    1000/1000 [==============================] - 0s - loss: 183.9862     
-    Epoch 20/1000
-    1000/1000 [==============================] - 0s - loss: 163.9086     
-    Epoch 21/1000
-    1000/1000 [==============================] - 0s - loss: 181.8609     
-    Epoch 22/1000
-    1000/1000 [==============================] - 0s - loss: 135.5362     
-    Epoch 23/1000
-    1000/1000 [==============================] - 0s - loss: 164.6700     
-    Epoch 24/1000
-    1000/1000 [==============================] - 0s - loss: 179.5287     
-    Epoch 25/1000
-    1000/1000 [==============================] - 0s - loss: 150.3696     
-    Epoch 26/1000
-      32/1000 [..............................] - ETA: 0s - loss: 74.9161
+    1500/1500 [==============================] - 0s - loss: 184.1776 - val_loss: 200.3438
+    ...
+    Epoch 998/1000
+    1500/1500 [==============================] - 0s - loss: 0.2356 - val_loss: 107.4000
+    Epoch 999/1000
+    1500/1500 [==============================] - 0s - loss: 0.3426 - val_loss: 107.5543
+    Epoch 1000/1000
+    1500/1500 [==============================] - 0s - loss: 0.5059 - val_loss: 110.1831
 
-#### 컨볼루션 신경망 소스
+     32/100 [========>.....................] - ETA: 0s110.12584671
 
+다층퍼셉트론 모델의 입력층인 Dense 레이어는 일차원 벡터로 데이터를 입력 받기 때문에, 이차원인 영상을 일차원 벡터로 변환하는 과정이 필요합니다.
 
 ```python
+x_train_1d = x_train.reshape(x_train.shape[0], width*height)
+x_val_1d = x_val.reshape(x_val.shape[0], width*height)
+x_test_1d = x_test.reshape(x_test.shape[0], width*height)
+```
+
+예측 결과 일부를 표시해봤습니다. R(Real)이 실제 값이고, P(Prediction)이 모델이 예측한 결과입니다. 출력층에 따로 활성화 함수를 지정하지 않았기 때문에 선형 함수가 사용되며, 정수가 아닌 실수로 예측됩니다. 
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_13_4.png)
+
+#### 컨볼루션 신경망 모델
+
+```python
+# 0. 사용할 패키지 불러오기
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D
 
 width = 16
 height = 16
@@ -305,13 +291,12 @@ def generate_image(points):
     
     return img.reshape(width, height, 1)
 
-x_train, y_train = generate_dataset(1000)
+# 1. 데이터셋 생성하기
+x_train, y_train = generate_dataset(1500)
+x_val, y_val = generate_dataset(300)
 x_test, y_test = generate_dataset(100)
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D
-
+# 2. 모델 구성하기
 model = Sequential()
 model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(width, height, 1)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -321,14 +306,34 @@ model.add(Flatten())
 model.add(Dense(256, activation='relu'))
 model.add(Dense(1))
 
-model.compile(loss='mse', optimizer='rmsprop')
-model.fit(x_train, y_train, batch_size=32, epochs=1000)
+# 3. 모델 학습과정 설정하기
+model.compile(loss='mse', optimizer='adam')
 
+# 5. 모델 학습시키기
+hist = model.fit(x_train, y_train, batch_size=32, epochs=1000, validation_data=(x_val, y_val))
+
+# 6. 학습과정 살펴보기
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+plt.plot(hist.history['loss'])
+plt.plot(hist.history['val_loss'])
+plt.ylim(0.0, 300.0)
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'val'], loc='upper left')
+plt.show()
+
+# 7. 모델 평가하기
 score = model.evaluate(x_test, y_test, batch_size=32)
 
 print(score)
 
-yhat_test = model.predict(x_test_1d, batch_size=32)
+# 8. 모델 사용하기
+yhat_test = model.predict(x_test, batch_size=32)
+
+%matplotlib inline
+import matplotlib.pyplot as plt
 
 plt_row = 5
 plt_col = 5
@@ -346,20 +351,49 @@ for i in range(plt_row*plt_col):
 plt.show()
 ```
 
+    Train on 1500 samples, validate on 300 samples
+    Epoch 1/1000
+    1500/1500 [==============================] - 1s - loss: 4547.2297 - val_loss: 489.0028
+    Epoch 2/1000
+    1500/1500 [==============================] - 0s - loss: 270.5862 - val_loss: 250.0564
+    Epoch 3/1000
+    1500/1500 [==============================] - 0s - loss: 184.1776 - val_loss: 200.3438
+    ...
+    Epoch 998/1000
+    1500/1500 [==============================] - 0s - loss: 0.0858 - val_loss: 173.7133
+    Epoch 999/1000
+    1500/1500 [==============================] - 0s - loss: 0.0905 - val_loss: 173.3539
+    Epoch 1000/1000
+    1500/1500 [==============================] - 0s - loss: 0.0450 - val_loss: 173.4334
+
+     32/100 [========>.....................] - ETA: 0s191.033380737
+
+컨볼루션 신경망 모델이 예측한 결과 일부를 표시해봤습니다.
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_15_3.png)
+
 ---
 
 ### 학습결과 비교
 
-N/A
+다층퍼셉트론 신경망 모델와 컨볼루션 신경망 모델을 비교했을 때, 현재 파라미터로는 다층퍼셉트론 신경망 모델의 정확도가 더 높았습니다. 라벨값이 픽셀 간의 관계가 있거나 모양 및 색상이 다양하지 않고 단순히 1인 픽셀 개수와 관련이 있기 때문에 컨볼루션 신경망 모델이 크케 성능을 발휘하지 못했습니다. 
+
+|다층퍼셉트론 신경망 모델|컨볼루션 신경망 모델|
+|:-:|:-:|
+|![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_13_2.png)|![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_output_15_1.png)|
 
 ---
 
-### 결론
+### 요약
 
-N/A
+영상를 입력하여 수치예측을 할 수 있는 깊은 다층퍼셉트론 신경망 모델, 컨볼루션 신경망 모델을 살펴보고 그 성능을 확인 해봤습니다. 영상 입력이라고 해서 컨볼루션 신경망 모델이 항상 좋은 성능이 나오는 것이 아니라는 것도 알게되었습니다. 어떤 모델이 성능이 좋게 나올지는 테스트를 해봐야 겠지만, 워낙 모델을 다양하게 구성할 수 있고 여러 파라미터를 설정할 수 있으므로, 모델을 개발하기 전 데이터 특징을 분석하고 적절한 후보 모델들을 선정하는 것을 권장드립니다.
+
+![img](http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical_Prediction_Model_Recipe_title.png)
 
 ---
 
 ### 같이 보기
 
 * [강좌 목차](https://tykimos.github.io/Keras/lecture/)
+* 이전 : [수치입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/19/Numerical_Input_Multiclass_Classification_Model_Recipe/)
+* 다음 : [영상입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/18/Image_Input_Binary_Classification_Model_Recipe/)
