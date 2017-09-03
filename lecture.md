@@ -5,7 +5,7 @@ comments: true
 ---
 케라스로 배워보는 딥러닝 강좌를 아래 내용를 아래 순서대로 진행하고자 합니다.
 
-### 1권 브릭과 함께하는 딥러닝 "케라스 이야기"
+### 1권 (블록과 함께하는) 파이썬 딥러닝 "케라스"
 
 1. 케라스 시작하기
     * [케라스 이야기](https://tykimos.github.io/Keras/2017/01/27/Keras_Talk/)
@@ -53,7 +53,7 @@ comments: true
     * [LSTM 레이어를 여러개로 쌓아보기] 
     * 상태 유지 모드 여부에 따른 배치사이즈(batch_size)에 대한 이해
 
-### 2권 케라스로 컴퓨터비전 해보기
+### 2권 (블록과 함께하는) 케라스 영상처리
 
 1. 객체 검출(object detection) 해보기
 1. 영상 분할(sementic segmentation) 해보기
@@ -66,7 +66,10 @@ comments: true
     * [Variational Autoencoder (VAE) 해보기]
     * [Generative Adversarial Network (GAN) 해보기]   
 
-### 3권 케라스로 자연현상 예측하기
+### 3권 실용 케라스
+1. 객체 검출
+
+### 4권 케라스로 자연현상 예측하기
 
 1. 물리적 추론
 1. 예측 모델

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13,8 +11,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -1109,7 +1107,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2535,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3025,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8760,6 +8755,9 @@ body > #header .header-bar {
     margin-left: 10px;
   }
 }
+[dir="rtl"] #ipython_notebook {
+  float: right !important;
+}
 #noscript {
   width: auto;
   padding-top: 16px;
@@ -8962,8 +8960,14 @@ span#login_widget > .button .badge,
  *
  * Author: Jupyter Development Team
  */
+[dir="rtl"] #tabs li {
+  float: right;
+}
 ul#tabs {
   margin-bottom: 4px;
+}
+[dir="rtl"] ul#tabs {
+  margin-right: 0px;
 }
 ul#tabs a {
   padding-top: 6px;
@@ -8986,6 +8990,16 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons {
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-right {
+  padding-top: 1px;
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-left {
+  float: right !important;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9122,6 +9136,9 @@ ul.breadcrumb span {
 #tree-selector {
   padding-right: 0px;
 }
+[dir="rtl"] #tree-selector a {
+  float: right;
+}
 #button-select-all {
   min-width: 50px;
 }
@@ -9211,6 +9228,9 @@ ul#new-menu {
   left: auto;
   right: 0;
 }
+[dir="rtl"] #new-menu {
+  text-align: right;
+}
 .kernel-menu-icon {
   padding-right: 12px;
   width: 24px;
@@ -9255,6 +9275,9 @@ ul#new-menu {
 }
 #running .panel-group .panel .panel-body .list_container .list_item:last-child {
   border-bottom: 0px;
+}
+[dir="rtl"] #running .col-sm-8 {
+  float: right !important;
 }
 .delete-button {
   display: none;
@@ -9551,6 +9574,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +9595,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -11246,7 +11265,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11558,6 +11577,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +11591,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +11654,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +11668,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11698,9 +11725,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11721,7 +11746,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11753,8 +11778,7 @@ categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_4m.png
 ---
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11763,13 +11787,12 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#45936;&#51060;&#53552;&#49483;-&#51456;&#48708;">&#45936;&#51060;&#53552;&#49483; &#51456;&#48708;<a class="anchor-link" href="#&#45936;&#51060;&#53552;&#49483;-&#51456;&#48708;">&#182;</a></h3><p>훈련에 사용할 임의의 값을 가진 인자 12개로 구성된 입력(x) 1000개와 각 입력에 대해 0과 1 중 임의로 지정된 출력(y)를 가지는 데이터셋을 생성해봤습니다. 시험에 사용할 데이터는 100개 준비했습니다.</p>
+<h3 id="&#45936;&#51060;&#53552;&#49483;-&#51456;&#48708;">&#45936;&#51060;&#53552;&#49483; &#51456;&#48708;<a class="anchor-link" href="#&#45936;&#51060;&#53552;&#49483;-&#51456;&#48708;">&#194;&#182;</a></h3><p>훈련에 사용할 임의의 값을 가진 인자 12개로 구성된 입력(x) 1000개와 각 입력에 대해 0과 1 중 임의로 지정된 출력(y)를 가지는 데이터셋을 생성해봤습니다. 시험에 사용할 데이터는 100개 준비했습니다.</p>
 
 </div>
 </div>
@@ -11792,8 +11815,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11830,7 +11852,9 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 <div class="output_wrapper">
 <div class="output">
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
 
 </div>
 
@@ -11838,8 +11862,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11848,8 +11871,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11884,7 +11906,9 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 <div class="output_wrapper">
 <div class="output">
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
 
 </div>
 
@@ -11892,8 +11916,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11902,8 +11925,7 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -11912,45 +11934,24 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#47112;&#51060;&#50612;-&#51456;&#48708;">&#47112;&#51060;&#50612; &#51456;&#48708;<a class="anchor-link" href="#&#47112;&#51060;&#50612;-&#51456;&#48708;">&#182;</a></h3><p>이진분류 모델에 사용할 레이어는 <code>Dense</code>와 <code>Activation</code>입니다. <code>Activation</code>에는 은닉층(hidden layer)에 사용할 <code>relu</code>와 출력층(output layer)에 사용할 <code>sigmoid</code>입니다. <code>sigmoid</code>는 출력값을 0과 1사이의 값으로 변환시키는 역할을 수행합니다. 따라서 특정 임계값(예를 들어 0.5) 이상이면 양성, 이하이면 음성이라고 판별할 수 있는 이진분류 모델이 될 수 있습니다. 데이터셋은 일차원 벡터만 다루도록 하겠습니다.</p>
+<h3 id="&#47112;&#51060;&#50612;-&#51456;&#48708;">&#47112;&#51060;&#50612; &#51456;&#48708;<a class="anchor-link" href="#&#47112;&#51060;&#50612;-&#51456;&#48708;">&#194;&#182;</a></h3><p>본 장에서 새롭게 소개되는 블록은 'sigmoid'입니다.</p>
 <table>
 <thead><tr>
-<th style="text-align:center">종류</th>
-<th style="text-align:center">구분</th>
-<th style="text-align:center">상세구분</th>
-<th style="text-align:center">브릭</th>
+<th style="text-align:center">블록</th>
+<th style="text-align:center">이름</th>
+<th style="text-align:left">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">데이터셋</td>
-<td style="text-align:center">Vector</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset_Vector_s.png" alt="img"></td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Dense</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png" alt="img"></td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Activation</td>
-<td style="text-align:center">relu</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png" alt="img"></td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Activation</td>
-<td style="text-align:center">sigmoid</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png" alt="img"></td>
+<td style="text-align:center">sigmoid</td>
+<td style="text-align:left">활성화 함수로 입력되는 값을 0과 1사이의 값으로 출력시킵니다. 출력값이 특정 임계값(예를 들어 0.5) 이상이면 양성, 이하이면 음성이라고 판별할 수 있기 때문에 이진분류 모델의 출력층에 주로 사용됩니다.</td>
 </tr>
 </tbody>
 </table>
@@ -11958,23 +11959,21 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binar
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#47784;&#45944;-&#51456;&#48708;">&#47784;&#45944; &#51456;&#48708;<a class="anchor-link" href="#&#47784;&#45944;-&#51456;&#48708;">&#182;</a></h3><p>이진분류를 하기 위해 <code>퍼셉트론 모델</code>, <code>다층퍼셉트론 모델</code>, <code>깊은 다층퍼셉트론 모델</code>을 준비했습니다.</p>
+<h3 id="&#47784;&#45944;-&#51456;&#48708;">&#47784;&#45944; &#51456;&#48708;<a class="anchor-link" href="#&#47784;&#45944;-&#51456;&#48708;">&#194;&#182;</a></h3><p>이진분류를 하기 위해 <code>퍼셉트론 모델</code>, <code>다층퍼셉트론 모델</code>, <code>깊은 다층퍼셉트론 모델</code>을 준비했습니다.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4><p>Dense 레이어가 하나이고, 뉴런의 수도 하나인 가장 기본적인 퍼셉트론 모델입니다. 즉 웨이트(w) 하나, 바이어스(b) 하나로 전형적인  Y = w * X + b를 풀기 위한 모델입니다. 이진분류이므로 출력 레이어는 sigmoid 활성화 함수를 사용하였습니다.</p>
+<h4 id="&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4><p>Dense 레이어가 하나이고, 뉴런의 수도 하나인 가장 기본적인 퍼셉트론 모델입니다. 즉 웨이트(w) 하나, 바이어스(b) 하나로 전형적인  Y = w * X + b를 풀기 위한 모델입니다. 이진분류이므로 출력 레이어는 sigmoid 활성화 함수를 사용하였습니다.</p>
 
 <pre><code>model = Sequential()
 model.add(Dense(1, input_dim=12, activation='sigmoid'))
@@ -11992,12 +11991,11 @@ model.add(Activation('sigmoid'))
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4><p>Dense 레이어가 두 개인 다층퍼셉트론 모델입니다. 첫 번째 레이어는 64개의 뉴런을 가진 Dense 레이어이고 오류역전파가 용이한 <code>relu</code> 활성화 함수를 사용하였습니다. 출력 레이어인 두 번째 레이어는 0과 1사이의 값 하나를 출력하기 위해 1개의 뉴런과 <code>sigmoid</code> 활성화 함수를 사용했습니다.</p>
+<h4 id="&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4><p>Dense 레이어가 두 개인 다층퍼셉트론 모델입니다. 첫 번째 레이어는 64개의 뉴런을 가진 Dense 레이어이고 오류역전파가 용이한 <code>relu</code> 활성화 함수를 사용하였습니다. 출력 레이어인 두 번째 레이어는 0과 1사이의 값 하나를 출력하기 위해 1개의 뉴런과 <code>sigmoid</code> 활성화 함수를 사용했습니다.</p>
 
 <pre><code>model = Sequential()
 model.add(Dense(64, input_dim=12, activation='relu'))
@@ -12009,12 +12007,11 @@ model.add(Dense(1, activation='sigmoid'))
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#44618;&#51008; &#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4><p>Dense 레이어가 총 세 개인 다층퍼셉트론 모델입니다. 첫 번째, 두 번째 레이어는 64개의 뉴런을 가진 Dense 레이어이고 오류역전파가 용이한 <code>relu</code> 활성화 함수를 사용하였습니다. 출력 레이어인 세 번째 레이어는 0과 1사이의 값 하나를 출력하기 위해 1개의 뉴런과 <code>sigmoid</code> 활성화 함수를 사용했습니다.</p>
+<h4 id="&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#44618;&#51008; &#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4><p>Dense 레이어가 총 세 개인 다층퍼셉트론 모델입니다. 첫 번째, 두 번째 레이어는 64개의 뉴런을 가진 Dense 레이어이고 오류역전파가 용이한 <code>relu</code> 활성화 함수를 사용하였습니다. 출력 레이어인 세 번째 레이어는 0과 1사이의 값 하나를 출력하기 위해 1개의 뉴런과 <code>sigmoid</code> 활성화 함수를 사용했습니다.</p>
 
 <pre><code>model = Sequential()
 model.add(Dense(64, input_dim=12, activation='relu'))
@@ -12027,23 +12024,21 @@ model.add(Dense(1, activation='sigmoid'))
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#51204;&#52404;-&#49548;&#49828;">&#51204;&#52404; &#49548;&#49828;<a class="anchor-link" href="#&#51204;&#52404;-&#49548;&#49828;">&#182;</a></h3><p>앞서 살펴본 <code>퍼셉트론 모델</code>, <code>다층퍼셉트론 모델</code>, <code>깊은 다층퍼셉트론 모델</code>의 전체 소스는 다음과 같습니다.</p>
+<h3 id="&#51204;&#52404;-&#49548;&#49828;">&#51204;&#52404; &#49548;&#49828;<a class="anchor-link" href="#&#51204;&#52404;-&#49548;&#49828;">&#194;&#182;</a></h3><p>앞서 살펴본 <code>퍼셉트론 모델</code>, <code>다층퍼셉트론 모델</code>, <code>깊은 다층퍼셉트론 모델</code>의 전체 소스는 다음과 같습니다.</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4>
+<h4 id="&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -12108,7 +12103,10 @@ model.add(Dense(1, activation='sigmoid'))
 <div class="output_wrapper">
 <div class="output">
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Epoch 1/1000
 1000/1000 [==============================] - 0s - loss: 0.7249 - acc: 0.4900     
@@ -12130,7 +12128,9 @@ Epoch 1000/1000
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
 
 </div>
 
@@ -12138,12 +12138,11 @@ Epoch 1000/1000
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4>
+<h4 id="&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -12209,7 +12208,10 @@ Epoch 1000/1000
 <div class="output_wrapper">
 <div class="output">
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Epoch 1/1000
 1000/1000 [==============================] - 0s - loss: 0.6985 - acc: 0.4870     
@@ -12230,18 +12232,26 @@ Epoch 1000/1000
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>Using Theano backend.
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
 
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre> 32/100 [========&gt;.....................] - ETA: 0sloss_and_metrics : [0.90548927903175358, 0.52000000000000002]
 </pre>
@@ -12252,12 +12262,11 @@ Epoch 1000/1000
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#44618;&#51008; &#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#182;</a></h4>
+<h4 id="&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#44618;&#51008; &#45796;&#52789;&#54140;&#49481;&#53944;&#47200; &#47784;&#45944;<a class="anchor-link" href="#&#44618;&#51008;-&#45796;&#52789;&#54140;&#49481;&#53944;&#47200;-&#47784;&#45944;">&#194;&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -12324,7 +12333,10 @@ Epoch 1000/1000
 <div class="output_wrapper">
 <div class="output">
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Epoch 1/1000
 1000/1000 [==============================] - 0s - loss: 0.6954 - acc: 0.5190     
@@ -12346,7 +12358,9 @@ Epoch 1000/1000
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
 
 </div>
 
@@ -12354,13 +12368,12 @@ Epoch 1000/1000
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#54617;&#49845;&#44208;&#44284; &#48708;&#44368;<a class="anchor-link" href="#&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#182;</a></h3><p>퍼셉트론 &gt; 다층퍼셉트론 &gt; 깊은 다층퍼셉트론 순으로 학습이 좀 더 빨리 되는 것을 확인할 수 있습니다.</p>
+<h3 id="&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#54617;&#49845;&#44208;&#44284; &#48708;&#44368;<a class="anchor-link" href="#&#54617;&#49845;&#44208;&#44284;-&#48708;&#44368;">&#194;&#182;</a></h3><p>퍼셉트론 &gt; 다층퍼셉트론 &gt; 깊은 다층퍼셉트론 순으로 학습이 좀 더 빨리 되는 것을 확인할 수 있습니다.</p>
 <table>
 <thead><tr>
 <th style="text-align:center">퍼셉트론</th>
@@ -12380,13 +12393,12 @@ Epoch 1000/1000
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#50836;&#50557;">&#50836;&#50557;<a class="anchor-link" href="#&#50836;&#50557;">&#182;</a></h3><p>수치를 입력하여 이진분류를 할 수 있는 위한 퍼셉트론, 다층퍼셉트론, 깊은 다층퍼셉트론 모델을 살펴보고, 그 성능을 확인 해봤습니다.</p>
+<h3 id="&#50836;&#50557;">&#50836;&#50557;<a class="anchor-link" href="#&#50836;&#50557;">&#194;&#182;</a></h3><p>수치를 입력하여 이진분류를 할 수 있는 위한 퍼셉트론, 다층퍼셉트론, 깊은 다층퍼셉트론 모델을 살펴보고, 그 성능을 확인 해봤습니다.</p>
 <p><img src="http://tykimos.github.com/Keras/warehouse/2017-8-18-Numerical_Input_Binary_Classification_Model_Recipe_4m.png" alt="img"></p>
 
 </div>
@@ -12396,4 +12408,7 @@ Epoch 1000/1000
     </div>
   </div>
 </body>
+
+ 
+
 </html>

@@ -11782,7 +11782,12 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>영상을 입력해서 수치를 예측하는 모델들에 대해서 알아보겠습니다. 간단한 테스트를 위해 수치예측을 위한 영상 데이터셋 생성을 해보고, 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성 및 학습 시켜보겠습니다. 이 모델은 고정된 지역에서 촬영된 영상으로부터 복잡도, 밀도 등을 수치화하는 문제를 풀 수 있습니다. 예를 들어 CCTV 등 촬영 영상으로부터 미세먼지 지수를 예측하거나 위성영상으로부터 녹조, 적조 등의 지수를 예측하는 데 활용될 수 있습니다.</p>
+<p>영상을 입력해서 수치를 예측하는 모델들에 대해서 알아보겠습니다. 간단한 테스트를 위해 수치예측을 위한 영상 데이터셋 생성을 해보고, 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성 및 학습 시켜보겠습니다. 이 모델은 고정된 지역에서 촬영된 영상으로부터 복잡도, 밀도 등을 수치화하는 문제를 풀 수 있습니다. 아래 문제들에 활용 기대해봅니다.</p>
+<ul>
+<li>CCTV 등 촬영 영상으로부터 미세먼지 지수 예측</li>
+<li>위성영상으로부터 녹조, 적조 등의 지수 예측</li>
+<li>태양광 패널의 먼지가 쌓여있는 정도 예측</li>
+</ul>
 
 </div>
 </div>
@@ -11922,79 +11927,39 @@ image: http://tykimos.github.com/Keras/warehouse/2017-8-20-Image_Input_Numerical
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <hr>
-<h3 id="&#47112;&#51060;&#50612;-&#51456;&#48708;">&#47112;&#51060;&#50612; &#51456;&#48708;<a class="anchor-link" href="#&#47112;&#51060;&#50612;-&#51456;&#48708;">&#194;&#182;</a></h3><p>영상입력 수치예측 모델에서 사용할 레이어는 다음과 같습니다.</p>
+<h3 id="&#47112;&#51060;&#50612;-&#51456;&#48708;">&#47112;&#51060;&#50612; &#51456;&#48708;<a class="anchor-link" href="#&#47112;&#51060;&#50612;-&#51456;&#48708;">&#194;&#182;</a></h3><p>본 장에서 새롭게 소개되는 블록들은 다음과 같습니다.</p>
 <table>
 <thead><tr>
-<th style="text-align:center">종류</th>
-<th style="text-align:center">구분</th>
-<th style="text-align:center">상세구분</th>
-<th style="text-align:center">브릭</th>
-<th style="text-align:center">비고</th>
+<th style="text-align:center">블록</th>
+<th style="text-align:center">이름</th>
+<th style="text-align:left">설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">데이터셋</td>
-<td style="text-align:center">1D</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset_Vector_s.png" alt="img"></td>
-<td style="text-align:center">MLP 모델 입력과 출력, CNN 모델 출력으로 사용</td>
-</tr>
-<tr>
-<td style="text-align:center">데이터셋</td>
-<td style="text-align:center">2D</td>
-<td style="text-align:center">-</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dataset2D_s.png" alt="img"></td>
-<td style="text-align:center">CNN 모델 입력으로 2D 영상데이터 입력</td>
+<td style="text-align:center">2D Input data</td>
+<td style="text-align:left">2차원의 입력 데이터입니다. 주로 영상 데이터를 의미하며, 너비, 높이, 채널수로 구성됩니다.</td>
 </tr>
 <tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Dense</td>
-<td style="text-align:center">-</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Dense_s.png" alt="img"></td>
-<td style="text-align:center">MLP 모델이나 CNN 모델의 FC에 사용</td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Conv2D</td>
-<td style="text-align:center">-</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Conv2D_s.png" alt="img"></td>
-<td style="text-align:center">CNN 모델에 사용</td>
+<td style="text-align:center">Conv2D</td>
+<td style="text-align:left">필터를 이용하여 영상 특징을 추출하는 컨볼루션 레이어입니다.</td>
 </tr>
 <tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">MaxPooling2D</td>
-<td style="text-align:center">-</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_MaxPooling2D_s.png" alt="img"></td>
-<td style="text-align:center">CNN 모델에 사용</td>
+<td style="text-align:center">MaxPooling2D</td>
+<td style="text-align:left">영상에서 사소한 변화가 특징 추출에 크게 영향을 미치지 않도록 해주는 맥스풀링 레이어입니다.</td>
 </tr>
 <tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Flatten</td>
-<td style="text-align:center">-</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Flatten_s.png" alt="img"></td>
-<td style="text-align:center">CNN 모델에서 FC 연결용으로 사용</td>
+<td style="text-align:center">Flatten</td>
+<td style="text-align:left">2차원의 특징맵을 전결합층으로 전달하기 위해서 1차원 형식으로 바꿔줍니다.</td>
 </tr>
 <tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Activation</td>
-<td style="text-align:center">relu</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_Relu_s.png" alt="img"></td>
-<td style="text-align:center">Dense 레이어의 은닉층에 사용</td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Activation</td>
-<td style="text-align:center">relu</td>
 <td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_relu_2D_s.png" alt="img"></td>
-<td style="text-align:center">Conv2D 레이어의 은닉층에 사용</td>
-</tr>
-<tr>
-<td style="text-align:center">레이어</td>
-<td style="text-align:center">Activation</td>
-<td style="text-align:center">sigmoid</td>
-<td style="text-align:center"><img src="http://tykimos.github.com/Keras/warehouse/DeepBrick/Model_Recipe_Part_Activation_sigmoid_s.png" alt="img"></td>
-<td style="text-align:center">이진분류 모델의 출력층에 사용</td>
+<td style="text-align:center">relu</td>
+<td style="text-align:left">활성화 함수로 주로 Conv2D 은닉층에 사용됩니다.</td>
 </tr>
 </tbody>
 </table>
