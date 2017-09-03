@@ -5,7 +5,7 @@ author: 김태영
 date:   2017-08-18 03:00:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Binary_Classification_Model_Recipe_4m.png
+image: http://tykimos.github.com/Keras/warehouse/2017-8-18-Image_Input_Multiclass_Classification_Model_Recipe_output_23_3.png
 ---
 영상을 입력해서 다중클래스를 분류할 수 있는 모델들에 대해서 알아보겠습니다. 숫자 손글씨 데이터셋인 MNIST을 이용하여 다층퍼셉트론 및 컨볼루션 신경망 모델을 구성하고 학습 시켜보겠습니다. 이 모델들은 아래 문제들에 활용 기대해봅니다.
 * 동양인 얼굴 사진으로 한국인, 일본인, 중국인 구분
