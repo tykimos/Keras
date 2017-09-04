@@ -157,7 +157,7 @@ y_val = y_train[50000:]
 x_train = x_train[:50000]
 y_train = y_train[:50000]
 
-# 데이터셋 전처리 : 홀수는 1, 짝수는 0으로 변환
+# 데이터셋 전처리 : one-hot 인코딩
 y_train = np_utils.to_categorical(y_train)
 y_val = np_utils.to_categorical(y_val)
 y_test = np_utils.to_categorical(y_test)
@@ -288,7 +288,7 @@ y_val = y_train[50000:]
 x_train = x_train[:50000]
 y_train = y_train[:50000]
 
-# 데이터셋 전처리 : 홀수는 1, 짝수는 0으로 변환
+# 데이터셋 전처리 : one-hot 인코딩
 y_train = np_utils.to_categorical(y_train)
 y_val = np_utils.to_categorical(y_val)
 y_test = np_utils.to_categorical(y_test)
@@ -424,7 +424,7 @@ y_val = y_train[50000:]
 x_train = x_train[:50000]
 y_train = y_train[:50000]
 
-# 데이터셋 전처리 : 홀수는 1, 짝수는 0으로 변환
+# 데이터셋 전처리 : one-hot 인코딩
 y_train = np_utils.to_categorical(y_train)
 y_val = np_utils.to_categorical(y_val)
 y_test = np_utils.to_categorical(y_test)
