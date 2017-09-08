@@ -23,7 +23,11 @@ comments: true
 - 2016년 11월 7일 세브란스병원, "영상인식 분야에서의 딥러닝 이야기 세미나"
 
 <img src="http://tykimos.github.io/Keras/images/face1.jpg">
+[선릉]
 <img src="http://tykimos.github.io/Keras/images/face2.jpg">
+[하와이]
+<img src="http://tykimos.github.io/Keras/images/face3.jpg">
+[북극]
 
 연락처
 
