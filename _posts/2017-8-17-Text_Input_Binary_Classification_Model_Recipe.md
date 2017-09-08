@@ -297,11 +297,6 @@ print(loss_and_metrics)
 
     Train on 20000 samples, validate on 5000 samples
     Epoch 1/2
-    20000/20000 [==============================] - 25s - loss: 0.4136 - acc: 0.7916 - val_loss: 0.3069 - val_acc: 0.8728
-    Epoch 2/2
-    20000/20000 [==============================] - 25s - loss: 0.0534 - acc: 0.9810 - val_loss: 0.4522 - val_acc: 0.8484
-
-    Epoch 1/2
     20000/20000 [==============================] - 139s - loss: 0.4392 - acc: 0.7882 - val_loss: 0.3288 - val_acc: 0.8658
     Epoch 2/2
     20000/20000 [==============================] - 140s - loss: 0.2295 - acc: 0.9137 - val_loss: 0.3181 - val_acc: 0.8702
@@ -389,22 +384,9 @@ plt.show()
 loss_and_metrics = model.evaluate(x_test, y_test, batch_size=64)
 print('## evaluation loss and_metrics ##')
 print(loss_and_metrics)
-
-# 7. 모델 사용하기
-#yhat_test = model.predict(xhat_test, batch_size=64)
 ```
 
     Train on 20000 samples, validate on 5000 samples
-    Epoch 1/2
-    20000/20000 [==============================] - 25s - loss: 0.4136 - acc: 0.7916 - val_loss: 0.3069 - val_acc: 0.8728
-    Epoch 2/2
-    20000/20000 [==============================] - 25s - loss: 0.0534 - acc: 0.9810 - val_loss: 0.4522 - val_acc: 0.8484
-
-    Epoch 1/2
-    20000/20000 [==============================] - 139s - loss: 0.4392 - acc: 0.7882 - val_loss: 0.3288 - val_acc: 0.8658
-    Epoch 2/2
-    20000/20000 [==============================] - 140s - loss: 0.2295 - acc: 0.9137 - val_loss: 0.3181 - val_acc: 0.8702
-
     Epoch 1/2
     20000/20000 [==============================] - 68s - loss: 0.4382 - acc: 0.7823 - val_loss: 0.2904 - val_acc: 0.8762
     Epoch 2/2
@@ -494,21 +476,6 @@ print(loss_and_metrics)
 ```
 
     Train on 20000 samples, validate on 5000 samples
-    Epoch 1/2
-    20000/20000 [==============================] - 25s - loss: 0.4136 - acc: 0.7916 - val_loss: 0.3069 - val_acc: 0.8728
-    Epoch 2/2
-    20000/20000 [==============================] - 25s - loss: 0.0534 - acc: 0.9810 - val_loss: 0.4522 - val_acc: 0.8484
-
-    Epoch 1/2
-    20000/20000 [==============================] - 139s - loss: 0.4392 - acc: 0.7882 - val_loss: 0.3288 - val_acc: 0.8658
-    Epoch 2/2
-    20000/20000 [==============================] - 140s - loss: 0.2295 - acc: 0.9137 - val_loss: 0.3181 - val_acc: 0.8702
-
-    Epoch 1/2
-    20000/20000 [==============================] - 68s - loss: 0.4382 - acc: 0.7823 - val_loss: 0.2904 - val_acc: 0.8762
-    Epoch 2/2
-    20000/20000 [==============================] - 67s - loss: 0.2153 - acc: 0.9157 - val_loss: 0.3163 - val_acc: 0.8690
-
     Epoch 1/2
     20000/20000 [==============================] - 191s - loss: 0.3976 - acc: 0.8088 - val_loss: 0.3251 - val_acc: 0.8636
     Epoch 2/2
