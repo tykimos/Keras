@@ -5,7 +5,7 @@ author: 김태영
 date:   2017-09-09 01:10:00
 categories: Lecture
 comments: true
-image: http://tykimos.github.com/Keras/warehouse/2017-9-9-Time-series_Numerical_Input_Numerical_Prediction_Model_Recipe_total.png
+image: http://tykimos.github.com/Keras/warehouse/2017-9-9-Time-series_Numerical_Input_Numerical_Prediction_Model_Recipe_front_total.png
 ---
 시계열 수치를 입력해서 다음 수치를 예측하는 모델들에 대해서 알아보겠습니다. 각 모델에 코사인(cosine) 데이터를 학습시킨 후, 처음 일부 데이터를 알려주면 이후 코사인 형태의 데이터 예측을 얼마나 잘 하는 지 테스트 하겠습니다.
 
