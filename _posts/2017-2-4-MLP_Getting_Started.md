@@ -1,21 +1,21 @@
 ---
 layout: post
 title:  "다층 퍼셉트론 모델 만들어보기"
-author: Taeyoung, Kim
+author: 김태영
 date:   2017-02-04 01:00:00
 categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_lego.png
 ---
-본 강좌에서는 케라스를 이용하여 간단한 다층 퍼셉트론 모델을 만들어보겠습니다. 다음과 같은 순서로 진행하겠습니다.
+케라스를 이용하여 간단한 다층 퍼셉트론 모델을 만들어보겠습니다. 다음과 같은 순서로 진행하겠습니다.
 
 1. 문제 정의하기
-1. 데이터셋 준비하기
-1. 데이터셋 불러오기
+1. 데이터 준비하기
+1. 데이터셋 생성하기
 1. 모델 구성하기
-1. 모델 엮기
+1. 모델 학습과정 설정하기
 1. 모델 학습시키기
-1. 모델 사용하기
+1. 모델 평가하기
 
 ---
 
@@ -33,9 +33,10 @@ https://archive.ics.uci.edu/ml/datasets/Pima+Indians+Diabetes
 
 데이터셋을 준비하기에 앞서, 매번 실행 시마다 결과가 달라지지 않도록 랜덤 시드를 명시적으로 지정합니다. 이것을 하지 않으면 매번 실행 시 마다 동일 모델인데도 불구하고 다른 결과가 나오기 때문에, 연구개발 단계에서 파라미터 조정이나 데이터셋에 따른 결과 차이를 보려면 랜덤 시드를 지정해주는 것이 좋습니다.
 
-
 ```python
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
 
 # 랜덤시드 고정시키기
 np.random.seed(5)
@@ -43,7 +44,7 @@ np.random.seed(5)
 
 ---
 
-### 데이터셋 준비하기
+### 데이터 준비하기
 
 위 링크에서 'pima-indians-diabetes.names'을 열어보면 데이터셋에 대한 설명이 포함되어 있습니다. 먼저 몇가지 주요 항목을 살펴보겠습니다.
 
@@ -86,20 +87,23 @@ np.random.seed(5)
 |7|당뇨 직계 가족력|0.5|0.3|
 |8|나이|33.2|11.8|
 
----
-
-### 데이터셋 불러오기
-
-csv 형식의 파일은 numpy 패키지에서 제공하는 loadtxt() 함수로 직접 불러올 수 있습니다. 데이터셋에는 속성값과 판정결과가 모두 포함되어 있기 때문에 입력(X, 속성값 8개)와 출력(Y, 판정결과 1개) 변수로 분리합니다.
-
+numpy 패키지에서 제공하는 loadtxt() 함수를 통해 데이터를 불러옵니다.
 
 ```python
-# 데이터셋 불러오기
 dataset = np.loadtxt("./warehouse/pima-indians-diabetes.data", delimiter=",")
+```
 
-# 입력(X)과 출력(Y) 변수로 분리하기
-X = dataset[:,0:8]
-Y = dataset[:,8]
+---
+
+### 데이터셋 생성하기
+
+csv 형식의 파일은 numpy 패키지에서 제공하는 loadtxt() 함수로 직접 불러올 수 있습니다. 데이터셋에는 속성값과 판정결과가 모두 포함되어 있기 때문에 입력(속성값 8개)와 출력(판정결과 1개) 변수로 분리합니다.
+
+```python
+x_train = dataset[:700,0:8]
+y_train = dataset[:700,8]
+x_test = dataset[700:,0:8]
+y_test = dataset[700:,8]
 ```
 
 ---
@@ -112,50 +116,42 @@ Y = dataset[:,8]
 - 두번째 Dense 레이어는 은닉층으로 12개 뉴런을 입력받아 8개 뉴런을 출력합니다.
 - 마지막 Dense 레이어는 출럭 레이어로 8개 뉴런을 입력받아 1개 뉴런을 출력합니다.
 
-이 것을 앞 강좌에서 표현했던 것 처럼 레고 블럭으로 쌓아봤습니다. 총 세 개의 Dense 레이어 블럭으로 모델을 구성한 다음, 8개의 속성 값을 입력하면 1개의 출력값을 얻을 수 있는 구성입니다.
+이 구성을 블록으로 표시해봤습니다. 총 세 개의 Dense 레이어 블록으로 모델을 구성한 다음, 8개의 속성 값을 입력하면 1개의 출력값을 얻을 수 있는 구성입니다.
 
 ![lego](http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_lego.png)
 
-
 ```python
-from keras.models import Sequential
-from keras.layers import Dense
-
-# 모델 구성하기
 model = Sequential()
-model.add(Dense(12, input_dim=8, init='uniform', activation='relu'))
-model.add(Dense(8, init='uniform', activation='relu'))
-model.add(Dense(1, init='uniform', activation='sigmoid'))
+model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
 ```
-
-    Using Theano backend.
-
 
 은닉 레이어의 활성화 함수는 모두 'relu'를 사용하였고, 출력 레이어만 0과 1사이로 값이 출력될 수 있도록 활성화 함수를 'sigmoid'로 사용하였습니다. 0과 1사이의 실수값이 나오기 때문에 양성 클래스의 확률로 쉽게 매칭할 수 있습니다.
 
-
 ```python
 from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
+from keras.utils.vis_utils import model_to_dot
 
-# 모델 구성 가시화하기
+%matplotlib inline
+
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
-![model](http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_model.png)
+![svg](output_12_0.svg)
+
+![model](http://tykimos.github.com/Keras/warehouse/2017-2-4_MLP_Getting_Started_model.svg)
 
 ---
 
-### 모델 엮기
+### 모델 학습과정 설정하기
 
 모델을 정의했다면 모델을 손실함수와 최적화 알고리즘으로 엮어봅니다. 
 - loss : 현재 가중치 세트를 평가하는 데 사용한 손실 함수 입니다. 이진 클래스 문제이므로 'binary_crossentropy'으로 지정합니다.
 - optimizer : 최적의 가중치를 검색하는 데 사용되는 최적화 알고리즘으로 효율적인 경사 하강법 알고리즘 중 하나인 'adam'을 사용합니다.
 - metrics : 평가 척도를 나타내며 분류 문제에서는 일반적으로 'accuracy'으로 지정합니다.
 
-
 ```python
-# 모델 엮기
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 ```
 
@@ -166,122 +162,101 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 모델을 학습시키기 위해서 fit() 함수를 사용합니다. 
 - 첫번째 인자 : 입력 변수입니다. 8개의 속성 값을 담고 있는 X를 입력합니다.
 - 두번째 인자 : 출력 변수 즉 라벨값입니다. 결과 값을 담고 았는 Y를 입력합니다.
-- nb_epoch : 전체 훈련 데이터셋에 대해 학습 반복 횟수를 지정합니다. 100번을 반복적으로 학습시켜 보겠습니다.
-- batch_size : 가중치를 업데이트할 배치 크기를 의미하며, 10개로 지정했습니다.
-
+- epochs : 전체 훈련 데이터셋에 대해 학습 반복 횟수를 지정합니다. 1500번을 반복적으로 학습시켜 보겠습니다.
+- batch_size : 가중치를 업데이트할 배치 크기를 의미하며, 64개로 지정했습니다.
 
 ```python
-# 모델 학습시키기
-model.fit(X, Y, nb_epoch=100, batch_size=10)
+model.fit(x_train, y_train, epochs=1500, batch_size=64)
 ```
 
-    Epoch 1/100
-    768/768 [==============================] - 0s - loss: 0.6854 - acc: 0.6211     
-    Epoch 2/100
-    768/768 [==============================] - 0s - loss: 0.6671 - acc: 0.6510     
-    Epoch 3/100
-    768/768 [==============================] - 0s - loss: 0.6550 - acc: 0.6510     
-    Epoch 4/100
-    768/768 [==============================] - 0s - loss: 0.6468 - acc: 0.6484     
-    Epoch 5/100
-    768/768 [==============================] - 0s - loss: 0.6374 - acc: 0.6602     
-    ...   
-    Epoch 95/100
-    768/768 [==============================] - 0s - loss: 0.4857 - acc: 0.7643     
-    Epoch 96/100
-    768/768 [==============================] - 0s - loss: 0.4822 - acc: 0.7682     
-    Epoch 97/100
-    768/768 [==============================] - 0s - loss: 0.4846 - acc: 0.7656     
-    Epoch 98/100
-    768/768 [==============================] - 0s - loss: 0.4854 - acc: 0.7695     
-    Epoch 99/100
-    768/768 [==============================] - 0s - loss: 0.4782 - acc: 0.7656     
-    Epoch 100/100
-    768/768 [==============================] - 0s - loss: 0.4811 - acc: 0.7747     
+    Epoch 1/1500
+    700/700 [==============================] - 0s - loss: 6.7867 - acc: 0.4457     
+    Epoch 2/1500
+    700/700 [==============================] - 0s - loss: 5.5095 - acc: 0.5329     
+    Epoch 3/1500
+    700/700 [==============================] - 0s - loss: 4.3757 - acc: 0.6257     
+    ...
+    Epoch 1474/1500
+    700/700 [==============================] - 0s - loss: 0.4070 - acc: 0.7986     
+    Epoch 1475/1500
+    700/700 [==============================] - 0s - loss: 0.4049 - acc: 0.8100     
+    Epoch 1476/1500
+     64/700 [=>............................] - ETA: 0s - loss: 0.4664 - acc: 0.7656
 
 ---
 
-### 모델 사용하기
+### 모델 평가하기
 
-동일한 데이터셋으로 학습한 모델을 평가해봅니다. 일반적으로 모델을 평가할 때 훈련셋과 동일한 데이터셋을 이용하지 않습니다. 모델 평가 하는 법에 대해서는 이후 강좌에서 다루겠습니다.
-
+시험셋으로 학습한 모델을 평가해봅니다. 
 
 ```python
-# 모델 평가하기
-scores = model.evaluate(X, Y)
+scores = model.evaluate(x_test, y_test)
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 ```
 
-     32/768 [>.............................] - ETA: 0sacc: 77.21%
+    32/68 [=============>................] - ETA: 0sacc: 77.94%
 
-
-77.21% 이라는 결과가 나왔습니다. 현재 튜닝도 하지 않았고 모델 평가도 제대로 된 방법으로 이루어지진 않았지만 만족할만한 수준인 것 같습니다.
+77.94% 이라는 결과가 나왔습니다. 평가 방법이 조금 다르기는 하지만 77.7%이라고 웹사이트 표기된 것에 비교하면 만족할 만한 수준입니다.
 
 ---
 
 ### 전체 소스
 
-
 ```python
+# 0. 사용할 패키지 불러오기
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
 
 # 랜덤시드 고정시키기
 np.random.seed(5)
 
-# 데이터셋 불러오기
+# 1. 데이터 준비하기
 dataset = np.loadtxt("./warehouse/pima-indians-diabetes.data", delimiter=",")
 
-# 입력(X)과 출력(Y) 변수로 분리하기
-X = dataset[:,0:8]
-Y = dataset[:,8]
+# 2. 데이터셋 생성하기
+x_train = dataset[:700,0:8]
+y_train = dataset[:700,8]
+x_test = dataset[700:,0:8]
+y_test = dataset[700:,8]
 
-from keras.models import Sequential
-from keras.layers import Dense
-
-# 모델 구성하기
+# 3. 모델 구성하기
 model = Sequential()
-model.add(Dense(12, input_dim=8, init='uniform', activation='relu'))
-model.add(Dense(8, init='uniform', activation='relu'))
-model.add(Dense(1, init='uniform', activation='sigmoid'))
+model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
 
-# 모델 엮기
+# 4. 모델 학습과정 설정하기
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-# 모델 학습시키기
-model.fit(X, Y, nb_epoch=100, batch_size=10)
+# 5. 모델 학습시키기
+model.fit(x_train, y_train, epochs=1500, batch_size=64)
 
-# 모델 평가하기
-scores = model.evaluate(X, Y)
+# 6. 모델 평가하기
+scores = model.evaluate(x_test, y_test)
 print("%s: %.2f%%" %(model.metrics_names[1], scores[1]*100))
 ```
 
-    Epoch 1/100
-    768/768 [==============================] - 0s - loss: 0.6854 - acc: 0.6211     
-    Epoch 2/100
-    768/768 [==============================] - 0s - loss: 0.6671 - acc: 0.6510     
-    Epoch 3/100
-    768/768 [==============================] - 0s - loss: 0.6550 - acc: 0.6510     
-    Epoch 4/100
-    768/768 [==============================] - 0s - loss: 0.6468 - acc: 0.6484     
-    Epoch 5/100
-    768/768 [==============================] - 0s - loss: 0.6374 - acc: 0.6602     
-    ...    
-    Epoch 96/100
-    768/768 [==============================] - 0s - loss: 0.4822 - acc: 0.7682     
-    Epoch 97/100
-    768/768 [==============================] - 0s - loss: 0.4846 - acc: 0.7656     
-    Epoch 98/100
-    768/768 [==============================] - 0s - loss: 0.4854 - acc: 0.7695     
-    Epoch 99/100
-    768/768 [==============================] - 0s - loss: 0.4782 - acc: 0.7656     
-    Epoch 100/100
-    768/768 [==============================] - 0s - loss: 0.4811 - acc: 0.7747     
-     32/768 [>.............................] - ETA: 0sacc: 77.21%
+    Epoch 1/1500
+    700/700 [==============================] - 0s - loss: 6.7867 - acc: 0.4457     
+    Epoch 2/1500
+    700/700 [==============================] - 0s - loss: 5.5095 - acc: 0.5329     
+    Epoch 3/1500
+    700/700 [==============================] - 0s - loss: 4.3757 - acc: 0.6257     
+    ...
+    Epoch 1498/1500
+    700/700 [==============================] - 0s - loss: 0.4021 - acc: 0.8057     
+    Epoch 1499/1500
+    700/700 [==============================] - 0s - loss: 0.4056 - acc: 0.8000     
+    Epoch 1500/1500
+    700/700 [==============================] - 0s - loss: 0.4082 - acc: 0.8043     
+    32/68 [=============>................] - ETA: 0sacc: 77.94%
 
+    Using Theano backend.
 
 ---
 
-### 결론
+### 요약
 
 다층 퍼셉트론 모델을 만들어보고 실제 데이터셋을 사용하여 학습시켜봤습니다. 수치로 된 데이터를 불러오는 법과 모델에 학습시키기 위해서 간단히 가공을 해봤습니다. 또한 이진 분류 문제를 적용하기 위해서 입력 레이어와 출력 레이어를 어떻게 구성해야 하는 지도 알아봤습니다.
 
