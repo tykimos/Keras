@@ -7,24 +7,28 @@ categories: Lecture
 comments: true
 image: http://tykimos.github.com/Keras/warehouse/2017-9-16-YonghoHa_Slide_title.png
 ---
-아주 쉽고 재미있게, 직관적으로 딥러닝 개념을 설명한 하용호님의 자료를 공유합니다. (주의)'한 번 클릭하면 10분~15분동안 다른 일을 할 수가 없습니다.'
+딥러닝 개념을 아주 쉽고 제미있게, 직관적으로 설명한 하용호님의 '네 뇌에 딥러닝 인스톨' 자료를 공유합니다. 이 발표자료에는 케라스로 구현된 VGG16 모델을 이해하기 위한 여정이 시작되는 데요. 그 여정의 끝으로 딥브릭을 통해 뇌에 모델을 각인시킨 후 실습을 통해 손으로 익혀보겠습니다. 먼저 그 유명한 '네 뇌의 딥러닝 인스톨' 발표자료 입니다. (주의)'한 번 클릭하면 10분~15분동안 다른 일을 할 수가 없습니다.
 
 [발표자료 링크](https://www.slideshare.net/yongho/ss-79607172)
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-9-16-YonghoHa_Slide_01.png)
 
-이 발표자료에 사용된 케라스 코드를 딥브릭으로 쌓아보고, 실습도 해보겠습니다.
+여기서 딥브릭이 무엇인지 궁금하시다면, ['딥브릭(DeepBrick) 이야기'](https://tykimos.github.io/Keras/2017/08/09/DeepBrick_Talk/)
 
 ---
 ### VGG16 모델
 
-하용호님 발표자료에 소개된 VGG16 모델은 이 사진으로 모두 설명될 것 같습니다. 유재준님이 CVPR 2017 발표현장에서 찍은 사진입니다.
+딥러닝 모델이 수만가지가 있지만, 하용호님 발표자료엔 왜 VGG16 모델이 소개되었을까요? VGG16이 그렇게 간단한 모델도 아닌데 말이죠. 아래 사진으로 모두 설명이 가능할 것 같습니다. 참고로 이 사진으로 유재준님이 CVPR 2017 발표현장에서 찍은 사진입니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/2017-9-16-YonghoHa_Slide_02.jpg)
 
-영상 처리에 있어서는 빠질 수 없는 일꾼이죠. GPU 머신들 속에서 계속 시달리는 모델입니다. 케라스에서도 VGG16를 공식적으로 제공하고 있습니다. 아래 링크에서 소스코드를 볼 수 있습니다.
+VGG16 모델은 영상 처리에 있어서는 빠질 수 없는 일꾼이죠. 지금 이 순간에도 아마 GPU 머신에 의해 계속 시달리고 있을 겁니다. 케라스에서도 VGG16 코드를 공식적으로 제공하고 있습니다. [VGG16 소스코드 보기](https://github.com/fchollet/keras/blob/master/keras/applications/vgg16.py)
 
-https://github.com/fchollet/keras/blob/master/keras/applications/vgg16.py 
+같이 보기
+* 컨볼루션 신경망에 대해서 더 알고 싶으시다면, [컨볼루션 신경망 레이어 이야기](https://tykimos.github.io/Keras/2017/01/27/CNN_Layer_Talk/) 클릭
+* 컨볼루션 신경망 모델을 만들어보고 싶으시다면, [컨볼루션 신경망 모델 만들어보기](https://tykimos.github.io/Keras/2017/03/08/CNN_Getting_Started/) 클릭
+* 영상을 입력하여 이진분류 모델을 만들고 싶다면, [영상입력 이진분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/18/Image_Input_Binary_Classification_Model_Recipe/) 클릭
+* 영상을 입력하여 다중클래스분류 모델을 만들고 싶다면, [영상입력 다중클래스분류 모델 레시피](https://tykimos.github.io/Keras/2017/08/18/Image_Input_Multiclass_Classification_Model_Recipe/) 클릭
 
 #### 모델 구성 코드
 
@@ -80,7 +84,7 @@ VGG16 모델을 딥브릭으로 쌓아보겠습니다.
 
 #### 브릭 목록
 
-먼저 필요한 브릭 목록입니다.
+먼저 필요한 브릭 목록입니다. 더 다양한 브릭을 보고 싶다면, [딥브릭 스튜디오](https://tykimos.github.io/Keras/DeepBrickStudio/)
 
 |브릭|이름|설명|
 |:-:|:-:|:-|
@@ -152,7 +156,9 @@ VGG16 모델 전체을 딥브릭으로 표현하면 다음과 같습니다.
 ---
 ### 미리 학습된 VGG16  모델 사용하기
 
-VGG16 모델은 층이 깊어 학습하는 데 오랜 시간이 걸립니다. 다행이도 케라스에서는 VGG16 모델에 대해 미리 학습된 가중치를 제공하고 있습니다. 우리는 미리 학습된 가중치를 VGG16 모델에 셋팅하여 사용할 예정입니다. 아래는 테스트 시에 사용할 이미지입니다.
+VGG16 모델은 층이 깊어 학습하는 데 오랜 시간이 걸립니다. 다행이도 케라스에서는 VGG16 모델에 대해 미리 학습된 가중치를 제공하고 있습니다. 우리는 미리 학습된 가중치를 VGG16 모델에 셋팅하여 사용할 예정입니다. 가중치 불러온다는 것이 생소하시다면, [학습 모델 보기/저장하기/불러오기](https://tykimos.github.io/Keras/2017/06/10/Model_Save_Load/) 클릭
+
+아래는 테스트 시에 사용할 이미지입니다.
 
 ![img](http://tykimos.github.com/Keras/warehouse/elephant.jpg)
 
@@ -216,7 +222,21 @@ for (i, (imagenetID, label, prob)) in enumerate(P[0]):
 
 
     Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5
-    215916544/553467096 [==========>...................] - ETA: 1188s
+    553459712/553467096 [============================>.] - ETA: 0sDownloading data from https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json
+    40960/35363 [==================================] - 0s 
+    1. African_elephant: 49.05%
+    2. tusker: 46.28%
+    3. Indian_elephant: 4.67%
+    4. warthog: 0.00%
+    5. triceratops: 0.00%
+
+
+위 코드를 실행하면 먼저 다음 파일들을 다운로드 받습니다. 
+
+* vgg16_weights_tf_dim_ordering_tf_kernels.h5 : VGG16 가중치 파일입니다.
+* imagenet_class_index.json : 인덱스 값에 해당하는 클래스 정보를 얻을 수 있는 파일입니다. 
+
+한 번 다운로드 받아 놓으면 재실행 시에는 다운로드 하지 않습니다. 그 다음 문장이 예측 결과입니다. 1위에서 5위까지 표시가 되었는데, 1위, 2위가 코끼리로 나오네요~
 
 ---
 
