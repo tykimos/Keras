@@ -1,4 +1,6 @@
 ---
+redirect_to:
+  - https://tykimos.github.io/lecture/
 layout: post
 title:  "케라스 강좌 내용"
 comments: true

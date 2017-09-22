@@ -1,6 +1,6 @@
 ---
 redirect_to:
-  - https://tykimos.github.io/about
+  - https://tykimos.github.io/about/
 layout: page
 comments: true
 ---

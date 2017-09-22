@@ -1,4 +1,6 @@
 ---
+redirect_to:
+  - https://tykimos.github.io/DeepBrickStudio/
 layout: post
 title:  "DeepBrick Studio for Keras (케라스를 위한 딥브릭 스튜디오)"
 author: 김태영 (Taeyoung Kim)
