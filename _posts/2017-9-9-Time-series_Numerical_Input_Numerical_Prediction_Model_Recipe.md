@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "시계열수치입력 수치예측 모델 레시피"
+redirect_to:
+  - https://tykimos.github.io/2017/09/09/Time-series_Numerical_Input_Numerical_Prediction_Model_Recipe/
 author: 김태영
 date:   2017-09-09 01:10:00
 categories: Lecture

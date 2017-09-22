@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "데이터셋 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/03/25/Dataset_and_Fit_Talk/
 author: 김태영
 date:   2017-03-25 12:00:00
 categories: Keras

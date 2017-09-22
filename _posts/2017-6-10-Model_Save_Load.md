@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "학습 모델 보기/저장하기/불러오기"
+redirect_to:
+  - https://tykimos.github.io/2017/06/10/Model_Save_Load/
 author: 김태영
 date:   2017-06-10 23:10:00
 categories: Lecture

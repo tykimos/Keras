@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "컨볼루션 신경망 레이어 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/01/27/CNN_Layer_Talk/
 author: Taeyoung, Kim
 date:   2017-01-27 04:00:00
 categories: Lecture

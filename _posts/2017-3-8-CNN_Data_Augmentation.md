@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "컨볼루션 신경망 모델을 위한 데이터 부풀리기"
+redirect_to:
+  - https://tykimos.github.io/2017/06/10/CNN_Data_Augmentation/
 author: Taeyoung, Kim
 date:   2017-06-10 23:10:00
 categories: Lecture

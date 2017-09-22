@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "순환 신경망 레이어 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/04/09/RNN_Getting_Started/
 author: 김태영
 date:   2017-04-09 04:00:00
 categories: Lecture

@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "컨볼루션 신경망 모델 만들어보기"
+redirect_to:
+  - https://tykimos.github.io/2017/03/08/CNN_Getting_Started/
 author: 김태영
 date:   2017-03-08 23:00:00
 categories: Lecture

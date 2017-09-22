@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "평가 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/05/22/Evaluation_Talk/
 author: 김태영
 date:   2017-05-22 13:00:00
 categories: Keras

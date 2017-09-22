@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "학습 조기종료 시키기"
+redirect_to:
+  - https://tykimos.github.io/2017/07/09/Early_Stopping/
 author: 김태영
 date:   2017-07-09 10:00:00
 categories: Lecture

@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "윈도우에서 케라스 설치하기"
+redirect_to:
+  - https://tykimos.github.io/2017/08/07/Keras_Install_on_Windows/
 author: 김태영
 date:   2017-08-07 16:00:00
 categories: Lecture

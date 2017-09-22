@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "순환 신경망 모델 만들어보기"
+redirect_to:
+  - https://tykimos.github.io/2017/04/09/RNN_Layer_Talk/
 author: 김태영
 date:   2017-04-09 05:00:00
 categories: Lecture

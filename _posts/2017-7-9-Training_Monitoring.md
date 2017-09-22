@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "학습과정 표시하기 (텐서보드 포함)"
+redirect_to:
+  - https://tykimos.github.io/2017/07/09/Training_Monitoring/
 author: 김태영
 date:   2017-07-09 23:00:00
 categories: Lecture

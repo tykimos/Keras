@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "다층 퍼셉트론 레이어 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/01/27/MLP_Layer_Talk/
 author: Taeyoung, Kim
 date:   2017-01-27 02:00:00
 categories: Lecture

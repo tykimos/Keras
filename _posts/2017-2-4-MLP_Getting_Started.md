@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "다층 퍼셉트론 모델 만들어보기"
+redirect_to:
+  - https://tykimos.github.io/2017/02/04/MLP_Getting_Started/
 author: 김태영
 date:   2017-02-04 01:00:00
 categories: Lecture

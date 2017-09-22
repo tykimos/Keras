@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "텐서플로우, 티아노, 케라스 오프라인 설치 (주피터 포함)"
+redirect_to:
+  - https://tykimos.github.io/2017/03/15/Keras_Offline_Install/
 author: Taeyoung, Kim
 date:   2017-03-15 12:00:00
 categories: Lecture

@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "케라스 이야기"
+redirect_to:
+  - https://tykimos.github.io/2017/01/27/Keras_Talk/
 author: 김태영
 date:   2017-01-27 01:00:00
 categories: Lecture

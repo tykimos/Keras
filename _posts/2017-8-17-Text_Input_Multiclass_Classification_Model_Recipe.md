@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "문장(시계열수치)입력 다중클래스분류 모델 레시피"
+redirect_to:
+  - https://tykimos.github.io/2017/08/17/Text_Input_Multiclass_Classification_Model_Recipe/
 author: 김태영
 date:   2017-08-17 03:00:00
 categories: Lecture

@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "문장(시계열수치)입력 이진분류 모델 레시피"
+redirect_to:
+  - https://tykimos.github.io/2017/08/17/Text_Input_Binary_Classification_Model_Recipe/
 author: 김태영
 date:   2017-08-17 02:00:00
 categories: Lecture
